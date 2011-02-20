@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<title>Custom Start Page :: Pierce Moore</title>
+		<link rel="stylesheet" href="css/style.css" type="text/css" />
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript">
+		
+			function updateTime() {
+				
+				var today = new Date();
+				var hour = today.getHours();
+				var min = today.getMinutes();
+				var sec = today.getSeconds();
+				
+				if( min < 10) {
+					min = "0" + min;
+				}
+				if(sec < 10) {
+					sec = "0" + sec;
+				}
+				
+				document.getElementById("time").innerHTML = hour + ":" + min + ":" + sec;
+				
+				var day = today.toDateString();
+				
+				document.getElementById("date").innerHTML = day;
+				
+			}
+			
+			$(document).ready(function () {
+				updateTime();
+				var clock = window.setInterval(updateTime,1000);
+				
+				$('a[href^="http://"]').attr({target: "_blank",title: "Opens in a new window"});				
+			});
+			
+		</script>
+	</head>
+	<body>
+		
+		<div id="timeBox">
+			<h1 id="time"></h1>
+		</div>
+		
+		<!--<div id="form">
+			<form name="myform">
+				<input type="text" name="address" id="address" value="&nbsp;"/><button id="click" value="Go"></button>
+			</form>
+			<br />
+		</div>-->
+		<div id="dateBox">
+			<h1 id="date"></h1>
+		</div> 	
+		<div id="links">
+			
+			<a href="http://www.facebook.com"><h2>facebook</h2></a>
+			<a href="http://www.gmail.com"><h2>gmail</h2></a>
+			<a href="https://www.google.com/calendar/render?tab=mc"><h2>google calendar</h2></a>
+			<a href="http://www.lifehacker.com"><h2>lifehacker</h2></a>
+			<a href="http://www.gizmodo.com"><h2>gizmodo</h2></a>
+			<a href="http://www.woot.com"><h2>woot</h2></a>
+			<a href="http://shirt.woot.com"><h2>shirt.woot</h2></a>
+			<a href="http://sellout.woot.com"><h2>sellout.woot</h2></a>
+			<a href="http://www.netflix.info"><h2>netflix</h2></a>
+			<a href="http://www.engadget.com"><h2>engadget</h2></a>
+			
+			<hr />
+			<div style="clear:both"><br /></div>
+			<a href="steam:"><h2>Open Steam</h2></a>
+			<a href="itunes:///"><h2>Open iTunes</h2></a>
+			
+		</div>
+		
+		<script type="text/javascript">
+			// Process notifications
+			var notification = webkitNotifications.createNotification(
+				'../../img/icon_48.png',
+				'This is a test Notification!',
+				'And this is the body of the notification. I sure hope this works! This could be really cool if it does.'
+			);
+			//notification.show();
+		</script>
+	</body>
+</html>

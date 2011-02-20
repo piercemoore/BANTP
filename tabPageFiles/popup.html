@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<title>Popup!</title>
+		
+		<style>
+			body {
+				/*background:url("../img/popup.png") no-repeat top left #003366;*/
+				background:#dddddd;
+				width:400px;
+			}
+			h1 {
+				color:#eeeeee;
+				text-shadow:0px 0px 4px #000000;
+				letter-spacing:-2px;
+				font-size:24px;
+				margin:0;
+				padding:0;
+			}
+			h2 {
+				color:#888888;
+				letter-spacing:-2px;
+			}
+			h3 {
+				color:#aaaaaa;
+				font-size:10px;
+			}
+			h1,h2,h3 {
+				font-family:"Segoe UI",sans-serif;
+				padding:0;
+				margin:0;
+			}
+			#logo {
+				width:50px;height:100%;float:left;
+			}
+			#name {
+				width:350px;float:left;
+			}
+			.clear {
+				clear:both;
+			}
+			#addSiteButton {
+				width: 278px;
+				height: 70px;
+				display:block;
+				margin:auto;
+				background: url('../img/addSite.png') no-repeat top;
+				text-indent:-9999em;
+			}
+			#addSiteButton:hover {
+				background-position:0 -70px;
+			}
+			#addSiteButton:active {
+				background-position:0 -140px;
+			}
+			#customLinkInput {
+				width:80%;
+				padding:3px;
+				font-size:20px;
+				font-family:"Segoe UI", sans-serif;
+			}
+			#customLinkButton {
+				width:40px;
+				height:40px;
+				padding:2px;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			<div id="logo">
+				<a href="#" target="_blank" style="vertical-align:middle;">
+					<img src="../img/icon_48.png" alt="Extension Home Page" title="Extension Home Page" />
+				</a>
+			</div>
+			<div id="name">
+				<h1>Bad Ass New Tab Page</h1>
+			</div>	
+			
+			<div class="clear"></div>
+			<div>
+				<a href="#" id="addSiteButton">Add Site to New Tab Page</a>
+			</div>
+			<div>
+				<h2>Add New Link</h2>
+				<h3>Make sure you copy the entire URL into this box! (ex. http://www.google.com)</h3>
+				<input type="text" id="customLinkInput" /><button id="customLinkButton">Add</button>
+			</div>
+			<div class="clear"></div>
+			<div>
+				<h1>Tab Page Status</h1>
+				<h2>Total Links: <span id="ls_linkCount">Unavailable</span></h2>
+				<h2>Alarm Clock: <span id="ls_alarmActive">Unavailable</span></h2>
+				<h2>Task Manager: <span id="ls_taskActive">Unavailable</span></h2>
+			</div>
+			<div>
+				<h3>This extension was designed and built by Pierce Moore of Refreshed Web Design. Copyright &copy; 2011 </h3>
+				
+			</div>
+		</div>
+	</body>
+</html>
