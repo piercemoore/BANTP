@@ -31,7 +31,7 @@ var dbT = {
 
 
 var defaultInstallData		= {
-	"version"			:	"0.1",
+	"version"			:	"0.1.2",
 	"defaults"			:	true,
 	"authenticated"		:	false,
 	"dataEntered"		:	false
@@ -42,9 +42,9 @@ var defaultPrefs	= {
 }
 
 var defaultLinkData = {
-	"linkCount":4,
+	"linkCount":10,
 	"links": 
-	{ 0:
+	{ 	   0:
 	    {
 	    	"href": "http://www.facebook.com",
 	    	"name": "facebook",
@@ -73,8 +73,62 @@ var defaultLinkData = {
 	    	"linkId": "ascnoiweasdASDJHAksldasdloij12MNEjdo2d90ddojp1"
     	}, 3:
     	{
-    		"href": "http://code.google.com/chrome/extensions/docs.html",
-	    	"name": "chrome extensions docs",
+    		"href": "http://www.lifehacker.com",
+	    	"name": "lifehacker",
+	    	"img":	"linkImages/3.png",
+	    	"target": "self",
+	    	"addedFromIcon": 0,
+	    	"addedOn": "02-20-2011 04:14:00",
+	    	"linkId": "ascnoiweasdASDJHAksldasdloij12MNEjdo2d90ddojp1"
+    	}, 4:
+    	{
+    		"href": "http://www.gizmodo.com",
+	    	"name": "gizmodo",
+	    	"img":	"linkImages/3.png",
+	    	"target": "self",
+	    	"addedFromIcon": 0,
+	    	"addedOn": "02-20-2011 04:14:00",
+	    	"linkId": "ascnoiweasdASDJHAksldasdloij12MNEjdo2d90ddojp1"
+    	}, 5:
+	    {
+	    	"href": "http://www.newegg.com",
+	    	"name": "newegg",
+	    	"img":	"linkImages/1.png",
+	    	"target": "self",
+	    	"addedFromIcon": 0,
+	    	"addedOn": "02-20-2011 04:14:00",
+	    	"linkId": "ascnoiwejalASDJHAksldasdloij12MNEjdo2d90ddojp1"
+	    }, 6:
+	    {
+	    	"href": "http://www.last.fm",
+	    	"name": "last.fm",
+	    	"img":	"linkImages/2.png",
+	    	"target": "self",
+	    	"addedFromIcon": 1,
+	    	"addedOn": "02-20-2011 04:14:00",
+	    	"linkId": "ascnoiwejalASDJHAksldasdloij12assedo2d90ddojp1"
+	    }, 7:
+	    {
+	    	"href": "https://www.google.com/calendar/render?tab=mc",
+	    	"name": "google calendar",
+	    	"img":	"linkImages/3.png",
+	    	"target": "self",
+	    	"addedFromIcon": 0,
+	    	"addedOn": "02-20-2011 04:14:00",
+	    	"linkId": "ascnoiweasdASDJHAksldasdloij12MNEjdo2d90ddojp1"
+    	}, 8:
+    	{
+    		"href": "http://www.php.net",
+	    	"name": "php.net",
+	    	"img":	"linkImages/3.png",
+	    	"target": "self",
+	    	"addedFromIcon": 0,
+	    	"addedOn": "02-20-2011 04:14:00",
+	    	"linkId": "ascnoiweasdASDJHAksldasdloij12MNEjdo2d90ddojp1"
+    	}, 9:
+    	{
+    		"href": "http://amazon.com",
+	    	"name": "amazon",
 	    	"img":	"linkImages/3.png",
 	    	"target": "self",
 	    	"addedFromIcon": 0,
@@ -95,7 +149,8 @@ var defaultCritData = {
 }
 
 var defaultUrlData = {
-	"updateUrl"		:	"http://bantp.refreshedweb.com/update/"
+	"updateUrl"		:	"http://www.refreshedweb.com/newtab/update/",
+	"updateFile"	:	"update.xml"
 }
 
 // Now, let's get into some nice, sweet functionality. Do NOT edit below this comment if you do not know what you are doing!
