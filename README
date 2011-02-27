@@ -1,7 +1,29 @@
-The Bad Ass New Tab Page extension is a solid attempt to make the default new tab page of Google Chrome a thing of the past. That nasty old bugger.
+Have you ever opened a new tab page and just gotten sad and complacent? So have I. In an attempt to solve this problem, the Bad Ass New Tab Page (BANTP, for short) was born.
 
-Download this extension in the Google Chrome extension gallery (coming soon) or its home page, http://bantp.refreshedweb.com!
+Right now, in version 0.1.2, BANTP does one thing: changes your default new tab page to something a little nicer on the eyes.
 
-Stay tuned. Awesome things ahead.
+What you can expect from future versions: (yep, roadmap time!)
+
+0.2: Ability to create, update, and remove your own custom links, as well as add the current page to the list of links on the new tab page.
+
+Note: Minor version 0.2 will be the first official version released to the public in the Google Chrome App Gallery. At this time, version 0.1.2 has been released to a small group of testers. Please email me at piercemoore@gmail.com if you would like to participate in testing.
+
+0.3: Custom fonts and images
+
+0.4: Small, built-in task manager
+
+0.5: Built-in alarm clock
+
+0.6: Work with links, alarms, and tasks right from the URL bar (omnibox).
+
+0.7: Ability to re-arrange links as well as move around different modules (alarms,tasks,links) on the home page.
+
+0.8: Encrypt and store links and settings files remotely to secure server, OPT-IN
+
+0.9: This version number reserved specifically for bug-checking and debugging.
+
+1.0: The non-beta, 1.0 official release of this extension will come along with a newly released web service that will allow you to manage your links in a web interface as well as track version history and enable undo/redo for any mistakes you may have made accidentally deleting a link from your tab page. 
+
+Get excited, people. Convenience and raw awesomeness are on the way :)
 
 --Pierce
