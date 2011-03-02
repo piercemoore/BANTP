@@ -164,6 +164,54 @@ function accessDatabase(table) {
 	}
 }
 
+function addLink(title,url) {
+	var t = dbT.links; // Name of table
+	// Grab the link object really quickly
+	var linkObj = getLinkObj();
+	// Now grab the JSON object for the links themselves
+	var linkList = linkObj.links;
+	console.log(linkObj);
+	console.log(linkList);
+	// Let's count how many links are in the table so far, so we can insert the new link in the last position.
+	var linkCount = countTotalLinks(linkList); // Since this number does not start from 0, we will just use this number as the index for the new link.
+	console.log(linkCount);
+	// Let's set the values for the new link
+	linkList[linkCount] = {"href":url,"name":title};
+	console.log(linkList[linkCount]);
+	// Now, let's update the link count in the Link Object
+	linkObj.linkCount = linkObj.linkCount + 1;
+	console.log(linkList);
+	console.log(linkObj);
+	// Now let's store it in local storage
+	if(storeLinkObj()) {
+		console.log("New link with url " + url + " and title " + title + " successfully stored in local storage.");
+		return true;
+	} else {
+		console.log("New link with url " + url + " and title " + title + " UNABLE TO BE STORED in local storage.");
+		return false;
+	}
+}
+
+function storeLinkObj(obj) {
+	var t = dbT.links;
+	if(insertData(t,obj)) {
+		console.log("Link object successfully stored. I hope the new tab page updates!");
+		return true;
+	} else {
+		console.log("Link object UNABLE to be stored. Whoops!");
+		return false;
+	}
+}
+
+function countTotalLinks(obj) {
+	// Now let's count the links
+	var count = 0;
+	for(var i in obj) {
+		count = count + 1;
+	}
+	return count;
+}
+
 function buildTables() {
 	// Put all of our tables into an array for easy looping.
 	var tables = new Array("first_install","db_crit","db_prefs","db_links","db_login","db_urls");
@@ -247,6 +295,16 @@ function checkDatabases() {
 			return false;
 		}
 	}
+}
+
+function getLinkObj() {
+	var linkData = window.localStorage[dbT.links];
+	console.log("GetLinkObj: LinkData: ");
+	console.log(linkData);
+	var linkObj = JSON.parse(linkData);
+	console.log("GetLinkObj: LinkObj: ");
+	console.log(linkObj);
+	return JSON.parse(window.localStorage[dbT.links]);
 }
 
 function parseDatabase() {

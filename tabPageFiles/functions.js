@@ -18,6 +18,33 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
  * @author	: Pierce Moore
  */
 
+function showAddFb() {
+	chrome.tabs.getSelected(null, function(tab) {
+		// Build the HTML markup to be inserted into the facebox.
+		var html = "<h1>Edit Link Details</h1><h3>Title</h3><input type=\"text\" id=\"customLinkTitle\" value=\"" + tab.title + "\" /><h3>Full URL</h3><input type=\"text\" id=\"customLinkUrl\" value=\"" + tab.url + "\"  /><button id=\"customLinkFbSubmit\">Add</button>";
+		jQuery.facebox(html);
+	});
+}
+
+function doAddLink(title,url)
+{
+	//alert('Add new site to tab page working!');
+	/*
+	chrome.tabs.captureVisibleTab(null, function(dataUrl) {
+	content = document.getElementById('screenshots');
+	var image = document.createElement('img');
+	image.setAttribute('src', dataUrl);
+	content.appendChild(image);});
+	*/
+	if(addLink(title,url)) {
+		console.log(title + " with url " + url + " successfully added to new tab page.");
+		return true;
+	} else {
+		console.log(title + " with url " + url + " UNABLE to be added to new tab page.");
+		return false;
+	}
+}
+
 function displayLinks() {
 	if(debug) { console.log('Working on links now...'); }
 	var linkOutput = "";
@@ -60,3 +87,12 @@ function updateTime() {
 	var day = today.toDateString();
 	document.getElementById("date").innerHTML = day;
 }
+
+// Google Analytics functions
+function trackButton() {
+    _gaq.push(['_trackEvent', 'Site added to new tab page using the "Add" button.']);
+};
+
+function trackAddBox() {
+    _gaq.push(['_trackEvent', 'Site added to new tab page using the text input box in the popup.']);
+};

@@ -116,3 +116,14 @@ button {
 	-webkit-box-shadow:0px 0px 5px #555555;
 	
 }
+#bossiBug {
+	width:130px;
+	height:20px;
+	position:absolute;
+	bottom: 20px;
+	right: 20px;
+	-webkit-opacity:0.5;
+}
+#bossiBug:hover {
+	-webkit-opacity:1;
+}

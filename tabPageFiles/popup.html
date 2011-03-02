@@ -18,6 +18,9 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 		<title>Popup!</title>
 		<style>
+			* {
+				font-family: "Segoe UI", sans-serif;
+			}
 			body {
 				/*background:url("../img/popup.png") no-repeat top left #003366;*/
 				background:#dddddd;
@@ -34,6 +37,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 			h2 {
 				color:#888888;
 				letter-spacing:-2px;
+				font-size:20px;
 			}
 			h3 {
 				color:#aaaaaa;
@@ -67,10 +71,15 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 			#addSiteButton:active {
 				background-position:0 -140px;
 			}
-			#customLinkInput {
+			#customLinkInput,input[type=text] {
 				width:80%;
 				padding:3px;
 				font-size:20px;
+				font-family:"Segoe UI", sans-serif;
+			}
+			button,#customLinkFbSubmit {
+				padding:3px;
+				width:100px;
 				font-family:"Segoe UI", sans-serif;
 			}
 			#customLinkButton {
@@ -78,8 +87,60 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 				height:40px;
 				padding:2px;
 			}
-			
+			#error,#success {
+				-webkit-border-radius:5px;
+				width:85%;
+				padding:10px;
+				margin:10px auto 10px auto;
+				text-align:center;
+			}
+			#error {
+				border:1px #AB4F4F solid;
+				background:#F5E1E1;
+			}
+			#success {
+				border:1px #73A860 solid;
+				background:#DDEDD8;
+			}
 		</style>
+		
+			
+		<script type="text/javascript" src="ClockAndLinks/js/jquery.js"></script>
+		<script type="text/javascript" src="data_db.js"></script>
+		<script type="text/javascript" src="config.js"></script>
+		<script type="text/javascript" src="functions.js"></script>
+		
+		<!-- Include Facebox stuff -->
+		<link rel="stylesheet" href="facebox/facebox.css" />
+		<script type="text/javascript" src="facebox/facebox.js"></script>
+		
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("#addSiteButton").click(function() {
+					showAddFb();
+				});
+				
+				$("#customLinkButton").click(function() {
+					//
+				});
+				$("#customLinkFbSubmit").live('click',function() {
+					var subBtn = $("#customLinkFbSubmit");
+					subBtn.attr("disabled","disabled").attr("value","Adding Link...");
+					// Let's grab pertinent information
+					var newLinkTitle = $("#customLinkTitle").val();
+					var newLinkUrl = $("#customLinkUrl").val();
+					// Let's add ourselves a link!
+					if(doAddLink(newLinkTitle,newLinkUrl)) {
+						subBtn.attr("value","Link successfully added!");
+						jQuery(document).trigger('close.facebox');
+					} else {
+						// To-do: Create Success/Error divs that will indicate outcome of link creation
+						subBtn.attr("value","Something went wrong, please try again!").attr("disabled","");
+						setTimeout(subBtn.attr("value","Add"),2000);
+					}
+				});
+			});
+		</script>
 	</head>
 	<body>
 		<div id="container">
@@ -95,17 +156,30 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 			<div class="clear"></div>
 			<div style="line-height:20px;">
 				<h2>An extension built by and for people who are sick of Chrome's ugly, useless default page.</h2>
+				<!--
 				<h2 style="color:#eeeeee;text-shadow:0px 0px 4px #000000;">In the next update, there will be controls here to interact more fully with the New Tab page, so don't delete this icon!</h2>
+				-->
 			</div>
-			<!--
+			<div id="error">This is the error div.</div>
+			<div id="success">This is the success div.</div>
 			<div>
 				<a href="#" id="addSiteButton">Add Site to New Tab Page</a>
 			</div>
+			<script type="text/javascript">
+				
+				$(document).ready(function() {
+					for(var i in data.dataLinks.links) {
+						//$("#linkCount").append("<a href=\"" + data.dataLinks.links[i].href + "\">" + data.dataLinks.links[i].name + "</a><br />");
+					}
+				});
+				
+			</script>
 			<div>
 				<h2>Add New Link</h2>
 				<h3>Make sure you copy the entire URL into this box! (ex. http://www.google.com)</h3>
 				<input type="text" id="customLinkInput" /><button id="customLinkButton">Add</button>
 			</div>
+			<!--
 			<div class="clear"></div>
 			<div>
 				<h1>Tab Page Status</h1>
@@ -118,8 +192,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 				<h3>This extension was designed and built by Pierce Moore of Refreshed Web Design. Copyright &copy; 2011 </h3>
 				
 			</div>
+			
+			<span id="screenshots"></span>
+			
+			<div id="linkCount"></div>
 		</div>
-		
 		
    <script>
      var _gaq = _gaq || [];
