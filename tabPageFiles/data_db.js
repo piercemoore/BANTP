@@ -17,7 +17,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
  * @package: Bad Ass New Tab Page
  * @author: Pierce Moore
  */
-var test = "This is a test!";
 
 //Throw the tables in the database into a JSON object for easy access.
 var dbT = {
