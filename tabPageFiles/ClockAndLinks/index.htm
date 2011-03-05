@@ -47,13 +47,12 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 				document.getElementById("date").innerHTML = day;
 			}
 			console.log('initializing...');
-			bg().init();		
 			$(document).ready(function () {
 				updateTime();
 				displayLinks();
 				var clock = window.setInterval(updateTime,1000);
 				//$('a[href^="http://"]').attr({target: "_blank",title: "Opens in a new window"});	
-					
+				alert(bg().sendObj());
 			});
 			
 		</script>

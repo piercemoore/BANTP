@@ -16,209 +16,120 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 <head>
 <script type="text/javascript">
 	
-function init() {
-	// First, a versioning variable for later checking. 
-	var currentVersion = "0.1.2"; // Version 0.1, working version
-	
-	// Let's check if the extension was just installed
-	isFirstInstall(currentVersion);
-	
-	// Once installed, let's build an object of all our important data.
-	var data = parseDatabase();
-	console.log(data);
-	
-	// Now, we set a few handy session variables..
-	var debug = data.dataPrefs.developerMode;
-	
-	// A little awareness for those of us curious about debug state.
-	console.log("Global debug set to " + debug + ".");
-	
-	// Let the developers out there see what we have stored in the data object...
-	if(debug) { console.log(data); } 
-	// Let's check to see if the user has databases set up...
-	//if(!checkDatabases()) { alert("Unable to initialize Bad Ass New Tab Page extension for Google Chrome. Please try reinstalling this extension."); }
-}
-
-//Throw the tables in the database into a JSON object for easy access.
-var dbT = {
-	"fi"	:	"BANTP.install",
-	"crit"	: 	"BANTP.crit",
-	"links"	:	"BANTP.links",
-	"prefs"	:	"BANTP.prefs",
-	"login"	:	"BANTP.login",
-	"urls"	:	"BANTP.urls"
-}
-
-
-var defaultInstallData		= {
-	"version"			:	"0.1.2",
-	"defaults"			:	true,
-	"authenticated"		:	false,
-	"dataEntered"		:	false
-};
-
-var defaultPrefs	= {
-	"developerMode"		:	true
-}
-
-var defaultLinkData = {
-	"linkCount":10,
-	"links": 
-	{ 	   0:
-	    {
-	    	"href": "http://www.facebook.com",
-	    	"name": "facebook",
-	    	"img":	"linkImages/1.png",
-	    	"target": "self",
-	    	"addedFromIcon": 0,
-	    	"addedOn": "02-20-2011 04:14:00",
-	    	"linkId": "ascnoiwejalASDJHAksldasdloij12MNEjdo2d90ddojp1"
-	    }, 1:
-	    {
-	    	"href": "http://www.google.com",
-	    	"name": "google",
-	    	"img":	"linkImages/2.png",
-	    	"target": "self",
-	    	"addedFromIcon": 1,
-	    	"addedOn": "02-20-2011 04:14:00",
-	    	"linkId": "ascnoiwejalASDJHAksldasdloij12assedo2d90ddojp1"
-	    }, 2:
-	    {
-	    	"href": "http://www.gmail.com",
-	    	"name": "gmail",
-	    	"img":	"linkImages/3.png",
-	    	"target": "self",
-	    	"addedFromIcon": 0,
-	    	"addedOn": "02-20-2011 04:14:00",
-	    	"linkId": "ascnoiweasdASDJHAksldasdloij12MNEjdo2d90ddojp1"
-    	}, 3:
-    	{
-    		"href": "http://www.lifehacker.com",
-	    	"name": "lifehacker",
-	    	"img":	"linkImages/3.png",
-	    	"target": "self",
-	    	"addedFromIcon": 0,
-	    	"addedOn": "02-20-2011 04:14:00",
-	    	"linkId": "ascnoiweasdASDJHAksldasdloij12MNEjdo2d90ddojp1"
-    	}, 4:
-    	{
-    		"href": "http://www.gizmodo.com",
-	    	"name": "gizmodo",
-	    	"img":	"linkImages/3.png",
-	    	"target": "self",
-	    	"addedFromIcon": 0,
-	    	"addedOn": "02-20-2011 04:14:00",
-	    	"linkId": "ascnoiweasdASDJHAksldasdloij12MNEjdo2d90ddojp1"
-    	}, 5:
-	    {
-	    	"href": "http://www.newegg.com",
-	    	"name": "newegg",
-	    	"img":	"linkImages/1.png",
-	    	"target": "self",
-	    	"addedFromIcon": 0,
-	    	"addedOn": "02-20-2011 04:14:00",
-	    	"linkId": "ascnoiwejalASDJHAksldasdloij12MNEjdo2d90ddojp1"
-	    }, 6:
-	    {
-	    	"href": "http://www.last.fm",
-	    	"name": "last.fm",
-	    	"img":	"linkImages/2.png",
-	    	"target": "self",
-	    	"addedFromIcon": 1,
-	    	"addedOn": "02-20-2011 04:14:00",
-	    	"linkId": "ascnoiwejalASDJHAksldasdloij12assedo2d90ddojp1"
-	    }, 7:
-	    {
-	    	"href": "https://www.google.com/calendar/render?tab=mc",
-	    	"name": "google calendar",
-	    	"img":	"linkImages/3.png",
-	    	"target": "self",
-	    	"addedFromIcon": 0,
-	    	"addedOn": "02-20-2011 04:14:00",
-	    	"linkId": "ascnoiweasdASDJHAksldasdloij12MNEjdo2d90ddojp1"
-    	}, 8:
-    	{
-    		"href": "http://www.php.net",
-	    	"name": "php.net",
-	    	"img":	"linkImages/3.png",
-	    	"target": "self",
-	    	"addedFromIcon": 0,
-	    	"addedOn": "02-20-2011 04:14:00",
-	    	"linkId": "ascnoiweasdASDJHAksldasdloij12MNEjdo2d90ddojp1"
-    	}, 9:
-    	{
-    		"href": "http://amazon.com",
-	    	"name": "amazon",
-	    	"img":	"linkImages/3.png",
-	    	"target": "self",
-	    	"addedFromIcon": 0,
-	    	"addedOn": "02-20-2011 04:14:00",
-	    	"linkId": "ascnoiweasdASDJHAksldasdloij12MNEjdo2d90ddojp1"
-    	}
+//var data = parseDatabase();
+//var debug = data.dataPrefs.developerMode;
+var debug = true;
+var lsTable = "bantp";
+var defaultData = {
+	"info": {
+		"name": "Bad Ass New Tab Page",
+		"description": "A Google Chrome extension for people tired of Chrome's ugly, useless tab page.",
+		"version": "0.1.2",
+		"homepage": "http://www.refreshedweb.com/projects/newtab/",
+		"github": "http://www.github.com/piercemoore/bantp/",
+		"devName": "Pierce Moore",
+		"devEmail": "Pierce@RefreshedWeb.com"
+	},
+	"prefs": {
+		"developerMode": true
+	},
+	"links": {
+		"linkCount": 10,
+		"links": {
+			0: {
+				"href": "http://www.facebook.com",
+				"name": "facebook"
+			},
+			1: {
+				"href": "http://www.google.com",
+				"name": "google"
+			},
+			2: {
+				"href": "http://www.gmail.com",
+				"name": "gmail"
+			},
+			3: {
+				"href": "http://www.lifehacker.com",
+				"name": "lifehacker"
+			},
+			4: {
+				"href": "http://www.gizmodo.com",
+				"name": "gizmodo"
+			},
+			5: {
+				"href": "http://www.newegg.com",
+				"name": "newegg"
+			},
+			6: {
+				"href": "http://www.last.fm",
+				"name": "last.fm"
+			},
+			7: {
+				"href": "https://www.google.com/calendar/render?tab=mc",
+				"name": "google calendar"
+			},
+			8: {
+				"href": "http://www.php.net",
+				"name": "php.net"
+			},
+			9: {
+				"href": "http://amazon.com",
+				"name": "amazon"
+			}
+		}
 	}
 };
+var firstInstall = isFirstInstall();
+var debug = getDeveloperMode();
+log(defaultData);
+log(JSON.stringify(defaultData));
 
-var defaultLoginData = {
-	"user"			:	null,
-	"pass"			:	null,
-	"authenticated"	:	false
+function log(msg) {
+	if(debug) {
+		console.log(msg);
+	}
 }
 
-var defaultCritData = {
-	"paidUser"		:	false
+function getDeveloperMode() {
+	// Sometime soon I will mess with this, but for now it's just going to be true.
+	return true;
 }
 
-var defaultUrlData = {
-	"updateUrl"		:	"http://www.refreshedweb.com/newtab/update/",
-	"updateFile"	:	"update.xml"
-}
 
 // Now, let's get into some nice, sweet functionality. Do NOT edit below this comment if you do not know what you are doing!
-function accessDatabase(table) {
-	try {
-		var connect = window.localStorage[table];
-		if(connect) return true;
-	} catch(err) {
-		console.log("Table " + table + " unable to be accessed.");
-		return false;
-	}
-}
 
 function addLink(title,url) {
-	var t = dbT.links; // Name of table
+	log("Adding new link: Title- " + title + ", URL- " + url);
+	var t = lsTable; // Name of table
+	log(t);
+	log("Grabbing the link Object...");
 	// Grab the link object really quickly
 	var linkObj = getLinkObj();
+	log(linkObj);
+	log("Grabbing Link List");
 	// Now grab the JSON object for the links themselves
 	var linkList = linkObj.links;
-	console.log(linkObj);
-	console.log(linkList);
+	log(linkList);
+	log("Now we're counting the total number of links.");
 	// Let's count how many links are in the table so far, so we can insert the new link in the last position.
 	var linkCount = countTotalLinks(linkList); // Since this number does not start from 0, we will just use this number as the index for the new link.
-	console.log(linkCount);
+	log(linkCount);
+	log("Setting values for new link..");
 	// Let's set the values for the new link
 	linkList[linkCount] = {"href":url,"name":title};
-	console.log(linkList[linkCount]);
+	log(linkList[linkCount]);
+	log("Updating link count in link object..");
 	// Now, let's update the link count in the Link Object
 	linkObj.linkCount = linkObj.linkCount + 1;
-	console.log(linkList);
-	console.log(linkObj);
+	log(linkList);
+	log(linkObj);
+	log("Now, let's store it in local storage. Fingers crossed!");
 	// Now let's store it in local storage
-	if(storeLinkObj()) {
-		console.log("New link with url " + url + " and title " + title + " successfully stored in local storage.");
+	if(storeLinkObj(linkObj)) {
+		log("New link with url " + url + " and title " + title + " successfully stored in local storage.");
 		return true;
 	} else {
-		console.log("New link with url " + url + " and title " + title + " UNABLE TO BE STORED in local storage.");
-		return false;
-	}
-}
-
-function storeLinkObj(obj) {
-	var t = dbT.links;
-	if(insertData(t,obj)) {
-		console.log("Link object successfully stored. I hope the new tab page updates!");
-		return true;
-	} else {
-		console.log("Link object UNABLE to be stored. Whoops!");
+		log("New link with url " + url + " and title " + title + " UNABLE TO BE STORED in local storage.");
 		return false;
 	}
 }
@@ -232,185 +143,102 @@ function countTotalLinks(obj) {
 	return count;
 }
 
-function buildTables() {
-	// Put all of our tables into an array for easy looping.
-	var tables = new Array("first_install","db_crit","db_prefs","db_links","db_login","db_urls");
-	console.log(tables);
-	var count = 0;
-	for(var t in tables) {
-		console.log('Building table ' + t);
-		if(!setupTable(t)) {
-			console.log("Unable to build table " + t + ".");
-			break;
-		} else {
-			count++;
-			console.log("Table " + t + " built. " + count + " tables built so far.");
-		}
-	}
-	if(count == tables.length) {
-		parseDatabase();
-	}
-}
-
-function setupTable(table) {
-	switch(table) {
-		case "0":
-			var d = JSON.stringify(defaultInstallData);
-			console.log(d);
-			if(insertData(dbT.fi,d)) { return true; }
-			break;
-		case "1":
-			var d = JSON.stringify(defaultCritData);
-			console.log(d);
-			if(insertData(dbT.crit,d)) { return true; }
-			break;
-		case "2":
-			var d = JSON.stringify(defaultPrefs);
-			console.log(d);
-			if(insertData(dbT.prefs,d)) { return true; }
-			break;
-		case "3":
-			var d = JSON.stringify(defaultLinkData);
-			console.log(d);
-			if(insertData(dbT.links,d)) { return true; }
-			break;
-		case "4":
-			var d = JSON.stringify(defaultLoginData);
-			console.log(d);
-			if(insertData(dbT.login,d)) { return true; }
-			break;
-		case "5":
-			var d = JSON.stringify(defaultUrlData);
-			console.log(d);
-			if(insertData(dbT.urls,d)) { return true; }
-			break;
-		default:
-			console.log("Something is amiss.. No cases reported.");
-	}
-}
-
-function insertData(t,d) {
-	try {
-		if(window.localStorage[t] = d) {
-			return true;
-		}
-	} catch(err) {
-		console.log("Data insertion into table " + t + " failed. Data to be inserted: " + d);
+function storeLinkObj(linkObj) {
+	var db = parseDatabase();
+	db.links = linkObj;
+	log("New Full Object to be stored:");
+	log(db);
+	if(storeObj(db)) {
+		log("StoreLinkObj: Link object successfully updated in database!");
+		return true;
+	} else {
+		log("Unknown failure while updating links in database.");
 		return false;
 	}
 }
 
-function checkDatabases() {
-	for(var t in tables) {
-		try {
-			if(!accessDatabase(t)) {
-				if(setupTable(t)) {
-					return true;
-				} else {
-					console.log("Unable to setup table " + t + " in local storage. [#1]");
-				}
-			}
-		} catch(err) {
-			console.log("Unable to setup table " + t + " in local storage. [#2]");
-			return false;
-		}
+function storeObj(obj) {
+	log("Storing the following Link Object into local storage into table " + lsTable + ".");
+	log(obj);
+	var stringy = JSON.stringify(obj);
+	//var thing = "Test bullshit";
+	log("The database will receive this information: " + stringy);
+	window.localStorage[lsTable] = stringy;
+	if(true) {
+		log("Link object successfully stored. I hope the new tab page updates!");
+		return true;
+	} else {
+		log("Link object UNABLE to be stored. Whoops!");
+		return false;
 	}
 }
 
 function getLinkObj() {
-	var linkData = window.localStorage[dbT.links];
-	console.log("GetLinkObj: LinkData: ");
-	console.log(linkData);
-	var linkObj = JSON.parse(linkData);
-	console.log("GetLinkObj: LinkObj: ");
-	console.log(linkObj);
-	return JSON.parse(window.localStorage[dbT.links]);
+	log("Grabbing database object...");
+	var dbObj = parseDatabase();
+	log(dbObj);
+	var linkData = dbObj.links;
+	log("GetLinkObj: LinkData: ");
+	log(linkData);
+	return linkData;
+}
+
+function sendObj() {
+	return JSON.parse(defaultData);
 }
 
 function parseDatabase() {
+	log("Parsing database...");
 	// Grab everything from the local storage database and parse it
-	var data = {
-		"dataInstall"	: JSON.parse(window.localStorage[dbT.fi]),
-		"dataCrit"		: JSON.parse(window.localStorage[dbT.crit]),
-		"dataLinks"		: JSON.parse(window.localStorage[dbT.links]),
-		"dataPrefs"		: JSON.parse(window.localStorage[dbT.prefs]),
-		"dataLogin"		: JSON.parse(window.localStorage[dbT.login]),
-		"dataUrls"		: JSON.parse(window.localStorage[dbT.urls])
-	};
-	return data;
+	var db = JSON.parse(window.localStorage[lsTable]);
+	log(db);
+	return db;
 }
 
-function isFirstInstall() {
-	console.log("Checking for first install...");
-	console.log(dbT);
-	if(!window.localStorage[dbT.fi]) {
-		console.log("First install, building tables...");
-		if(buildTables()) {
-			console.log("Tables built, parsing database...");
-			if(parseDatabase()) {
-				console.log("Database parsed...");
-			} else {
-				console.log("There was an unknown failure while attempting to parse the database.");
-			}
-		}
+function processInstall() {
+	log("Processing installation...");
+	if(storeObj(defaultData)) {
+		log("Table built!");
 		return true;
 	} else {
-		console.log("Not first install.");
-		parseDatabase();
-		false;
-	}
-}
-
-function showAddFb() {
-	chrome.tabs.getSelected(null, function(tab) {
-		// Build the HTML markup to be inserted into the facebox.
-		var html = "<h1>Edit Link Details</h1><h3>Title</h3><input type=\"text\" id=\"customLinkTitle\" value=\"" + tab.title + "\" /><h3>Full URL</h3><input type=\"text\" id=\"customLinkUrl\" value=\"" + tab.url + "\"  /><button id=\"customLinkFbSubmit\">Add</button>";
-		jQuery.facebox(html);
-	});
-}
-
-function doAddLink(title,url)
-{
-	//alert('Add new site to tab page working!');
-	/*
-	chrome.tabs.captureVisibleTab(null, function(dataUrl) {
-	content = document.getElementById('screenshots');
-	var image = document.createElement('img');
-	image.setAttribute('src', dataUrl);
-	content.appendChild(image);});
-	*/
-	if(addLink(title,url)) {
-		console.log(title + " with url " + url + " successfully added to new tab page.");
-		return true;
-	} else {
-		console.log(title + " with url " + url + " UNABLE to be added to new tab page.");
+		log("Unable to build table. Please try reinstalling this extension.");
 		return false;
 	}
 }
 
+function isFirstInstall() {
+	log("Checking for first install...");
+	if(!window.localStorage[lsTable]) {
+		log("First install, building table...");
+		processInstall();
+	} else {
+		log("Not first install.");
+		return false;
+	}
+}
 function buildLinks() {
 	var data = parseDatabase();
-	var debug = data.dataLinks.developerMode;
-	if(debug) { console.log('Working on links now...'); }
+	var debug = getDeveloperMode();
+	log('Working on links now...');
 	var linkOutput = "";
-	var links = data.dataLinks.links;
+	var links = data.links.links;
 	if(debug) {
-		$.each(data.dataLinks.links,function(key,val) {
-			console.log("Key: " + key + ", Val: " + val);
-		});
+		for(var i in links) {
+			log("Link #" + i + ": Name-" + links[i].name + ", href-" + links[i].href + ".");
+		}
 	}	
 	if(links) {
-		if(debug) { console.log("There are links in the database for parsing. Starting loop now."); }
+		log("There are links in the database for parsing. Starting loop now.");
 		for(var link in links) {
 			if(links.hasOwnProperty(link)) {
-				var currentLink = "<a style=\"background:url('linkImages/" + links[link].img + ") no-repeat top;\" href=\"" + links[link].href +"\"><h2>" + links[link].name + "</h2></a>";
+				var currentLink = "<a href=\"" + links[link].href +"\"><h2>" + links[link].name + "</h2></a>";
 				linkOutput += currentLink;
-				console.log("Link " + link + ": " + currentLink);
+				log("Link " + link + ": " + currentLink);
 			}
 		}
 		return linkOutput;
 	} else {
-		console.log("No links were found. Something is screwy.");
+		log("No links were found. Something is screwy.");
 	}
 }
 
