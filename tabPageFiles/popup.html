@@ -24,7 +24,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 			body {
 				/*background:url("../img/popup.png") no-repeat top left #003366;*/
 				background:#dddddd;
-				width:400px;
+				width:300px;
 			}
 			h1 {
 				color:#eeeeee;
@@ -58,24 +58,27 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 				clear:both;
 			}
 			#addSiteButton {
-				width: 278px;
-				height: 70px;
+				width: 253px;
+				height: 62px;
 				display:block;
 				margin:auto;
 				background: url('../img/addSite.png') no-repeat top;
 				text-indent:-9999em;
 			}
 			#addSiteButton:hover {
-				background-position:0 -70px;
+				background-position:0 -62px;
 			}
 			#addSiteButton:active {
-				background-position:0 -140px;
+				background-position:0 -123px;
 			}
 			#customLinkInput,input[type=text] {
 				width:80%;
 				padding:3px;
 				font-size:20px;
 				font-family:"Segoe UI", sans-serif;
+			}
+			#customLinkTitle,#customLinkUrl {
+				width:97%;
 			}
 			button,#customLinkFbSubmit {
 				padding:3px;
@@ -103,6 +106,9 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 				border:1px #73A860 solid;
 				background:#DDEDD8;
 			}
+			#facebox {
+				margin-left:36px;
+			}
 		</style>
 		
 			
@@ -113,12 +119,25 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 		<script type="text/javascript" src="facebox/facebox.js"></script>
 		
 		<script type="text/javascript">			
-			function showAddFb() {
-				chrome.tabs.getSelected(null, function(tab) {
+			function showAddFb(title,url) {
+				if (url == null) {
+					chrome.tabs.getSelected(null, function(tab){
+						console.log("Title and url: " + title + ", " + url);
+						// Build the HTML markup to be inserted into the facebox.
+						var html = "<h1>Edit Link Details</h1><h3>Title</h3><input type=\"text\" id=\"customLinkTitle\" value=\"" + tab.title + "\" /><h3>Full URL</h3><input type=\"text\" id=\"customLinkUrl\" value=\"" + tab.url + "\"  /><button id=\"customLinkFbSubmit\">Add</button>";
+						$.facebox(html);
+					});
+				} else {
+					if(title == null) {
+						title = "";
+					}
+					if(url == null) {
+						url = "";
+					}
 					// Build the HTML markup to be inserted into the facebox.
-					var html = "<h1>Edit Link Details</h1><h3>Title</h3><input type=\"text\" id=\"customLinkTitle\" value=\"" + tab.title + "\" /><h3>Full URL</h3><input type=\"text\" id=\"customLinkUrl\" value=\"" + tab.url + "\"  /><button id=\"customLinkFbSubmit\">Add</button>";
+					var html = "<h1>Edit Link Details</h1><h3>Title</h3><input type=\"text\" id=\"customLinkTitle\" value=\"" + title + "\" /><h3>Full URL</h3><input type=\"text\" id=\"customLinkUrl\" value=\"" + url + "\"  /><button id=\"customLinkFbSubmit\">Add</button>";
 					$.facebox(html);
-				});
+				}
 			}
 			
 			function bg() {
@@ -138,9 +157,37 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 				}
 			}
 			
+			function expandPopup() {
+				var con = $("#container");
+				var body = $(document.body);
+				con.animate({
+					height: '215px'
+				},500);
+				body.animate({
+					width: '375px'
+				},500);
+				//$("#facebox").css("marginLeft","36px");
+			}
+			function shrinkPopup() {
+				var con = $("#container");
+				var body = $(document.body);
+				con.animate({
+					height: '182px'
+				},500);
+				body.animate({
+					width: '300px'
+				},500);
+			}
+			
 			var data = bg().parseDatabase();
 		
 			$(document).ready(function() {
+				$(document).bind('close.facebox',function() {
+					shrinkPopup();
+				});
+				$(document).bind('beforeReveal.facebox',function() {
+					expandPopup();
+				});
 				$("#addSiteButton").click(function() {
 					console.log("Add site button clicked. Processing...");
 					showAddFb();
@@ -148,7 +195,9 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 				});
 				
 				$("#customLinkButton").click(function() {
-					//
+					var link = $("#customLinkInput").val();
+					// bg().trackCustom(); // Google analytics tracking for custom link creation
+					showAddFb(null,link);
 				});
 				$("#customLinkFbSubmit").live('click',function() {
 					var subBtn = $("#customLinkFbSubmit");
@@ -179,27 +228,12 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 	</head>
 	<body>
 		<div id="container">
-			<div id="logo">
-				<a href="#" target="_blank" style="vertical-align:middle;">
-					<img src="../img/icon_48.png" alt="Extension Home Page" title="Extension Home Page" />
-				</a>
-			</div>
-			<div id="name">
-				<h1>Bad Ass New Tab Page</h1>
-			</div>	
-			
-			<div class="clear"></div>
-			<div style="line-height:20px;">
-				<h2>An extension built by and for people who are sick of Chrome's ugly, useless default page.</h2>
-				<!--
-				<h2 style="color:#eeeeee;text-shadow:0px 0px 4px #000000;">In the next update, there will be controls here to interact more fully with the New Tab page, so don't delete this icon!</h2>
-				-->
-			</div>
-			<div id="error">This is the error div.</div>
-			<div id="success">This is the success div.</div>
 			<div>
 				<a href="#" id="addSiteButton">Add Site to New Tab Page</a>
 			</div>
+			<div class="clear"></div>
+			<div id="error">This is the error div.</div>
+			<div id="success">This is the success div.</div>
 			<script type="text/javascript">
 				
 				$(document).ready(function() {
