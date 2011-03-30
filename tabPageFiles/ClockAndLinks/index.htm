@@ -19,6 +19,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 		<title>Get Started :: Pierce Moore</title>
 		<link rel="stylesheet" href="css/style.css" type="text/css" />
 		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/jqueryUI.js"></script>
 		<script type="text/javascript">
 			function bg() {
 				return chrome.extension.getBackgroundPage();
@@ -52,7 +53,49 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 				displayLinks();
 				var clock = window.setInterval(updateTime,1000);
 				//$('a[href^="http://"]').attr({target: "_blank",title: "Opens in a new window"});	
-				alert(bg().sendObj());
+				//alert(bg().sendObj());
+				
+				$("#menuBar a").hover(function() {
+					$(this).animate({
+						backgroundColor: "#cccccc",
+						color: "#333333"
+					},"fast")
+				},function() {
+					$(this).animate({
+						backgroundColor: "#666666;",
+						color: "#eeeeee"
+					},"fast")
+				});
+				$("#menuBar_editLinks").toggle(function() {
+					$("#links a").each(function() {
+						$(this).prepend('<a href="#" class="buttonDeleteLink" style="display:none;"><img src="img/cancel_16.png" alt="Delete this link" title="Delete this link" />Delete This Link</a>');
+						$(".buttonDeleteLink").each(function() {
+							$(this).fadeIn("slow");
+						});
+					})
+				},function() {
+					$(".buttonDeleteLink").each(function() {
+						$(this).fadeOut("fast",function() {
+							$(this).remove();
+						});
+					});
+				});
+				$(".buttonDeleteLink").live('click',function() {
+					var link = $(this).next().text();
+					var id = $(this).parent().attr("id");
+					if (confirm("Are you sure that you want to delete '" + link + "' from your new tab page?")) {
+						//alert(link);
+						console.log('Removing...');
+						if(bg().removeLink(id)) {
+							$(this).parent().fadeOut('slow',function() {
+								$(this).remove();
+							});
+							$("#success").html("Link for '" + link + "' successfully removed from new tab page.").fadeIn('fast');
+						} else {
+							$("#error").html("Unable to delete link. Please try again.").fadeIn('fast');
+						}
+					}
+				});
 			});
 			
 		</script>
@@ -73,6 +116,16 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 		<div id="dateBox">
 			<h1 id="date"></h1>
 		</div> 	
+		
+		<div id="error" style="display:none;">Error!</div>
+		<div id="success" style="display:none;">Success!</div>
+		
+		<div id="menuBar" class="round">
+			<a href="#" class="round" id="menuBar_editLinks">Edit Links</a>
+			<a href="#" class="round" id="menuBar_optionsPage">Configure Options</a>
+			<!--<a href="#" class="round" id="menuBar_groupManage">Manage Groups</a>-->
+			<a href="#" class="round" id="menuBar_donate">Donate!</a>
+		</div>
 		<div id="links">
 			<span id="linkStart"></span>
 			
@@ -80,9 +133,9 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 			<!--
 			<a href="steam:"><h2>Open Steam</h2></a>
 			<a href="itunes:///"><h2>Open iTunes</h2></a>
-			-->
 			<a href="http://www.refreshedweb.com/projects/newtab/"><h2>BANTP Home Page</h2></a>
 			<a href="mailto://pierce@refreshedweb.com"><h2>Email the Developer</h2></a>
+			-->
 		</div>
 		
 		<script type="text/javascript">

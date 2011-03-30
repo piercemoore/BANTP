@@ -232,7 +232,7 @@ function buildLinks() {
 		log("There are links in the database for parsing. Starting loop now.");
 		for(var link in links) {
 			if(links.hasOwnProperty(link)) {
-				var currentLink = "<a href=\"" + links[link].href +"\"><h2>" + links[link].name + "</h2></a>";
+				var currentLink = "<a href=\"" + links[link].href +"\" class=\"link\" id=\"" + link + "\"><h2>" + links[link].name + "</h2></a>";
 				linkOutput += currentLink;
 				log("Link " + link + ": " + currentLink);
 			}
@@ -240,6 +240,23 @@ function buildLinks() {
 		return linkOutput;
 	} else {
 		log("No links were found. Something is screwy.");
+	}
+}
+
+function removeLink(id) {
+	var data = parseDatabase();
+	var links = data.links.links;
+	console.log(links);
+	//links.splice(id,1);
+	console.log(id + " -- " + data.links.links[id]);
+	delete data.links.links[id];
+	console.log(data.links.links);
+	if(storeObj(data)) {
+		console.log('Link #' + id + " removed!");
+		return true;
+	} else {
+		console.log('Unable to remove link #' + id);
+		return false;
 	}
 }
 
