@@ -99,30 +99,46 @@ function getDeveloperMode() {
 // Now, let's get into some nice, sweet functionality. Do NOT edit below this comment if you do not know what you are doing!
 
 function addLink(title,url) {
-	log("Adding new link: Title- " + title + ", URL- " + url);
+	//log("Adding new link: Title- " + title + ", URL- " + url);
 	var t = lsTable; // Name of table
-	log(t);
-	log("Grabbing the link Object...");
+	//log(t);
+	//log("Grabbing the link Object...");
 	// Grab the link object really quickly
 	var linkObj = getLinkObj();
-	log(linkObj);
-	log("Grabbing Link List");
+	//log(linkObj);
+	//log("Grabbing Link List");
 	// Now grab the JSON object for the links themselves
 	var linkList = linkObj.links;
-	log(linkList);
-	log("Now we're counting the total number of links.");
+	//log(linkList);
+	//log("Now we're counting the total number of links.");
 	// Let's count how many links are in the table so far, so we can insert the new link in the last position.
 	var linkCount = countTotalLinks(linkList); // Since this number does not start from 0, we will just use this number as the index for the new link.
-	log(linkCount);
-	log("Setting values for new link..");
+	//log("Here's how many links we're working with:");
+	//log(linkCount);
+	log("Finding the last link ID");
+	// We have to find out what the ID of the last link is so that we don't overwrite any old links. 
+	var lastLinkId;
+	log("Starting the loop to get the last index item...");
+	for (var i in linkList) {
+		//log("i = ");
+		//log(i);
+    	//log("Last item found: ");
+    	//log(linkList[i]);
+    	var item = i;
+    	//log("Item = ");
+    	//log(item);
+	}
+	var newLinkId = Number(item) + Number(1);
+	//log(newLinkId);
+	log("Setting values for new link #" + newLinkId);
 	// Let's set the values for the new link
-	linkList[linkCount] = {"href":url,"name":title};
-	log(linkList[linkCount]);
+	linkList[newLinkId] = {"href":url,"name":title};
+	log(linkList[newLinkId]);
 	log("Updating link count in link object..");
 	// Now, let's update the link count in the Link Object
-	linkObj.linkCount = linkObj.linkCount + 1;
-	log(linkList);
-	log(linkObj);
+	linkObj.linkCount = linkCount + 1;
+	//log(linkList);
+	//log(linkObj);
 	log("Now, let's store it in local storage. Fingers crossed!");
 	// Now let's store it in local storage
 	if(storeLinkObj(linkObj)) {
