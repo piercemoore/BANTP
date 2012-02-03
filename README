@@ -4,7 +4,7 @@ Right now, in version 0.1.2, BANTP does one thing: changes your default new tab 
 
 What you can expect from future versions: (yep, roadmap time!)
 
-0.2: Ability to create, update, and remove your own custom links, as well as add the current page to the list of links on the new tab page.
+COMPLETED! 0.2: Ability to create, update, and remove your own custom links, as well as add the current page to the list of links on the new tab page.
 
 Note: Minor version 0.2 will be the first official version released to the public in the Google Chrome App Gallery. At this time, version 0.1.2 has been released to a small group of testers. Please email me at piercemoore@gmail.com if you would like to participate in testing.
 
@@ -24,7 +24,7 @@ Note: Minor version 0.2 will be the first official version released to the publi
 
 1.0: The non-beta, 1.0 official release of this extension will come along with a newly released web service that will allow you to manage your links in a web interface as well as track version history and enable undo/redo for any mistakes you may have made accidentally deleting a link from your tab page. 
 
-This project's home can be found at http://www.refreshedweb.com/projects/newtab/
+This project's home can be found at http://www.piercemoore.com/projects/bantp/
 
 Get excited, people. Convenience and raw awesomeness are on the way :)
 
