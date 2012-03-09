@@ -15,7 +15,7 @@
 	"background_page": "tabPageFiles/bg.html",
 	"options_page": "tabPageFiles/options.html",
 	"chrome_url_overrides": {
-		"newtab": "tabPageFiles/ClockAndLinks/index.htm"
+		"newtab": "tabPageFiles/index.html"
 	},
 	"permissions": [
 		"tabs",

@@ -11,20 +11,15 @@ Neither the names of Pierce Moore, RefreshedWeb.com, NerdTraining.info,  nor the
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 -->
-
-<html>
-<head>
 <script type="text/javascript">
 	
-//var data = parseDatabase();
-//var debug = data.dataPrefs.developerMode;
 var debug = true;
 var lsTable = "bantp";
 var defaultData = {
 	"info": {
 		"name": "Bad Ass New Tab Page",
 		"description": "A Google Chrome extension for people tired of Chrome's ugly, useless tab page.",
-		"version": "0.1.2",
+		"version": "0.3.0",
 		"homepage": "http://www.refreshedweb.com/projects/newtab/",
 		"github": "http://www.github.com/piercemoore/bantp/",
 		"devName": "Pierce Moore",
@@ -248,7 +243,7 @@ function buildLinks() {
 		log("There are links in the database for parsing. Starting loop now.");
 		for(var link in links) {
 			if(links.hasOwnProperty(link)) {
-				var currentLink = "<a href=\"" + links[link].href +"\" class=\"link\" id=\"" + link + "\"><h2>" + links[link].name + "</h2></a>";
+				var currentLink = "<li><div class=\"btnDelete\"><a href=\"#\" class=\"deleteLink\" name=\"" + link + "\"><img src=\"delete.png\" title=\"Delete This Link\" /></a></div><a href=\"#\"class=\"genbutton\"><span class=\"gentext\">" + links[link].name + "</span></a></li>";
 				linkOutput += currentLink;
 				log("Link " + link + ": " + currentLink);
 			}
@@ -286,10 +281,6 @@ function trackAddBox() {
     _gaq.push(['_trackEvent', 'Site added to new tab page using the text input box in the popup.']);
 };
 
-</script>
-</head>
-<body>
-<script>
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-21684633-1']);
 _gaq.push(['_trackPageview']);
@@ -300,5 +291,3 @@ ga.src = 'https://ssl.google-analytics.com/ga.js';
 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
 </script>
-</body>
-</html>

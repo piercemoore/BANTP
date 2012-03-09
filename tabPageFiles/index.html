@@ -1,0 +1,152 @@
+<html>
+	<head>
+		<title>BANTP Mockup</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.8.18.custom.css" />
+		<script src="js/jquery-1.7.1.min.js" type="text/javascript"></script>
+		<script src="js/jquery-ui-1.8.18.custom.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="facebox/facebox.js"></script>
+		<script type="text/javascript">
+
+		const bg = chrome.extension.getBackgroundPage();
+
+			function bg() {
+				console.log(chrome.extension.getBackgroundPage());
+				return chrome.extension.getBackgroundPage();
+			}
+			
+			function displayLinks() {
+				console.log('displaying links..');
+				console.log( bg );
+				var linkOutput = bg.buildLinks();
+				console.log(linkOutput);
+				$(linkOutput).appendTo("#linkStart");
+			}	
+			function updateTime() {
+				var today = new Date();
+				var hour = today.getHours();
+				var min = today.getMinutes();
+				var sec = today.getSeconds();
+				var ampm = '';
+				if( hour < 12) {
+					ampm = 'a';
+				} else if( hour >= 12 ) {
+					ampm = 'p';
+				}
+				if( hour < 10) {
+					hour = "0" + hour;
+				}
+				if( min < 10) {
+					min = "0" + min;
+				}
+				if(sec < 10) {
+					sec = "0" + sec;
+				}
+				document.getElementById("time").innerHTML = hour + ":" + min + ":" + sec + " " + ampm;
+				var day = today.toDateString();
+				document.getElementById("date").innerHTML = day;
+			}
+			console.log('initializing...');
+			$(document).ready(function () {
+				updateTime();
+				displayLinks();
+				var clock = window.setInterval(updateTime,1000);
+				
+				$("#menuBar_donate").click(function() {
+					jQuery.facebox({ div: '#donatePopup' });
+				});
+				
+				$("#menuBar_optionsPage").click(function() {
+					chrome.tabs.create({
+						url:	"options.html"
+					})
+				});
+				
+				$("#menuBar a").hover(function() {
+					$(this).animate({
+						backgroundColor: "#cccccc",
+						color: "#333333"
+					},"fast")
+				},function() {
+					$(this).animate({
+						backgroundColor: "#666666;",
+						color: "#eeeeee"
+					},"fast")
+				});
+				$(".buttonDeleteLink").live('click',function() {
+					var link = $(this).next().text();
+					var id = $(this).parent().attr("id");
+					if (confirm("Are you sure that you want to delete '" + link + "' from your new tab page?")) {
+						//alert(link);
+						console.log('Removing...');
+						if(bg().removeLink(id)) {
+							$(this).parent().fadeOut('slow',function() {
+								$(this).remove();
+							});
+							$("#success").html("Link for '" + link + "' successfully removed from new tab page.").fadeIn('fast');
+						} else {
+							$("#error").html("Unable to delete link. Please try again.").fadeIn('fast');
+						}
+					}
+				});
+
+				var w = $(document).width();
+				//$("#links").css("width",w - 500);
+				
+				$("#btn_linkedit").toggle(function() {
+					$(".btnDelete").show("slide",{direction: "right"}, 1000);
+					$("#sortable").sortable({disabled : false});
+					$(this).find('span').text("Done Editing");
+				},function() {
+					$(".btnDelete").hide("slide",{direction: "right"}, 1000);
+					$("#sortable").sortable({disabled : true});
+					$(this).find('span').text("Edit Links");
+				});
+			});
+			
+		</script>
+	</head>
+	
+	<body>
+
+		<div id="clock">
+			<div id="timeBox">
+				<h1 class="gentext" id="time" style="letter-spacing: -8px;width: 400px;">02:27:35 pm</h1>
+			</div>
+			<div id="dateBox">
+				<h1 class="gentext" id="date">Tues<br />Mar 06<br />2012</h1>
+			</div>
+		</div>
+		
+		<div id="links">
+			<div id="bigbar">
+				<a href="#" id="btn_linkedit"><span class="gentext">Edit Links</span></a>
+				<a href="#"><span class="gentext">Options</span></a>
+				<a href="#" id="menuBar_donate"><span class="gentext">Donate</span></a>
+				<div class="clear"></div>
+			</div>
+
+			<div class="clear"></div>
+			<ul id="linkStart">
+				<!--<span id="linkStart" style="display:none;"></span> -->
+			</ul>
+			
+		</div>
+		
+		<div id="error" style="display:none;">Error!</div>
+		<div id="success" style="display:none;">Success!</div>
+		
+		<div id="donatePopup" style="display:none;">
+			
+			Thank you for donating! I will enjoy this beer to the fullest extent allowable by law.<br /><br />
+			
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+				<input type="hidden" name="cmd" value="_s-xclick">
+				<input type="hidden" name="hosted_button_id" value="83RSHMQWVRFFS">
+				<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+				<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+			</form>
+
+		</div>
+	</body>
+</html>
