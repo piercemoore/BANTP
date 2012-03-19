@@ -77,7 +77,7 @@
 					color: "#eeeeee"
 				},"fast")
 			});
-			$(".buttonDeleteLink").live('click',function() {
+			$("a.deleteLink").live('click',function() {
 				var link = $(this).next().text();
 				var id = $(this).parent().attr("id");
 				if (confirm("Are you sure that you want to delete '" + link + "' from your new tab page?")) {

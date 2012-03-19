@@ -145,14 +145,6 @@ function getDeveloperMode() {
 	// Sometime soon I will mess with this, but for now it's just going to be true.
 	return false;
 }
-
-function sortLinks( mode , obj ) {
-	if( mode == "desc" ) {
-
-	}
-}
-
-
 // Now, let's get into some nice, sweet functionality. Do NOT edit below this comment if you do not know what you are doing!
 
 function addLink(title,url) {
@@ -279,6 +271,12 @@ function processInstall() {
 	}
 }
 
+function processStorageUpdate( data ) {
+	log("Processing storage update to make it compatible with next version.");
+	//if()
+	console.log("MAKE SURE YOU UPDATE THIS EXTENSION SO THAT IT DOESN'T BREAK PREVIOUS INSTALLATIONS!! THAT WOULD BE BAD MMMKAY!!!");
+}
+
 function isFirstInstall() {
 	log("Checking for first install...");
 	if(!window.localStorage[lsTable]) {
@@ -292,24 +290,48 @@ function isFirstInstall() {
 
 function buildLinks() {
 	var data = parseDatabase();
+
+	processStorageUpdate( data );
+
 	//var debug = getDeveloperMode();
 	var debug = true;
 	log('Working on links now...');
 	var linkOutput = "";
 	var links = data.links.links;
 	if(debug) {
-		for(var i in links) {
-			console.log("Link #" + i + ": Name-" + links[i].name + ", href-" + links[i].href + ".");
+
+		for(var link in links) {
+			//console.log("Link #" + i + ": Name-" + links[link].name + ", href-" + links[link].href + ".");
 		}
 	}	
 	if(links) {
 		log("There are links in the database for parsing. Starting loop now.");
-		for(link in links) {
-			if(links.hasOwnProperty(link)) {
-				var currentLink = "<li><div class=\"btnDelete\"><a href=\"#\" class=\"deleteLink\" name=\"" + link + "\"><img src=\"delete.png\" title=\"Delete This Link\" /></a><span class=\"gentext\">Delete</span></div><a href=\"" + links[link].href + "\" class=\"genbutton\"><span class=\"gentext\">" + links[link].name + "</span></a><div class=\"clear\"></div></li>";
-				linkOutput += currentLink;
-			}
+
+		var output = {};
+		var linkOutput = "";
+		var count = 0;
+
+		for( link in links ) {
+			count++;
+
+			//console.log("This is the individual link object: ");
+			//console.log(links[link]);
+			var currentLink = "<li><div class=\"btnDelete\"><a href=\"#\" class=\"deleteLink\" name=\"" + link + "\"><img src=\"delete.png\" title=\"Delete This Link\" /><span class=\"gentext\">Delete</span></a></div><a href=\"" + links[link].href + "\" class=\"genbutton\"><span class=\"gentext\">" + links[link].name + "</span></a><div class=\"clear\"></div></li>";
+
+			var order = links[link].order;
+
+			output[order] = currentLink;
+
+			//console.log("This is the text that will be appended to the list.");
+			//console.log(output[order]);
 		}
+
+		console.log(output);
+		console.log(count + " items in output.");
+		for( i = 16 ; i > 0 ; i-- ) {
+			linkOutput += output[i];
+		}
+
 		return linkOutput;
 	} else {
 		log("No links were found. Something is screwy.");
