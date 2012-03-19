@@ -13,7 +13,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 -->
 <script type="text/javascript">
 	
-var debug = false;
+var debug = true;
 var lsTable = "bantp";
 var defaultData = {
 	"info": {
@@ -126,18 +126,123 @@ var defaultData = {
 				"href": "http://spotify.com",
 				"name": "spotify",
 				"order" : 16
+			},
+			16: {
+				"id"  : 16,
+				"href": "http://www.piercemoore.com",
+				"name": "Developer's Website",
+				"order" : 17
+			}
+		}
+	}
+};
+var OldData = {
+	"info": {
+		"name": "Bad Ass New Tab Page",
+		"description": "A Google Chrome extension for people tired of Chrome's ugly, useless tab page.",
+		"version": "0.2.0",
+		"homepage": "http://www.refreshedweb.com/projects/newtab/",
+		"github": "http://www.github.com/piercemoore/bantp/",
+		"devName": "Pierce Moore",
+		"devEmail": "Pierce@RefreshedWeb.com"
+	},
+	"prefs": {
+		"developerMode": true
+	},
+	"links": {
+		"linkCount": 10,
+		"links": {
+			0: {
+				"id"  : 0,
+				"href": "http://www.facebook.com",
+				"name": "facebook"
+			},
+			1: {
+				"id"  : 1,
+				"href": "http://www.google.com",
+				"name": "google"
+			},
+			2: {
+				"id"  : 2,
+				"href": "http://www.gmail.com",
+				"name": "gmail"
+			},
+			3: {
+				"id"  : 3,
+				"href": "http://www.lifehacker.com",
+				"name": "lifehacker"
+			},
+			4: {
+				"id"  : 4,
+				"href": "http://www.gizmodo.com",
+				"name": "gizmodo"
+			},
+			5: {
+				"id"  : 5,
+				"href": "http://www.newegg.com",
+				"name": "newegg"
+			},
+			6: {
+				"id"  : 6,
+				"href": "http://www.last.fm",
+				"name": "last.fm"
+			},
+			7: {
+				"id"  : 7,
+				"href": "https://www.google.com/calendar/render?tab=mc",
+				"name": "google calendar"
+			},
+			8: {
+				"id"  : 8,
+				"href": "http://www.paypal.com",
+				"name": "paypal"
+			},
+			9: {
+				"id"  : 9,
+				"href": "http://amazon.com",
+				"name": "amazon"
+			},
+			10: {
+				"id"  : 10,
+				"href": "http://www.beatport.com",
+				"name": "beatport"
+			},
+			11: {
+				"id"  : 11,
+				"href": "http://www.nytimes.com/",
+				"name": "the new york times"
+			},
+			12: {
+				"id"  : 12,
+				"href": "http://netflix.com",
+				"name": "netflix"
+			},
+			13: {
+				"id"  : 13,
+				"href": "http://hulu.com",
+				"name": "hulu"
+			},
+			14: {
+				"id"  : 14,
+				"href": "http://tusplus.com",
+				"name": "tuts+"
+			},
+			15: {
+				"id"  : 15,
+				"href": "http://spotify.com",
+				"name": "spotify"
 			}
 		}
 	}
 };
 var firstInstall = isFirstInstall();
 var debug = getDeveloperMode();
-log(defaultData);
-log(JSON.stringify(defaultData));
+log(OldData);
+log(JSON.stringify(OldData));
 
 function log(msg) {
-	if( debug == true ) {
-		//console.log(msg);
+	if( debug ) {
+		console.log(msg);
 	}
 }
 
@@ -147,28 +252,42 @@ function getDeveloperMode() {
 }
 // Now, let's get into some nice, sweet functionality. Do NOT edit below this comment if you do not know what you are doing!
 
-function addLink(title,url) {
-	//log("Adding new link: Title- " + title + ", URL- " + url);
-	var t = lsTable; // Name of table
-	//log(t);
-	//log("Grabbing the link Object...");
+chrome.extension.onRequest.addListener( function( request , sender , sendResponse ) {
+	console.log("Request incoming. Parsing and executing now.");
+	if( request.action == 'addLink' ) {
+		console.log("AddLink functionality called.");
+		if( addLink( request.title , request.url ) ) {
+			console.log("Link added. Sending success message.");
+			sendResponse({ success : true });
+		} else {
+			console.log("Link NOT added. Sending failure message.");
+			sendResponse({ success : false });
+		}
+	} else if ( request.action == 'log' ) {
+		console.log( request.msg );
+	}
+});
+
+function addLink( title,url ) {
+	log("Adding new link: Title- " + title + ", URL- " + url);
+
 	// Grab the link object really quickly
 	var linkObj = getLinkObj();
-	//log(linkObj);
-	//log("Grabbing Link List");
+
 	// Now grab the JSON object for the links themselves
 	var linkList = linkObj.links;
-	//log(linkList);
-	//log("Now we're counting the total number of links.");
+
+	log("Now we're counting the total number of links.");
 	// Let's count how many links are in the table so far, so we can insert the new link in the last position.
 	var linkCount = countTotalLinks(linkList); // Since this number does not start from 0, we will just use this number as the index for the new link.
-	//log("Here's how many links we're working with:");
-	//log(linkCount);
+	log("Here's how many links we're working with:" + linkCount);
+
 	log("Finding the last link ID");
 	// We have to find out what the ID of the last link is so that we don't overwrite any old links. 
 	var lastLinkId;
 	log("Starting the loop to get the last index item...");
 	for (var i in linkList) {
+		console.log(linkList[i]);
 		//log("i = ");
 		//log(i);
     	//log("Last item found: ");
@@ -190,6 +309,7 @@ function addLink(title,url) {
 	//log(linkObj);
 	log("Now, let's store it in local storage. Fingers crossed!");
 	// Now let's store it in local storage
+	/*
 	if(storeLinkObj(linkObj)) {
 		log("New link with url " + url + " and title " + title + " successfully stored in local storage.");
 		return true;
@@ -197,6 +317,9 @@ function addLink(title,url) {
 		log("New link with url " + url + " and title " + title + " UNABLE TO BE STORED in local storage.");
 		return false;
 	}
+	*/
+
+	return true;
 }
 
 function countTotalLinks(obj) {
@@ -262,7 +385,7 @@ function parseDatabase() {
 
 function processInstall() {
 	log("Processing installation...");
-	if(storeObj(defaultData)) {
+	if(storeObj(OldData)) {
 		log("Table built!");
 		return true;
 	} else {
@@ -271,10 +394,44 @@ function processInstall() {
 	}
 }
 
-function processStorageUpdate( data ) {
+function processStorageUpdate() {
+
+	var data = parseDatabase();
+
 	log("Processing storage update to make it compatible with next version.");
-	//if()
+	
 	console.log("MAKE SURE YOU UPDATE THIS EXTENSION SO THAT IT DOESN'T BREAK PREVIOUS INSTALLATIONS!! THAT WOULD BE BAD MMMKAY!!!");
+
+	if( data.info.version == "0.3.0" ) {
+		return data;
+	} else {
+		var i = 1;
+		for ( d in data.links.links ) {
+			if(data.links.links[d].hasOwnProperty( 'order' )) {
+				console.log("Order property found.");
+				break;
+			} else {
+				console.log("Order property nonexistent. Being created.");
+				data.links.links[d].order = i;
+			}
+			i++;
+		}
+		data.info.version = "0.3.0";
+
+		console.log(data);
+
+		if( storeObj(data) ) {
+			var page = "tabPageFiles/update.html";
+		} else {
+			var page = "tabPageFiles/updatefail.html";
+		}
+		chrome.tabs.create({
+			url  : page
+		});
+		
+		return data;		
+
+	}
 }
 
 function isFirstInstall() {
@@ -289,12 +446,9 @@ function isFirstInstall() {
 }
 
 function buildLinks() {
-	var data = parseDatabase();
 
-	processStorageUpdate( data );
+	var data = processStorageUpdate();
 
-	//var debug = getDeveloperMode();
-	var debug = true;
 	log('Working on links now...');
 	var linkOutput = "";
 	var links = data.links.links;
@@ -316,7 +470,7 @@ function buildLinks() {
 
 			//console.log("This is the individual link object: ");
 			//console.log(links[link]);
-			var currentLink = "<li><div class=\"btnDelete\"><a href=\"#\" class=\"deleteLink\" name=\"" + link + "\"><img src=\"delete.png\" title=\"Delete This Link\" /><span class=\"gentext\">Delete</span></a></div><a href=\"" + links[link].href + "\" class=\"genbutton\"><span class=\"gentext\">" + links[link].name + "</span></a><div class=\"clear\"></div></li>";
+			var currentLink = "<li id=\"link_" + link + "\"><div class=\"btnDelete\"><a href=\"#\" class=\"deleteLink\" name=\"" + link + "\" linkname=\"" + links[link].name + "\"><img src=\"delete.png\" title=\"Delete This Link\" /><span class=\"gentext\">Delete</span></a></div><a href=\"" + links[link].href + "\" class=\"genbutton\"><span class=\"gentext\">" + links[link].name + "</span></a><div class=\"clear\"></div></li>";
 
 			var order = links[link].order;
 
@@ -328,7 +482,7 @@ function buildLinks() {
 
 		console.log(output);
 		console.log(count + " items in output.");
-		for( i = 16 ; i > 0 ; i-- ) {
+		for( i = 1 ; i < count ; i++ ) {
 			linkOutput += output[i];
 		}
 
@@ -354,16 +508,6 @@ function removeLink(id) {
 		return false;
 	}
 }
-
-
-// Google Analytics functions
-function trackButton() {
-    _gaq.push(['_trackEvent', 'Site added to new tab page using the "Add" button.']);
-};
-
-function trackAddBox() {
-    _gaq.push(['_trackEvent', 'Site added to new tab page using the text input box in the popup.']);
-};
 
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-21684633-1']);

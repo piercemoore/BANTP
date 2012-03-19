@@ -20,6 +20,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 		<style>
 			* {
 				font-family: "Segoe UI", sans-serif;
+				color:#999999;
 			}
 			body {
 				/*background:url("../img/popup.png") no-repeat top left #003366;*/
@@ -35,7 +36,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 				padding:0;
 			}
 			h2 {
-				color:#888888;
+				color:#eeeeee;
 				letter-spacing:-2px;
 				font-size:20px;
 			}
@@ -47,6 +48,13 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 				font-family:"Segoe UI",sans-serif;
 				padding:0;
 				margin:0;
+			}
+			a {
+				text-decoration: none;
+				color:#333333;
+			}
+			a:hover {
+				color:#666666;
 			}
 			#logo {
 				width:50px;height:100%;float:left;
@@ -119,29 +127,16 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 		<script type="text/javascript" src="facebox/facebox.js"></script>
 		
 		<script type="text/javascript">			
+
+			const bg = chrome.extension.getBackgroundPage();
+
 			function showAddFb(title,url) {
-				if (url == null) {
-					chrome.tabs.getSelected(null, function(tab){
-						console.log("Title and url: " + title + ", " + url);
-						// Build the HTML markup to be inserted into the facebox.
-						var html = "<h1>Edit Link Details</h1><h3>Title</h3><input type=\"text\" id=\"customLinkTitle\" value=\"" + tab.title + "\" /><h3>Full URL</h3><input type=\"text\" id=\"customLinkUrl\" value=\"" + tab.url + "\"  /><button id=\"customLinkFbSubmit\">Add</button>";
-						$.facebox(html);
-					});
-				} else {
-					if(title == null) {
-						title = "";
-					}
-					if(url == null) {
-						url = "";
-					}
+				chrome.tabs.getSelected(null, function(tab){
+					console.log("Title and url: " + tab.title + ", " + tab.url);
 					// Build the HTML markup to be inserted into the facebox.
-					var html = "<h1>Edit Link Details</h1><h3>Title</h3><input type=\"text\" id=\"customLinkTitle\" value=\"" + title + "\" /><h3>Full URL</h3><input type=\"text\" id=\"customLinkUrl\" value=\"" + url + "\"  /><button id=\"customLinkFbSubmit\">Add</button>";
+					var html = "<h1>Edit Link Details</h1><h3>Title</h3><input type=\"text\" id=\"customLinkTitle\" value=\"" + tab.title + "\" /><h3>Full URL</h3><input type=\"text\" id=\"customLinkUrl\" value=\"" + tab.url + "\"  /><button id=\"customLinkFbSubmit\">Add</button>";
 					$.facebox(html);
-				}
-			}
-			
-			function bg() {
-				return chrome.extension.getBackgroundPage();
+				});
 			}
 			
 			function showMsg(code,msg) {
@@ -164,7 +159,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 					height: '215px'
 				},500);
 				body.animate({
-					width: '375px'
+					width: '400px'
 				},500);
 				//$("#facebox").css("marginLeft","36px");
 			}
@@ -172,14 +167,12 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 				var con = $("#container");
 				var body = $(document.body);
 				con.animate({
-					height: '182px'
+					height: '102px'
 				},500);
 				body.animate({
-					width: '300px'
+					width: '335px'
 				},500);
 			}
-			
-			var data = bg().parseDatabase();
 		
 			$(document).ready(function() {
 				$(document).bind('close.facebox',function() {
@@ -194,33 +187,29 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 					console.log("Facebox thing should be up now.");
 				});
 				
-				$("#customLinkButton").click(function() {
-					var link = $("#customLinkInput").val();
-					// bg().trackCustom(); // Google analytics tracking for custom link creation
-					showAddFb(null,link);
-				});
 				$("#customLinkFbSubmit").live('click',function() {
 					var subBtn = $("#customLinkFbSubmit");
-					subBtn.attr("disabled","disabled").attr("value","Adding Link...");
+					subBtn.attr("value","Adding Link...").attr("disabled","disabled");
 					// Let's grab pertinent information
 					var newLinkTitle = $("#customLinkTitle").val();
 					var newLinkUrl = $("#customLinkUrl").val();
-					bg().log("Adding new link: Title: " + newLinkTitle + ", URL: " + newLinkUrl);
-					// Let's add ourselves a link!
-					//return true;
-					bg().log("Alright, here goes. Going into background page functionality to add the new link.");
-					if(bg().addLink(newLinkTitle,newLinkUrl)) {
-						bg().log("Popup: Link successfully added.");
-						console.log("Popup: Link added.");
-						subBtn.attr("value","Link successfully added!");
-						showMsg(1,"Link successfully added!");
-						jQuery(document).trigger('close.facebox');
-					} else {
-						console.log("fuck.");
-						bg().log("Popup: Link creation failed.");
-						subBtn.attr("disabled","");
-						showMsg(0,"Something went wrong, please try again!");
-					}
+
+					console.log("Adding new link: Title: " + newLinkTitle + ", URL: " + newLinkUrl);
+
+					chrome.extension.sendRequest({ action : "addLink" , title : newLinkTitle , url : newLinkUrl } , function( response ) {
+						if( response.success == true ) {
+							console.log("Popup: Link successfully added.");
+							console.log("Popup: Link added.");
+							subBtn.attr("value","Link successfully added!");
+							showMsg(1,"Link successfully added!");
+							jQuery(document).trigger('close.facebox');
+						} else {
+							console.log("Background page unable to create link. Uh oh... ");
+							console.log("Popup: Link creation failed.");
+							subBtn.attr("disabled","");
+							showMsg(0,"Something went wrong, please try again!");
+						}
+					});
 				});
 				
 			});
@@ -234,32 +223,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 			<div class="clear"></div>
 			<div id="error">This is the error div.</div>
 			<div id="success">This is the success div.</div>
-			<script type="text/javascript">
-				
-				$(document).ready(function() {
-					for(var i in data.links) {
-						//$("#linkCount").append("<a href=\"" + data.links[i].href + "\">" + data.links[i].name + "</a><br />");
-					}
-				});
-				
-			</script>
-			<!--
 			<div>
-				<h2>Add New Link</h2>
-				<h3>Make sure you copy the entire URL into this box! (ex. http://www.google.com)</h3>
-				<input type="text" id="customLinkInput" /><button id="customLinkButton">Add</button>
-			</div>
-			<!--
-			<div class="clear"></div>
-			<div>
-				<h1>Tab Page Status</h1>
-				<h2>Total Links: <span id="ls_linkCount">Unavailable</span></h2>
-				<h2>Alarm Clock: <span id="ls_alarmActive">Unavailable</span></h2>
-				<h2>Task Manager: <span id="ls_taskActive">Unavailable</span></h2>
-			</div>
-			-->
-			<div>
-				<h3>This extension was designed and built by Pierce Moore of Refreshed Web Design. Copyright &copy; 2011 </h3>
+				<h3>This extension was designed and built by Pierce Moore of <a href="http://www.piercemoore.com">PierceMoore.com</a> and <a href="http://www.refreshedweb.com">Refreshed Web Design</a>. Copyright &copy; 2012 </h3>
 				
 			</div>
 			
@@ -269,15 +234,15 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 		</div>
 		
    <script>
-     var _gaq = _gaq || [];
-     _gaq.push(['_setAccount', 'UA-21684633-1']);
-     _gaq.push(['_trackPageview']);
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-21684633-1']);
+		_gaq.push(['_trackPageview']);
 
-     (function() {
-       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-       ga.src = 'https://ssl.google-analytics.com/ga.js';
-       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-     })();
+		(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = 'https://ssl.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
    </script>
 	</body>
 </html>

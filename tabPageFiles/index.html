@@ -17,10 +17,25 @@
 		
 		function displayLinks() {
 			var linkOutput = bg.buildLinks();
-			console.log(linkOutput);
+			//console.log(linkOutput);
 			$(linkOutput).appendTo("#linkStart");
 			$("#linkStart").sortable({
-				disabled : true
+				disabled : true,
+				stop : function() {
+					console.log("Stopped!");
+					var order = $("#linkStart").sortable("toArray");
+					console.log(order);
+					alert(order);
+				},
+				start : function() {
+					console.log("Started!");
+				},
+				update : function() {
+					console.log("Updated.");
+				},
+				drop : function() {
+					console.log("Element dropped. Logging.");
+				}
 			});
 		}	
 		function updateTime() {
@@ -78,19 +93,21 @@
 				},"fast")
 			});
 			$("a.deleteLink").live('click',function() {
-				var link = $(this).next().text();
-				var id = $(this).parent().attr("id");
+				var link = $(this).attr("linkname");
+				var id = $(this).attr("name");
 				if (confirm("Are you sure that you want to delete '" + link + "' from your new tab page?")) {
 					console.log('Removing...');
 					if(bg.removeLink(id)) {
-						$(this).parent().fadeOut('slow',function() {
-							$(this).remove();
+						var li = $("#link_" + id);
+						li.fadeOut('slow',function() {
+							li.remove();
 						});
 						$("#success").html("Link for '" + link + "' successfully removed from new tab page.").fadeIn('fast');
 					} else {
 						$("#error").html("Unable to delete link. Please try again.").fadeIn('fast');
 					}
 				}
+				return false;
 			});
 
 			var w = $(document).width();
@@ -149,5 +166,17 @@
 			</form>
 
 		</div>
+
+		<script type="text/javscript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-21684633-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = 'https://ssl.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+		</script>
 	</body>
 </html>
