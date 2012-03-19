@@ -16,9 +16,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 	src: url('../league.otf');
 }
 * {
-	-moz-user-select: none;
 	-webkit-user-select: none;
-	-o-user-select: none;
 	user-select: none;
 	font-family:League,sans-serif;
 }
@@ -46,35 +44,25 @@ h1, h2, h3 {
 	float:left;
 	clear:left;
 }
-.gentext {
-	color: #cccccc;
-	text-shadow: 0px -1px 1px #ffffff,0px 2px 4px #000000;
-}
-.btnDelete {
-	position: relative;
-	z-index: 50;
-	display:none;
-	width: 40px;
-	height: 36px;
-	padding-top: 14px;
-	background: #A33737;
-	float:left;
-	margin: 20px -2px 0 0;
-	-webkit-border-radius: 5px 0 0 5px;
-	box-shadow: 0px 2px 4px #000000, inset 0px 1px 1px #F5ABAB;
-}
 #bigbar {
-	width: 400px;
-	margin: auto;
+	min-width: 150px;
+	margin: auto 25px 35px auto;
 	height: 80px;
+	float: right;
+	/*
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4f80b5), color-stop(100%,#093377));
 	background: -webkit-linear-gradient(top,  #4f80b5 0%,#093377 100%);
 	box-shadow: 0 2px 4px #000000 , inset 0 1px 1px #ffffff;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
+	*/
 }
 #bigbar a {
-	padding: 16px;
+	font-size: 60px;
+}
+/*
+#bigbar a {
+	padding: 18px;
 	display:block;
 	float:left;
 	font-size: 40px;
@@ -96,38 +84,50 @@ h1, h2, h3 {
 }
 #bigbar a:last-child {
 	border-right: none;
-}
+	border: none;
+}*/
 h1 {
 	font-size:150px;
 	line-height:80%;
 	margin:0;
 	padding:0;
 }
-#sortable { 
+#linkStart { 
 	list-style-type: none; 
 	margin: 0; 
 	padding: 0; 
 }
-#sortable li { 
-	margin: 3px 3px 3px 0; 
-	padding: 1px; float: left; 
-	min-width: 100px; 
-	min-height: 90px; 
-	display:block;
-	font-size: 4em; 
-	text-align: center; 
+#linkStart li { 
+	min-width: 100px;
+	min-height: 60px;
+	float:left;
+}
+.gentext {
+	color: #cccccc;
+	text-shadow: 0px -1px 1px #ffffff,0px 2px 4px #000000;
+}
+.btnDelete {
+	display: none;
+	width: 100px;
+	height: 40px;
+	font-size: 30px;
+	margin-left: 20px;
+	padding-top: 14px;
+	background: #A33737;
+	border-radius: 5px 5px 0 0;
+	text-align: center;
+	box-shadow: 0px 2px 4px #000000, inset 0px 1px 1px #F5ABAB;
 }
 a.genbutton {
-	position: relative;
-	z-index: 100;
-	margin: 0 5px 5px 0;
 	text-decoration: none;
 	padding: 10px 20px;
+	margin: 0 10px 10px 0;
+	min-width: 100px;
+	min-height: 60px;
 	display:block;
 	float:left;
+	text-align: center;
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5eaae5), color-stop(100%,#1e5799)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #5eaae5 0%,#1e5799 100%); /* Chrome10+,Safari5.1+ */
-	-webkit-border-radius: 5px;
 	border-radius: 5px;
 	box-shadow: inset 0px 1px 1px #ffffff , 0px 4px 4px #000000;
 	font-size: 45px;
@@ -186,4 +186,12 @@ a.genbutton:active {
 	position:absolute;
 	top:50px;
 	right:0;
+}
+#donatePopup {
+	display: none;
+	width: 400px;
+	height: 200px;
+	margin:auto;
+	background: #eeeeee;
+	border: 2px #333333 solid;
 }
