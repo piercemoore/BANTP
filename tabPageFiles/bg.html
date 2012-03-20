@@ -132,17 +132,24 @@ var defaultData = {
 				"href": "http://www.piercemoore.com",
 				"name": "Developer's Website",
 				"order" : 17
+			},
+			17: {
+				"id"  : 17,
+				"href": "http://www.piercemoore.com/projects/bantp/",
+				"name": "BANTP Home Page",
+				"order" : 18
 			}
 		}
 	}
 };
 var firstInstall = isFirstInstall();
 var debug = getDeveloperMode();
-log(defaultData);
-log(JSON.stringify(defaultData));
+//log(defaultData);
+//log(JSON.stringify(defaultData));
 
+console.log("THE TRICK IS IN THE DELETE LINK FUNCTION. it's breaking stuff because it's not reducing the order of the links above it when a link is deleted, leaving blank spots in the order and breaking stuff.");
 function log(msg) {
-	//console.log(msg);
+	console.log(msg);
 }
 
 function getDeveloperMode() {
@@ -182,6 +189,7 @@ chrome.extension.onRequest.addListener( function( request , sender , sendRespons
 function storeOrder( data ) {
 	var count = 1;
 	var links = getLinkObj();
+	var items = links.links;
 
 	//console.log(links);
 	for( i in data ) {
@@ -189,7 +197,7 @@ function storeOrder( data ) {
 		var id = String(data[i]);
 		id = id.replace(/[a-zA-Z_]/g, '');
 
-		links[id].order = count;
+		items[id].order = count;
 
 		count++;
 	}
@@ -209,8 +217,11 @@ function addLink( title , url ) {
 	// Grab the link object really quickly
 	var linkObj = getLinkObj();
 
+	console.log("This is the linkObj that is in addLink");
+	console.log(linkObj);
+
 	// Now grab the JSON object for the links themselves
-	var linkList = linkObj;
+	var linkList = linkObj.links;
 
 	console.log("This is the link list: ");
 	console.log(linkList);
@@ -251,17 +262,35 @@ function addLink( title , url ) {
 	//log(linkObj);
 	log("Now, let's store it in local storage. Fingers crossed!");
 
+	console.log(linkObj);
+
 	// Now let's store it in local storage
-	
-	if(storeLinkObj(linkList)) {
+
+	if(storeLinkObj(linkObj)) {
 		log("New link with url " + url + " and title " + title + " successfully stored in local storage.");
 		return true;
 	} else {
 		log("New link with url " + url + " and title " + title + " UNABLE TO BE STORED in local storage.");
 		return false;
 	}
-
 	return true;
+}
+
+function removeLink(id) {
+	var data = parseDatabase();
+	var links = data.links;
+	console.log("Link " + id + " being deleted from this list: ");
+	console.log(links);
+	delete data.links.links[id];
+
+
+	if(storeObj(data)) {
+		log('Link #' + id + " removed!");
+		return true;
+	} else {
+		log('Unable to remove link #' + id);
+		return false;
+	}
 }
 
 function countTotalLinks(obj) {
@@ -273,8 +302,17 @@ function countTotalLinks(obj) {
 	return count;
 }
 
-function storeLinkObj(linkObj) {
+function storeLinkObj( linkObj ) {
+	console.log('I am pretty sure this is not working correctly.');
+
+	console.log("This is the link object passed to storeLinkObj:");
+	console.log(linkObj);
+
 	var db = parseDatabase();
+
+	console.log("This is the database as it is parsed from localStorage");
+	console.log(db);
+
 	db.links = linkObj;
 	log("New Full Object to be stored:");
 	log(db);
@@ -285,6 +323,16 @@ function storeLinkObj(linkObj) {
 		log("Unknown failure while updating links in database.");
 		return false;
 	}
+}
+
+function getLinkObj() {
+	log("Grabbing database object...");
+	var dbObj = parseDatabase();
+	log(dbObj);
+	var linkData = dbObj.links;
+	log("GetLinkObj: LinkData: ");
+	log(linkData);
+	return linkData;
 }
 
 function storeObj(obj) {
@@ -301,16 +349,6 @@ function storeObj(obj) {
 		log("Link object UNABLE to be stored. Whoops!");
 		return false;
 	}
-}
-
-function getLinkObj() {
-	log("Grabbing database object...");
-	var dbObj = parseDatabase();
-	log(dbObj);
-	var linkData = dbObj.links;
-	log("GetLinkObj: LinkData: ");
-	log(linkData);
-	return linkData;
 }
 
 function sendObj() {
@@ -344,7 +382,7 @@ function processStorageUpdate() {
 
 	log("Processing storage update to make it compatible with next version.");
 
-	if( data.info.version == "0.3.0" ) {
+	if( data.info.version == "0.2.0" ) {
 		console.log('data version correct');
 	} else {
 
@@ -369,9 +407,11 @@ function processStorageUpdate() {
 		} else {
 			var page = "tabPageFiles/updatefail.html";
 		}
+		/*
 		chrome.tabs.create({
 			url  : page
 		});
+		*/	
 	}
 
 	return data;
@@ -395,11 +435,11 @@ function buildLinks() {
 	console.log(data);
 	log('Working on links now...');
 	var linkOutput = "";
-	var links = data.links;
+	var links = data.links.links;
 	log(links);
 	console.log("Now let's run a loop.");
 	for(link in links) {
-		//log("Link #" + i + ": Name-" + links[link].name + ", href-" + links[link].href + ", order- " + links[link].order + ", id- " + links[link].id );
+		//console.log(links[link].order);
 	}
 	console.log("All links should be displayed.");
 	if(links) {
@@ -411,36 +451,21 @@ function buildLinks() {
 
 		for( link in links ) {
 			count++;
-
-			var currentLink = "<li id=\"link_" + link + "\"><div class=\"btnDelete\"><a href=\"#\" class=\"deleteLink\" name=\"" + link + "\" linkname=\"" + links[link].name + "\"><img src=\"lib/img/delete.png\" title=\"Delete This Link\" /><span class=\"gentext\">Delete</span></a></div><a href=\"" + links[link].href + "\" class=\"genbutton\"><span class=\"gentext\">" + links[link].name + "</span></a><div class=\"clear\"></div></li>";
+			console.log(links[link].id + ", position " + links[link].order);
+			var currentLink = "<li id=\"link_" + links[link].id + "\"><div class=\"btnDelete\"><a href=\"#\" class=\"deleteLink\" name=\"" + links[link].id + "\" linkname=\"" + links[link].name + "\"><img src=\"lib/img/delete.png\" title=\"Delete This Link\" /><span class=\"gentext\">Delete</span></a></div><a href=\"" + links[link].href + "\" class=\"genbutton\"><span class=\"gentext\">" + links[link].name + "</span></a><div class=\"clear\"></div></li>";
 
 			var order = links[link].order;
 
 			output[order] = currentLink;
 		}
 
-		for( i = 1 ; i < count ; i++ ) {
+		for( i = 0 ; i <= count ; i++ ) {
 			linkOutput += output[i];
 		}
 
 		return linkOutput;
 	} else {
 		log("No links were found. Something is screwy.");
-	}
-}
-
-function removeLink(id) {
-	var data = parseDatabase();
-	var links = data.links;
-	console.log("Link " + id + " being deleted from this list: ");
-	console.log(links);
-	delete data.links[id];
-	if(storeObj(data)) {
-		log('Link #' + id + " removed!");
-		return true;
-	} else {
-		log('Unable to remove link #' + id);
-		return false;
 	}
 }
 
