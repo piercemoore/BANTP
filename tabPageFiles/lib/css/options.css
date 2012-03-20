@@ -1,4 +1,4 @@
-<!--
+/**
 
 Copyright (c) 2011 Pierce Moore, RefreshedWeb.com, and NerdTraining.info
 All rights reserved.
@@ -10,30 +10,10 @@ Redistributions in binary form must reproduce the above copyright notice, this l
 Neither the names of Pierce Moore, RefreshedWeb.com, NerdTraining.info,  nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
--->
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-		<title>Options :: Bad Ass New Tab Page</title>
-		<link rel="stylesheet" type="text/css" href="lib/css/style.css" />
-		<script type="text/javascript" href="lib/js/jquery.js"></script>
-		
-	</head>
-	<body>
-		<br /><br /><br /><br /><br />
-		<h1 style="text-shadow:0px 0px 4px #000000;color:#eeeeee;">In the next update, this page will start to fill up with all the things you can configure. Right now, though, I just wanted to get you guys the core functionality of the New Tab Page beauty going. Enjoy, and stay tuned!</h1>
-		
-   <script>
-     var _gaq = _gaq || [];
-     _gaq.push(['_setAccount', 'UA-21684633-1']);
-     _gaq.push(['_trackPageview']);
+**/
+* {
 
-     (function() {
-       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-       ga.src = 'https://ssl.google-analytics.com/ga.js';
-       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-     })();
-   </script>
-	</body>
-</html>
+}
+body {
+	background: url('../img/options.png') no-repeat top left fixed #003366;
+}

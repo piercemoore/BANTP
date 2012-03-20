@@ -19,35 +19,32 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 		<title>Bad Ass New Tab Page : Popup</title>
 		<style>
 			* {
-				font-family: "Segoe UI", sans-serif;
-				color:#999999;
+				font-family: League , sans-serif;
+				font-size: 25px;
+				color: #666666;
 			}
 			body {
 				/*background:url("../img/popup.png") no-repeat top left #003366;*/
-				background:#dddddd;
 				width:300px;
 			}
 			h1 {
 				color:#eeeeee;
 				text-shadow:0px 0px 4px #000000;
 				letter-spacing:-2px;
-				font-size:24px;
 				margin:0;
 				padding:0;
 			}
 			h2 {
 				color:#eeeeee;
 				letter-spacing:-2px;
-				font-size:20px;
 			}
 			h3 {
 				color:#aaaaaa;
-				font-size:10px;
 			}
 			h1,h2,h3 {
-				font-family:"Segoe UI",sans-serif;
 				padding:0;
 				margin:0;
+				font-size: normal;
 			}
 			a {
 				text-decoration: none;
@@ -122,9 +119,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 			
 		
 		<!-- Include Facebox stuff -->
-		<link rel="stylesheet" href="facebox/facebox.css" />
-		<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-		<script type="text/javascript" src="facebox/facebox.js"></script>
+		<link rel="stylesheet" href="lib/css/style.css" />
+		<link rel="stylesheet" href="lib/facebox/facebox.css" />
+		<script type="text/javascript" src="lib/js/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="lib/facebox/facebox.js"></script>
 		
 		<script type="text/javascript">			
 
@@ -134,7 +132,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 				chrome.tabs.getSelected(null, function(tab){
 					console.log("Title and url: " + tab.title + ", " + tab.url);
 					// Build the HTML markup to be inserted into the facebox.
-					var html = "<h1>Edit Link Details</h1><h3>Title</h3><input type=\"text\" id=\"customLinkTitle\" value=\"" + tab.title + "\" /><h3>Full URL</h3><input type=\"text\" id=\"customLinkUrl\" value=\"" + tab.url + "\"  /><button id=\"customLinkFbSubmit\">Add</button>";
+					var html = "<span style=\"font-size: 35px\">Edit Link Details</span><br /><span style=\"font-size: 20px;\">Title</span><input type=\"text\" id=\"customLinkTitle\" value=\"" + tab.title + "\" /><span style=\"font-size: 20px\">Full URL</span><input type=\"text\" id=\"customLinkUrl\" value=\"" + tab.url + "\"  /><button id=\"customLinkFbSubmit\">Add</button>";
 					$.facebox(html);
 				});
 			}
@@ -156,7 +154,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 				var con = $("#container");
 				var body = $(document.body);
 				con.animate({
-					height: '215px'
+					height: '240px'
 				},500);
 				body.animate({
 					width: '400px'
@@ -167,10 +165,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 				var con = $("#container");
 				var body = $(document.body);
 				con.animate({
-					height: '102px'
+					height: '60px'
 				},500);
 				body.animate({
-					width: '335px'
+					width: '250px'
 				},500);
 			}
 		
@@ -199,13 +197,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 					chrome.extension.sendRequest({ action : "addLink" , title : newLinkTitle , url : newLinkUrl } , function( response ) {
 						if( response.success == true ) {
 							console.log("Popup: Link successfully added.");
-							console.log("Popup: Link added.");
 							subBtn.attr("value","Link successfully added!");
 							showMsg(1,"Link successfully added!");
 							jQuery(document).trigger('close.facebox');
 						} else {
 							console.log("Background page unable to create link. Uh oh... ");
-							console.log("Popup: Link creation failed.");
 							subBtn.attr("disabled","");
 							showMsg(0,"Something went wrong, please try again!");
 						}
@@ -223,14 +219,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 			<div class="clear"></div>
 			<div id="error">This is the error div.</div>
 			<div id="success">This is the success div.</div>
-			<div>
-				<h3>This extension was designed and built by Pierce Moore of <a href="http://www.piercemoore.com">PierceMoore.com</a> and <a href="http://www.refreshedweb.com">Refreshed Web Design</a>. Copyright &copy; 2012 </h3>
-				
-			</div>
-			
-			<span id="screenshots"></span>
-			
-			<div id="linkCount"></div>
 		</div>
 		
    <script>

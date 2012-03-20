@@ -1,0 +1,220 @@
+/**
+
+Copyright (c) 2011 Pierce Moore, RefreshedWeb.com, and NerdTraining.info
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+Neither the names of Pierce Moore, RefreshedWeb.com, NerdTraining.info,  nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+**/
+@font-face {
+	font-family: League;
+	src: url('../fonts/league.otf');
+}
+* {
+	-webkit-user-select: none;
+	user-select: none;
+	font-family:League,sans-serif;
+	line-height: 100%;
+}
+body {
+	background: url('../img/Pacific.jpg') no-repeat top;
+	background-size:100% 100%;
+	background-attachment: fixed;
+}
+ul {
+	list-style: none;
+}
+a {
+	text-decoration: none;
+}
+h1, h2, h3 {
+	letter-spacing: -3px;
+	margin: 0;
+	padding: 0;
+	color: #ffffff;
+	text-shadow: 0px 2px 4px #000000;
+	font-family: League;
+}
+.shadow {
+	box-shadow: 0px 2px 5px #000000;
+}
+.genBox {
+	width: 700px;
+	padding: 25px;
+	margin:50px auto auto auto;
+	background: -webkit-gradient( linear , left bottom , left top , color-stop( 0 , #eeeeee) , color-stop( 1 , #bbbbbb ) );
+	border-radius: 5px;
+	box-shadow: 0px 2px 8px #000000 , inset 0px 1px 1px #ffffff;
+	color: #333333;
+	letter-spacing: -3px;
+	font-size: 50px;
+}
+.clear {
+	clear: both;
+}
+#clock {
+	width: 300px;
+	height: 100%;
+	float:left;
+}
+#links {
+	width: 800px;
+	float:left;
+	clear:left;
+}
+#bigbar {
+	min-width: 150px;
+	margin: auto 25px 35px auto;
+	height: 80px;
+	float: right;
+	/*
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4f80b5), color-stop(100%,#093377));
+	background: -webkit-linear-gradient(top,  #4f80b5 0%,#093377 100%);
+	box-shadow: 0 2px 4px #000000 , inset 0 1px 1px #ffffff;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	*/
+}
+#bigbar a {
+	font-size: 60px;
+}
+/*
+#bigbar a {
+	padding: 18px;
+	display:block;
+	float:left;
+	font-size: 40px;
+	text-decoration: none;
+	border-left: 1px #A2A7E8 solid;
+	margin-bottom: 20px;
+}
+#bigbar a:hover {
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#56aec4), color-stop(100%,#175584));
+	background: -webkit-linear-gradient(top,  #56aec4 0%,#175584 100%);
+}
+#bigbar a:active {
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#417c93), color-stop(100%,#175584));
+	background: -webkit-linear-gradient(top,  #417c93 0%,#175584 100%);
+}
+#bigbar a:first-child {
+	-webkit-border-radius: 5px 0 0 5px;
+	border-left: none;
+}
+#bigbar a:last-child {
+	border-right: none;
+	border: none;
+}*/
+h1 {
+	font-size:150px;
+	line-height:80%;
+	margin:0;
+	padding:0;
+}
+#linkStart { 
+	list-style-type: none; 
+	margin: 0; 
+	padding: 0; 
+}
+#linkStart li { 
+	min-width: 100px;
+	min-height: 60px;
+	float:left;
+}
+.gentext {
+	color: #cccccc;
+	text-shadow: 0px -1px 1px #ffffff,0px 2px 4px #000000;
+}
+.btnDelete {
+	display: none;
+	width: 80px;
+	height: 40px;
+	font-size: 25px;
+	margin-left: 20px;
+	padding-top: 14px;
+	background: #A33737;
+	border-radius: 5px 5px 0 0;
+	text-align: center;
+	box-shadow: 0px 2px 4px #000000, inset 0px 1px 1px #F5ABAB;
+}
+a.genbutton {
+	text-decoration: none;
+	padding: 10px 10px;
+	margin: 0 10px 10px 0;
+	min-width: 100px;
+	min-height: 40px;
+	display:block;
+	float:left;
+	text-align: center;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5eaae5), color-stop(100%,#1e5799)); /* Chrome,Safari4+ */
+	border-radius: 5px;
+	box-shadow: inset 0px 1px 1px #ffffff , 0px 4px 4px #000000;
+	font-size: 45px;
+}
+a.genbutton:hover {
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8cbde2), color-stop(100%,#4f7199)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #8cbde2 0%,#4f7199 100%); /* Chrome10+,Safari5.1+ */
+}
+a.genbutton:active {
+	box-shadow: inset 0px 1px 1px #ffffff;
+}
+#error,#success {
+	-webkit-border-radius:5px;
+	width:50%;
+	padding:10px;
+	margin: auto;
+	text-align:center;
+	display:none;
+	position:fixed;
+	left:0;
+	right:0;
+	bottom: 10px;
+	margin: 0 auto;
+}
+#error {
+	border:1px #AB4F4F solid;
+	background:#F5E1E1;
+}
+#success {
+	border:1px #73A860 solid;
+	background:#DDEDD8;
+}
+#timeBox {
+	width:300px;
+	position:fixed;
+	top:20px;
+	left:20px;
+	float:left;
+	display:block;
+}
+#dateBox {
+	width:300px;
+	position:fixed;
+	bottom:20px;
+	left:20px;
+	float: left;
+	display:block;
+}
+.round {
+	-webkit-border-radius:5px;
+	border-radius:5px;
+}
+#links {
+	width:50%;
+	height:100%;
+	position:absolute;
+	top:50px;
+	right:0;
+}
+#donatePopup {
+	display: none;
+	width: 400px;
+	height: 200px;
+	margin:auto;
+	background: #eeeeee;
+	border: 2px #333333 solid;
+}
