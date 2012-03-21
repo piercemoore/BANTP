@@ -113,6 +113,24 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 			#facebox {
 				margin-left:36px;
 			}
+			#linkSubmit,input {
+				font-family: League;
+				font-size: 30px;
+				padding: 10px;
+				border-radius: 5px;
+				box-shadow: 0px 2px 16px #999999;
+				border: 1px #666666 solid;
+			}
+			#linkSubmit {
+				background: -webkit-gradient( linear , left bottom , left top , color-stop( 0 , #eeeeee ) , color-stop( 1 , #cccccc) );
+				box-shadow: 0 2px 16px #999999 , inset 0 1px 1px #ffffff;
+			}
+			#linkSubmit:hover {
+				background: #eeeeee;
+			}
+			#linkSubmit:active {
+				box-shadow: none;
+			}
 		</style>
 		
 			
@@ -131,7 +149,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 				chrome.tabs.getSelected(null, function(tab){
 					console.log("Title and url: " + tab.title + ", " + tab.url);
 					// Build the HTML markup to be inserted into the facebox.
-					var html = "<span style=\"font-size: 35px\">Edit Link Details</span><br /><span style=\"font-size: 20px;\">Title</span><input type=\"text\" id=\"customLinkTitle\" value=\"" + tab.title + "\" /><span style=\"font-size: 20px\">Full URL</span><input type=\"text\" id=\"customLinkUrl\" value=\"" + tab.url + "\"  /><button id=\"customLinkFbSubmit\">Add</button>";
+					var html = "<span style=\"font-size: 35px\">Edit Link Details</span><br /><span style=\"font-size: 20px;\">Title</span><input type=\"text\" id=\"customLinkTitle\" value=\"" + tab.title + "\" /><span style=\"font-size: 20px\">Full URL</span><input type=\"text\" id=\"customLinkUrl\" value=\"" + tab.url + "\"  /><button id=\"linkSubmit\">Add</button>";
 					$.facebox(html);
 				});
 			}
@@ -186,7 +204,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 				
 				$("#customLinkFbSubmit").live('click',function() {
 					var subBtn = $("#customLinkFbSubmit");
-					subBtn.attr("value","Adding Link...").attr("disabled","disabled");
+					//subBtn.attr("value","Adding Link...").attr("disabled","disabled");
 					// Let's grab pertinent information
 					var newLinkTitle = $("#customLinkTitle").val();
 					var newLinkUrl = $("#customLinkUrl").val();
@@ -201,7 +219,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 							jQuery(document).trigger('close.facebox');
 						} else {
 							console.log("Background page unable to create link. Uh oh... ");
-							subBtn.attr("disabled","");
+							//subBtn.attr("disabled","");
 							showMsg(0,"Something went wrong, please try again!");
 						}
 					});

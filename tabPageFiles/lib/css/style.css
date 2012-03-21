@@ -16,7 +16,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 	src: url('../fonts/league.otf');
 }
 * {
-	-webkit-user-select: none;
 	user-select: none;
 	font-family:League,sans-serif;
 	line-height: 100%;

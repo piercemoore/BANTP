@@ -13,13 +13,13 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 -->
 <script type="text/javascript">
 	
-var debug = true;
+var debug = false;
 var lsTable = "bantp";
 var defaultData = {
 	"info": {
 		"name": "Bad Ass New Tab Page",
 		"description": "A Google Chrome extension for people tired of Chrome's ugly, useless tab page.",
-		"version": "0.3.0",
+		"version": "0.2.0",
 		"homepage": "http://www.refreshedweb.com/projects/newtab/",
 		"github": "http://www.github.com/piercemoore/bantp/",
 		"devName": "Pierce Moore",
@@ -144,12 +144,11 @@ var defaultData = {
 };
 var firstInstall = isFirstInstall();
 var debug = getDeveloperMode();
-//log(defaultData);
-//log(JSON.stringify(defaultData));
 
-console.log("THE TRICK IS IN THE DELETE LINK FUNCTION. it's breaking stuff because it's not reducing the order of the links above it when a link is deleted, leaving blank spots in the order and breaking stuff.");
 function log(msg) {
-	console.log(msg);
+	if( debug ) {
+		console.log(msg);
+	}
 }
 
 function getDeveloperMode() {
@@ -212,29 +211,29 @@ function storeOrder( data ) {
 }
 
 function addLink( title , url ) {
-	log("Adding new link: Title- " + title + ", URL- " + url);
+	//log("Adding new link: Title- " + title + ", URL- " + url);
 
 	// Grab the link object really quickly
 	var linkObj = getLinkObj();
 
-	console.log("This is the linkObj that is in addLink");
-	console.log(linkObj);
+	//console.log("This is the linkObj that is in addLink");
+	//console.log(linkObj);
 
 	// Now grab the JSON object for the links themselves
 	var linkList = linkObj.links;
 
-	console.log("This is the link list: ");
-	console.log(linkList);
+	//console.log("This is the link list: ");
+	//console.log(linkList);
 
-	log("Now we're counting the total number of links.");
+	//log("Now we're counting the total number of links.");
 	// Let's count how many links are in the table so far, so we can insert the new link in the last position.
 	var linkCount = countTotalLinks(linkList); // Since this number does not start from 0, we will just use this number as the index for the new link.
-	log("Here's how many links we're working with:" + linkCount);
+	//log("Here's how many links we're working with:" + linkCount);
 
-	log("Finding the last link ID");
+	//log("Finding the last link ID");
 	// We have to find out what the ID of the last link is so that we don't overwrite any old links. 
 	var lastLinkId;
-	log("Starting the loop to get the last index item...");
+	//log("Starting the loop to get the last index item...");
 	var order = 1;
 	for (var i in linkList) {
     	var item = i;
@@ -246,7 +245,7 @@ function addLink( title , url ) {
 	var newOrder = Number(order) + Number(1);
 
 	//log(newLinkId);
-	log("Setting values for new link #" + newLinkId);
+	//log("Setting values for new link #" + newLinkId);
 	// Let's set the values for the new link
 	linkList[newLinkId] = {
 		"href" : url,
@@ -254,23 +253,23 @@ function addLink( title , url ) {
 		"name" : title,
 		"order": newOrder
 	};
-	log(linkList[newLinkId]);
-	log("Updating link count in link object..");
+	//log(linkList[newLinkId]);
+	//log("Updating link count in link object..");
 	// Now, let's update the link count in the Link Object
 	linkObj.linkCount = linkCount + 1;
-	console.log(linkList);
+	//console.log(linkList);
 	//log(linkObj);
-	log("Now, let's store it in local storage. Fingers crossed!");
+	//log("Now, let's store it in local storage. Fingers crossed!");
 
-	console.log(linkObj);
+	//console.log(linkObj);
 
 	// Now let's store it in local storage
 
 	if(storeLinkObj(linkObj)) {
-		log("New link with url " + url + " and title " + title + " successfully stored in local storage.");
+		//log("New link with url " + url + " and title " + title + " successfully stored in local storage.");
 		return true;
 	} else {
-		log("New link with url " + url + " and title " + title + " UNABLE TO BE STORED in local storage.");
+		//log("New link with url " + url + " and title " + title + " UNABLE TO BE STORED in local storage.");
 		return false;
 	}
 	return true;
@@ -279,10 +278,25 @@ function addLink( title , url ) {
 function removeLink(id) {
 	var data = parseDatabase();
 	var links = data.links;
-	console.log("Link " + id + " being deleted from this list: ");
-	console.log(links);
+	//console.log("Link " + id + " being deleted from this list: ");
+	//console.log(links);
+
+	for ( i in links.links ) {
+		var item  = links.links[i];
+
+		//console.log(item);
+
+		//console.log("Current order: " + links.links[id].order + ", compared to " + item.order);
+		if( links.links[id].order < item.order ) {
+			//console.log("Found a bigger link, decrementing.");
+			data.links.links[i].order--;
+		}
+
+	}
+
 	delete data.links.links[id];
 
+	//console.log(data);
 
 	if(storeObj(data)) {
 		log('Link #' + id + " removed!");
@@ -303,50 +317,50 @@ function countTotalLinks(obj) {
 }
 
 function storeLinkObj( linkObj ) {
-	console.log('I am pretty sure this is not working correctly.');
+	//console.log('I am pretty sure this is not working correctly.');
 
-	console.log("This is the link object passed to storeLinkObj:");
-	console.log(linkObj);
+	//console.log("This is the link object passed to storeLinkObj:");
+	//console.log(linkObj);
 
 	var db = parseDatabase();
 
-	console.log("This is the database as it is parsed from localStorage");
-	console.log(db);
+	//console.log("This is the database as it is parsed from localStorage");
+	//console.log(db);
 
 	db.links = linkObj;
-	log("New Full Object to be stored:");
-	log(db);
+	//log("New Full Object to be stored:");
+	//log(db);
 	if(storeObj(db)) {
-		log("StoreLinkObj: Link object successfully updated in database!");
+		//log("StoreLinkObj: Link object successfully updated in database!");
 		return true;
 	} else {
-		log("Unknown failure while updating links in database.");
+		//log("Unknown failure while updating links in database.");
 		return false;
 	}
 }
 
 function getLinkObj() {
-	log("Grabbing database object...");
+	//log("Grabbing database object...");
 	var dbObj = parseDatabase();
-	log(dbObj);
+	//log(dbObj);
 	var linkData = dbObj.links;
-	log("GetLinkObj: LinkData: ");
-	log(linkData);
+	//log("GetLinkObj: LinkData: ");
+	//log(linkData);
 	return linkData;
 }
 
 function storeObj(obj) {
-	log("Storing the following Link Object into local storage into table " + lsTable + ".");
-	log(obj);
+	//log("Storing the following Link Object into local storage into table " + lsTable + ".");
+	//log(obj);
 	var stringy = JSON.stringify(obj);
 	//var thing = "Test bullshit";
-	log("The database will receive this information: " + stringy);
+	//log("The database will receive this information: " + stringy);
 	window.localStorage[lsTable] = stringy;
 	if(true) {
-		log("Link object successfully stored. I hope the new tab page updates!");
+		//log("Link object successfully stored. I hope the new tab page updates!");
 		return true;
 	} else {
-		log("Link object UNABLE to be stored. Whoops!");
+		//log("Link object UNABLE to be stored. Whoops!");
 		return false;
 	}
 }
@@ -356,20 +370,20 @@ function sendObj() {
 }
 
 function parseDatabase() {
-	log("Parsing database...");
+	//log("Parsing database...");
 	// Grab everything from the local storage database and parse it
 	var db = JSON.parse(window.localStorage[lsTable]);
-	log(db);
+	//log(db);
 	return db;
 }
 
 function processInstall() {
-	log("Processing installation...");
+	//log("Processing installation...");
 	if(storeObj(defaultData)) {
-		log("Table built!");
+		//log("Table built!");
 		return true;
 	} else {
-		log("Unable to build table. Please try reinstalling this extension.");
+		//log("Unable to build table. Please try reinstalling this extension.");
 		return false;
 	}
 }
@@ -377,53 +391,53 @@ function processInstall() {
 function processStorageUpdate() {
 
 	var data = parseDatabase();
-	console.log("Processing storage update database");
-	console.log(data);
+	//console.log("Processing storage update database");
+	//console.log(data);
 
-	log("Processing storage update to make it compatible with next version.");
+	//log("Processing storage update to make it compatible with next version.");
 
-	if( data.info.version == "0.2.0" ) {
-		console.log('data version correct');
+	if( data.info.version == "0.3.0" ) {
+		//console.log('data version correct');
 	} else {
 
-		console.log('version incorrect, doing update');
+		//console.log('version incorrect, doing update');
 		var i = 1;
 		for ( d in data.links.links ) {
 			if(data.links.links[d].hasOwnProperty( 'order' )) {
-				console.log("Order property found.");
+				//console.log("Order property found.");
 				break;
 			} else {
-				console.log("Order property nonexistent. Being created.");
+				//console.log("Order property nonexistent. Being created.");
 				data.links.links[d].order = i;
 			}
 			i++;
 		}
 		data.info.version = "0.3.0";
 
-		console.log(data);
+		//console.log(data);
 
 		if( storeObj(data) ) {
 			var page = "tabPageFiles/update.html";
 		} else {
 			var page = "tabPageFiles/updatefail.html";
 		}
-		/*
+
 		chrome.tabs.create({
 			url  : page
 		});
-		*/	
+
 	}
 
 	return data;
 }
 
 function isFirstInstall() {
-	log("Checking for first install...");
+	//log("Checking for first install...");
 	if(!window.localStorage[lsTable]) {
-		log("First install, building table...");
+		//log("First install, building table...");
 		processInstall();
 	} else {
-		log("Not first install.");
+		//log("Not first install.");
 		return false;
 	}
 }
@@ -431,19 +445,19 @@ function isFirstInstall() {
 function buildLinks() {
 
 	var data = processStorageUpdate();
-	console.log("Data object passed to buildLinks:");
-	console.log(data);
-	log('Working on links now...');
+	//console.log("Data object passed to buildLinks:");
+	//console.log(data);
+	//log('Working on links now...');
 	var linkOutput = "";
 	var links = data.links.links;
-	log(links);
-	console.log("Now let's run a loop.");
+	//log(links);
+	//console.log("Now let's run a loop.");
 	for(link in links) {
 		//console.log(links[link].order);
 	}
-	console.log("All links should be displayed.");
+	//console.log("All links should be displayed.");
 	if(links) {
-		log("There are links in the database for parsing. Starting loop now.");
+		//log("There are links in the database for parsing. Starting loop now.");
 
 		var output = {};
 		var linkOutput = "";
@@ -451,7 +465,7 @@ function buildLinks() {
 
 		for( link in links ) {
 			count++;
-			console.log(links[link].id + ", position " + links[link].order);
+			//console.log(links[link].id + ", position " + links[link].order);
 			var currentLink = "<li id=\"link_" + links[link].id + "\"><div class=\"btnDelete\"><a href=\"#\" class=\"deleteLink\" name=\"" + links[link].id + "\" linkname=\"" + links[link].name + "\"><img src=\"lib/img/delete.png\" title=\"Delete This Link\" /><span class=\"gentext\">Delete</span></a></div><a href=\"" + links[link].href + "\" class=\"genbutton\"><span class=\"gentext\">" + links[link].name + "</span></a><div class=\"clear\"></div></li>";
 
 			var order = links[link].order;
