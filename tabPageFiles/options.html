@@ -17,44 +17,128 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 		<title>Options :: Bad Ass New Tab Page</title>
 		<link rel="stylesheet" type="text/css" href="lib/css/style.css" />
-		<script type="text/javascript" href="lib/js/jquery.js"></script>
+		<script src="lib/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+		function colorScheme() {
+
+			// Fetch config from localStorage
+			chrome.extension.sendRequest({ action : 'getConfig' } , function( response ) {
+
+				// Separate the configuration values from return data
+				var conf = response.conf;
+
+				console.log("Initializing color scheme...");
+				console.log( conf );
+
+				var backgrounds = {
+					1 : "url('lib/img/bg.jpg') no-repeat top", // Mountains
+					2 : "url('lib/img/bg2.jpg') no-repeat top", // Trees
+					3 : "url('lib/img/pacific.jpg') no-repeat top", // Island
+					4 : "-webkit-linear-gradient( #bbb , #888 )", // Grey Gradient
+					5 : "-webkit-linear-gradient( #1B70E0 , #0A317A )", // Blue Gradient
+					6 : "-webkit-linear-gradient( #555 , #111 )", // Dark Gradient
+					7 : ""  // No background
+				}
+
+				// Grab the current background
+				var current = parseInt( response.conf.background );
+
+				// Set the page background.
+				$("body").css("background", backgrounds[ current ] );
+
+				// Now time for color schemes
+				// Define what colors they are.
+				var colorSchemes = {
+					// Grey
+					1 : {
+						start : "#5eaae5",
+						end : "#1e5799"
+					},
+					2 : {
+						start : "#bbb",
+						end : "#888"
+					},
+					3 : {
+						start : "#555",
+						end : "#111"
+					}
+				}
+
+				var current = colorSchemes[ response.conf.colorScheme ];
+
+				$(".genbutton").css("background","-webkit-linear-gradient(" + current.start + "," + current.end + ")");
+
+			});
+
+		}
+
+		colorScheme();
+
+		$(document).ready(function() {
+			$("select").change(function() {
+
+				// First, assemble the configuration object to store
+				var configData = {
+					timeFormat : parseInt( $("#timeFormat :selected").val() ),
+					dateFormat : parseInt( $("#dateFormat :selected").val() ),
+					showSeconds : parseInt( $("#showSeconds :selected").val() ),
+					background : parseInt( $("#background :selected").val() ),
+					colorScheme : parseInt( $("#colorScheme :selected").val() )
+				}
+				console.log( configData );
+
+				// Now send the config to the background page for storing
+				chrome.extension.sendRequest({ action : 'setConfig' , data : configData } , function( response ) {
+					console.log( response );
+					if( response.success == true ) {
+						$("#success").text("Configuration stored!").fadeIn();
+					} else {
+						$("#error").text("Unable to store configuration! Refresh and try again!").fadeIn();
+					}
+				});
+
+			});
+		});
 		
+
+</script>
 	</head>
-	<body>
+	<body style="background-size: cover;">
 		<div class="genBox">
+
+			<div id="success">success</div>
+			<div id="error">error</div>
 			<h2>Options</h2>
 			
 			<form id="bantpOptions">
 			<hr />
 			Time Format: 
-			<select id="timeFormat">
-				<option value="">--</option>
+			<select id="timeFormat" class="option">
 				<option value="1">4:30 pm</option>
 				<option value="2">16:30</option>
 			</select>
 
 			Display Seconds:
-			<select id="showSeconds">
-				<option value="">--</option>
+			<select id="showSeconds" class="option">
 				<option value="1">Yes</option>
 				<option value="2">No</option>
 			</select>
 
 			<hr />
 
+<!--
 			Date Format 
-			<select id="dateFormat">
-				<option value="">--</option>
+			<select id="dateFormat" class="option">
 				<option value="1">January 1 2012</option>
 				<option value="2">1 January 2012</option>
 				<option value="3">01/01/2012</option>
 			</select>
 
 			<hr />
-
+-->
 			Background: 
-			<select id="background">
-				<option value="">--</option>
+			<select id="background" class="option">
 				<option value="1">Mountains</option>
 				<option value="2">Trees</option>
 				<option value="3">Island</option>
@@ -65,10 +149,9 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 			</select>
 
 			Color Scheme: 
-			<select id="colorScheme">
-				<option value="">--</option>
-				<option value="1">Grey</option>
-				<option value="2">Blue</option>
+			<select id="colorScheme" class="option">
+				<option value="1">Blue</option>
+				<option value="2">Grey</option>
 				<option value="3">Dark</option>
 			</select>
 

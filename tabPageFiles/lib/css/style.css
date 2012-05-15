@@ -23,21 +23,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 /** Body Styles for Customization **/
 body {
-	/*background: url('../img/bg2.jpg') no-repeat top;*/
-	background-size:100% 100%;
-	background-attachment: fixed;
-}
-body.mountains {
-	background: url('../img/bg.jpg') no-repeat top;
-}
-body.trees {
-	background: url('../img/bg2.jpg') no-repeat top;
-}
-body.island {
-	background: url('../img/pacific.jpg') no-repeat top;
-}
-body.grey_gradient {
-	background: -webkit-linear-gradient( #bbb , #888 );
+	background-size: cover;
+	background-attachment:fixed;
 }
 
 ul {
@@ -73,26 +60,21 @@ h1, h2, h3 {
 }
 #clock {
 	width: 300px;
-	height: 100%;
 	float:left;
 }
 #links {
-	width: 800px;
-	float:left;
-	clear:left;
+	width: 70%;
+	position: absolute;
+	top: 25;
+	right: 0;
+	overflow-y: auto;
+	height: 97%;
 }
 #bigbar {
 	min-width: 150px;
 	margin: auto 25px 35px auto;
 	height: 80px;
 	float: right;
-	/*
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4f80b5), color-stop(100%,#093377));
-	background: -webkit-linear-gradient(top,  #4f80b5 0%,#093377 100%);
-	box-shadow: 0 2px 4px #000000 , inset 0 1px 1px #ffffff;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
-	*/
 }
 #bigbar a {
 	font-size: 60px;
@@ -138,13 +120,13 @@ a.genbutton {
 	display:block;
 	float:left;
 	text-align: center;
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5eaae5), color-stop(100%,#1e5799)); /* Chrome,Safari4+ */
 	border-radius: 5px;
 	box-shadow: inset 0px 1px 1px #ffffff , 0px 4px 10px #000000;
 	font-size: 45px;
+	opacity: 0.9;
 }
 a.genbutton:hover {
-	background: -webkit-linear-gradient(top,  #8cbde2 0%,#4f7199 100%);
+	opacity: 1;
 }
 a.genbutton:active {
 	box-shadow: inset 0px 1px 1px #ffffff, 0 2px 6px #000;
@@ -189,13 +171,6 @@ a.genbutton:active {
 .round {
 	-webkit-border-radius:5px;
 	border-radius:5px;
-}
-#links {
-	width:50%;
-	height:100%;
-	position:absolute;
-	top:50px;
-	right:0;
 }
 #donatePopup {
 	display: none;

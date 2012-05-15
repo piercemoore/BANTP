@@ -2,10 +2,8 @@
 	<head>
 		<title>Start Here : Bad Ass New Tab Page</title>
 		<link rel="stylesheet" type="text/css" href="lib/css/style.css" />
-		<link rel="stylesheet" type="text/css" href="lib/css/ui-lightness/jquery-ui-1.8.18.custom.css" />
 		<script src="lib/js/jquery-1.7.1.min.js" type="text/javascript"></script>
 		<script src="lib/js/jquery-ui-1.8.18.custom.min.js" type="text/javascript"></script>
-		<script type="text/javascript" src="lib/facebox/facebox.js"></script>
 		<script type="text/javascript">
 
 		const bg = chrome.extension.getBackgroundPage();
@@ -13,6 +11,61 @@
 		function bg() {
 			console.log(chrome.extension.getBackgroundPage());
 			return chrome.extension.getBackgroundPage();
+		}
+
+		function colorScheme() {
+
+			// Fetch config from localStorage
+			chrome.extension.sendRequest({ action : 'getConfig' } , function( response ) {
+
+				// Separate the configuration values from return data
+				var conf = response.conf;
+
+				console.log("Initializing color scheme...");
+				console.log( conf );
+
+				var backgrounds = {
+					1 : "url('lib/img/bg.jpg') no-repeat top", // Mountains
+					2 : "url('lib/img/bg2.jpg') no-repeat top", // Trees
+					3 : "url('lib/img/pacific.jpg') no-repeat top", // Island
+					4 : "-webkit-linear-gradient( #bbb , #888 )", // Grey Gradient
+					5 : "-webkit-linear-gradient( #1B70E0 , #0A317A )", // Blue Gradient
+					6 : "-webkit-linear-gradient( #555 , #111 )", // Dark Gradient
+					7 : ""  // No background
+				}
+
+				// Grab the current background
+				var current = parseInt( response.conf.background );
+
+				// Set the page background.
+				$("body").css("background", backgrounds[ current ] );
+
+				// Now time for color schemes
+				// Define what colors they are.
+				var colorSchemes = {
+					// Grey
+					1 : {
+						start : "#5eaae5",
+						end : "#1e5799"
+					},
+					2 : {
+						start : "#bbb",
+						end : "#888"
+					},
+					3 : {
+						start : "#555",
+						end : "#111"
+					}
+				}
+
+				var current = parseInt( response.conf.colorScheme );
+
+				var item = colorSchemes[ current ];
+
+				$(".genbutton").css("background","-webkit-linear-gradient(" + item.start + "," + item.end + ")");
+
+			});
+
 		}
 		
 		function displayLinks() {
@@ -124,9 +177,8 @@
 			colorScheme();
 			
 			$("#menuBar_optionsPage").click(function() {
-				alert("clicked");
 				chrome.tabs.create({
-					url:	"options.html"
+					url:	"tabPageFiles/options.html"
 				})
 			});
 			
@@ -141,6 +193,7 @@
 					color: "#eeeeee"
 				},"fast")
 			});
+
 			$("a.deleteLink").live('click',function() {
 				var link = $(this).attr("linkname");
 				var id = $(this).attr("name");
@@ -200,19 +253,6 @@
 		
 		<div id="error" style="display:none;">Error!</div>
 		<div id="success" style="display:none;">Success!</div>
-		
-		<div id="donatePopup" style="background: #eeeeee; display: none;">
-			
-			Thank you for donating! I will enjoy this beer to the fullest extent allowable by law.<br /><br />
-			
-			<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-				<input type="hidden" name="cmd" value="_s-xclick">
-				<input type="hidden" name="hosted_button_id" value="83RSHMQWVRFFS">
-				<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-				<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-			</form>
-
-		</div>
 
 		<script type="text/javscript">
 		var _gaq = _gaq || [];
