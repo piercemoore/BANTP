@@ -3,7 +3,6 @@
 		<title>Start Here : Bad Ass New Tab Page</title>
 		<link rel="stylesheet" type="text/css" href="lib/css/style.css" />
 		<script src="lib/js/jquery-1.7.1.min.js" type="text/javascript"></script>
-		<script src="lib/js/jquery-ui-1.8.18.custom.min.js" type="text/javascript"></script>
 		<script type="text/javascript">
 
 		const bg = chrome.extension.getBackgroundPage();
@@ -31,7 +30,6 @@
 					4 : "-webkit-linear-gradient( #bbb , #888 )", // Grey Gradient
 					5 : "-webkit-linear-gradient( #1B70E0 , #0A317A )", // Blue Gradient
 					6 : "-webkit-linear-gradient( #555 , #111 )", // Dark Gradient
-					7 : ""  // No background
 				}
 
 				// Grab the current background
@@ -145,7 +143,7 @@
 				timeOutput = hour + ":" + min;
 
 				// Figure out seconds
-				if( response.conf.displaySeconds == 1 ) {
+				if( response.conf.showSeconds == 1 ) {
 					timeOutput += ":" + sec;
 				}
 
@@ -178,7 +176,7 @@
 			
 			$("#menuBar_optionsPage").click(function() {
 				chrome.tabs.create({
-					url:	"tabPageFiles/options.html"
+					url:	"tabPageFiles/update.html"
 				})
 			});
 			
@@ -231,7 +229,7 @@
 
 		<div id="clock">
 			<div id="timeBox">
-				<h1 class="gentext" id="time" style="letter-spacing: -8px;width: 400px;">02:27:35 pm</h1>
+				<h1 class="gentext" id="time" style="width: 400px;">02:27:35 pm</h1>
 			</div>
 			<div id="dateBox">
 				<h1 class="gentext" id="date">Tues<br />Mar 06<br />2012</h1>

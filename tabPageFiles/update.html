@@ -17,11 +17,64 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 		<title>Update Info :: Bad Ass New Tab Page</title>
 		<link rel="stylesheet" type="text/css" href="lib/css/style.css" />
-		<link rel="stylesheet" type="text/css" href="lib/css/ui-lightness/jquery-ui-1.8.18.custom.css" />
 		<script src="lib/js/jquery-1.7.1.min.js" type="text/javascript"></script>
-		<script src="lib/js/jquery-ui-1.8.18.custom.min.js" type="text/javascript"></script>
-		<script type="text/javascript" src="lib/facebox/facebox.js"></script>
-		
+<script type="text/javascript">
+	function colorScheme() {
+
+		// Fetch config from localStorage
+		chrome.extension.sendRequest({ action : 'getConfig' } , function( response ) {
+
+			// Separate the configuration values from return data
+			var conf = response.conf;
+
+			console.log("Initializing color scheme...");
+			console.log( conf );
+
+			var backgrounds = {
+				1 : "url('lib/img/bg.jpg') no-repeat top", // Mountains
+				2 : "url('lib/img/bg2.jpg') no-repeat top", // Trees
+				3 : "url('lib/img/pacific.jpg') no-repeat top", // Island
+				4 : "-webkit-linear-gradient( #bbb , #888 )", // Grey Gradient
+				5 : "-webkit-linear-gradient( #1B70E0 , #0A317A )", // Blue Gradient
+				6 : "-webkit-linear-gradient( #555 , #111 )", // Dark Gradient
+			}
+
+			// Grab the current background
+			var current = parseInt( response.conf.background );
+
+			// Set the page background.
+			$("body").css("background", backgrounds[ current ] );
+
+			// Now time for color schemes
+			// Define what colors they are.
+			var colorSchemes = {
+				// Grey
+				1 : {
+					start : "#5eaae5",
+					end : "#1e5799"
+				},
+				2 : {
+					start : "#bbb",
+					end : "#888"
+				},
+				3 : {
+					start : "#555",
+					end : "#111"
+				}
+			}
+
+			var current = parseInt( response.conf.colorScheme );
+
+			var item = colorSchemes[ current ];
+
+			$(".genbutton").css("background","-webkit-linear-gradient(" + item.start + "," + item.end + ")");
+
+		});
+
+	}
+
+	colorScheme();
+</script>
 		<style type="text/css">
 			* {
 				letter-spacing: 0px;
@@ -53,19 +106,17 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 		<div class="genBox">
 			<h2 style="color:#ffffff;"><img src="../img/icon_128.png" class="shadow" style="width: 80px; height: 80px;" align="left" /> Bad Ass New Tab Page :: Update</h2>
 			<br />
-			<h2>How's it going?</h2>
+			<h2>What up, y'all?</h2>
 			<span style="font-size: 30px; font-family: Vegur;">
-				It's going pretty well for me. It's been a few sleepless nights here because I've been so fixated on bringing you a totally bad ass update to this extension. I think I succeeded.
+				Update time!
 			</span>
 
 			<h2>What I Changed!</h2>
 			<span style="font-size: 30px; font-family: Vegur;">
-				The list of changes in this update is pretty comprehensive, but I'll keep it short. 
+				Another huge update, and corresponding changelist.
 				<ol>
-					<li>LINKS ARE NOW SORTABLE!! Yes. All caps. Because you know you wanted sortable links. My very first commenter (you know who you are) asked specifically for sortable links and WHAM there it is. All you have to do is click the "edit links" button and drag each link where you want it to go.</li>
-					<li>Enhanced the look and feel of very literally EVERY single element in the entire application. It should look and feel easier and sexier to use.</li>
-					<li>Enhanced functionality. Though you don't see it and don't care about it, the underlying code for this update is incredibly smooth.</li>
-					<li>I changed the clock settings so they should now reflect the proper 12 hour clock time, NOT the 24 hour time you're used to. It looks better, I promise.</li>
+					<li>OPTIONS PANEL!! YAY! I say yay, anyway. I hope you will too. You can now configure your options in the "Options" panel found in the home page next to the "Edit links" button.</li>
+					<li>You can change your background, the color scheme for the buttons, and even the way that the clock is displayed. All in all, pretty fully customizable.</li>
 				</ol>
 			</span>
 			<h2>How to contact me / Support</h2>
