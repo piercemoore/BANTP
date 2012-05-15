@@ -45,20 +45,22 @@
 				}
 			});
 		}	
+
 		function updateTime() {
 			var today = new Date();
 			var hour = today.getHours();
 			var min = today.getMinutes();
 			var sec = today.getSeconds();
 			var ampm = '';
+
+			// Figure out whether AM or PM
 			if( hour < 12) {
 				ampm = 'a';
 			} else if( hour >= 12 ) {
 				ampm = 'p';
 			}
-			if ( hour > 12 ) {
-				hour = hour - 12;
-			}
+
+			// Pad the hours/mins/seconds with zeroes
 			if( hour < 10) {
 				hour = "0" + hour;
 			}
@@ -68,24 +70,61 @@
 			if(sec < 10) {
 				sec = "0" + sec;
 			}
-			if( hour == "00" || hour == 0 ) {
-				hour = "12";
-			}
-			document.getElementById("time").innerHTML = hour + ":" + min + ":" + sec + " " + ampm;
+
+
+			// Get configuration for whether or not they want seconds displayed.
+			chrome.extension.sendRequest( { action : 'getConfig' } , function( response )  {
+
+				var timeOutput = "";
+
+				// Modify the hours if in the 12 hour format. 24 hour format unaffected.
+				if( response.conf.timeFormat == 1 ) {
+					// Specific to the 12 hour time format.
+					if ( hour > 12 ) {
+						hour = hour - 12;
+					}
+					if( hour == "00" || hour == 0 ) {
+						hour = "12";
+					}
+				}
+
+				// Assemble the time, format independent
+				timeOutput = hour + ":" + min;
+
+				// Figure out seconds
+				if( response.conf.displaySeconds == 1 ) {
+					timeOutput += ":" + sec;
+				}
+
+				// Now figure out if we show am/pm
+				if( response.conf.timeFormat == 1 ) {
+					timeOutput += " " + ampm;
+				}
+
+				document.getElementById("time").innerHTML = timeOutput;
+
+			});
+			
 			var day = today.toDateString();
 			document.getElementById("date").innerHTML = day;
 		}
+
 		console.log('initializing...');
+
 		$(document).ready(function () {
+
+			// Initialize clock and set it 
 			updateTime();
-			displayLinks();
 			var clock = window.setInterval(updateTime,1000);
 			
-			$("#menuBar_donate").click(function() {
-				jQuery.facebox({ div: '#donatePopup' });
-			});
+			// Get the links out there.
+			displayLinks();
+
+			// Configure color scheme based on user preferences.
+			colorScheme();
 			
 			$("#menuBar_optionsPage").click(function() {
+				alert("clicked");
 				chrome.tabs.create({
 					url:	"options.html"
 				})
@@ -119,9 +158,6 @@
 				}
 				return false;
 			});
-
-			var w = $(document).width();
-			//$("#links").css("width",w - 500);
 			
 			$("#btn_linkedit").toggle(function() {
 				$(".btnDelete").show("slide",{direction: "down"}, 1000);
@@ -151,6 +187,7 @@
 		
 		<div id="links">
 			<div id="bigbar">
+				<a href="#" id="menuBar_optionsPage" class="genbutton"><span class="gentext">Options</span></a>
 				<a href="#" id="btn_linkedit" class="genbutton"><span class="gentext">Edit Links</span></a>
 				<!-- <a href="#"><span class="gentext">Options</span></a> -->
 				<div class="clear"></div>

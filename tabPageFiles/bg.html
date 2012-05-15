@@ -15,6 +15,15 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 	
 var debug = false;
 var lsTable = "bantp";
+var configTable = "bantp_config";
+var defaultConfig = {
+	'background'	: 2, // Trees
+	'timeFormat'	: 1,
+	'displaySeconds': 2,
+	'dateFormat'	: 1,
+	'colorScheme'	: 1
+};
+
 var defaultData = {
 	"info": {
 		"name": "Bad Ass New Tab Page",
@@ -117,7 +126,7 @@ var defaultData = {
 			},
 			14: {
 				"id"  : 14,
-				"href": "http://tusplus.com",
+				"href": "http://tutsplus.com",
 				"name": "tuts+",
 				"order" : 15
 			},
@@ -138,6 +147,12 @@ var defaultData = {
 				"href": "http://www.piercemoore.com/projects/bantp/",
 				"name": "BANTP Home Page",
 				"order" : 18
+			},
+			18: {
+				"id"  : 18,
+				"href": "http://www.zee-way.com",
+				"name": "Zee-Way Hosting",
+				"order" : 19
 			}
 		}
 	}
@@ -182,8 +197,31 @@ chrome.extension.onRequest.addListener( function( request , sender , sendRespons
 			sendResponse({ success : false });
 		}
 
+	} else if ( request.action == 'getConfig' ) {
+		console.log("Fetching config from local storage.");
+		var config = getConfig();
+		console.log( config );
+		sendResponse({ success : true , conf : config });
 	}
 });
+
+function getConfig() {
+
+	console.log("Grabbing config");
+	if( !window.localStorage[configTable] ) {
+		console.log("Config not set up yet. Doing that now.");
+		window.localStorage[configTable] = JSON.stringify( defaultConfig );
+		return defaultConfig;
+	} else {
+		console.log("Config already stored, parsing now.");
+		return JSON.parse( window.localStorage[configTable] );
+	}
+
+}
+
+function setConfig( conf ) {
+	return window.localStorage[configTable] = JSON.stringify( conf );
+}
 
 function storeOrder( data ) {
 	var count = 1;

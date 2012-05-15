@@ -1,6 +1,6 @@
 {
 	"name":	"Bad Ass New Tab Page",
-	"version": "0.3.1",
+	"version": "0.4.0",
 	"description": "I got tired of Chrome's ugly new tab page, so this is an attempt to fix it and make it more useful. Stay tuned for new features!",
 	"browser_action": {
 		"default_icon": "img/icon_19.png",
