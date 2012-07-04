@@ -28,7 +28,7 @@ var defaultData = {
 	"info": {
 		"name": "Bad Ass New Tab Page",
 		"description": "A Google Chrome extension for people tired of Chrome's ugly, useless tab page.",
-		"version": "0.4.0",
+		"version": "0.4.2",
 		"homepage": "http://www.piercemoore.com/projects/bantp/",
 		"github": "http://www.github.com/piercemoore/bantp/",
 		"devName": "Pierce Moore",
@@ -437,7 +437,7 @@ function processStorageUpdate() {
 
 	//log("Processing storage update to make it compatible with next version.");
 
-	if( data.info.version == "0.3.0" ) {
+	if( data.info.version == defaultData.info.version ) {
 		//console.log('data version correct');
 	} else {
 
