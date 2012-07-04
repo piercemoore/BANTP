@@ -28,7 +28,7 @@ var defaultData = {
 	"info": {
 		"name": "Bad Ass New Tab Page",
 		"description": "A Google Chrome extension for people tired of Chrome's ugly, useless tab page.",
-		"version": "0.4.2",
+		"version": "0.4.3",
 		"homepage": "http://www.piercemoore.com/projects/bantp/",
 		"github": "http://www.github.com/piercemoore/bantp/",
 		"devName": "Pierce Moore",
@@ -462,11 +462,11 @@ function processStorageUpdate() {
 		} else {
 			var page = "tabPageFiles/updatefail.html";
 		}
-
+/*
 		chrome.tabs.create({
 			url  : page
 		});
-
+*/
 	}
 
 	return data;
