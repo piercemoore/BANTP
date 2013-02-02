@@ -31,6 +31,27 @@
          url('Novecentowide-DemiBold-webfont.svg#NovecentowideLightBold') format('svg');
     font-weight: normal;
     font-style: normal;
-
 }
 
+
+@font-face {
+    font-family: 'NovecentowideBookBold';
+    src: url('Novecentowide-Bold-webfont.eot');
+    src: url('Novecentowide-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('Novecentowide-Bold-webfont.woff') format('woff'),
+         url('Novecentowide-Bold-webfont.ttf') format('truetype'),
+         url('Novecentowide-Bold-webfont.svg#NovecentowideBookBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NovecentowideLightRegular';
+    src: url('Novecentowide-Light-webfont.eot');
+    src: url('Novecentowide-Light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('Novecentowide-Light-webfont.woff') format('woff'),
+         url('Novecentowide-Light-webfont.ttf') format('truetype'),
+         url('Novecentowide-Light-webfont.svg#NovecentowideLightRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
