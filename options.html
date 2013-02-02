@@ -1,0 +1,212 @@
+<!--
+
+Copyright (c) 2011 Pierce Moore, RefreshedWeb.com, and NerdTraining.info
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+Neither the names of Pierce Moore, RefreshedWeb.com, NerdTraining.info,  nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<title>Options :: Bad Ass New Tab Page</title>
+		<link rel="stylesheet" type="text/css" href="lib/css/style.css" />
+		<script src="lib/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+		function colorScheme() {
+
+			// Fetch config from localStorage
+			chrome.extension.sendRequest({ action : 'getConfig' } , function( response ) {
+
+				// Separate the configuration values from return data
+				var conf = response.conf;
+
+				console.log("Initializing color scheme...");
+				console.log( conf );
+
+				var backgrounds = {
+					1 : "url('lib/img/bg.jpg') no-repeat top", // Mountains
+					2 : "url('lib/img/bg2.jpg') no-repeat top", // Trees
+					3 : "url('lib/img/pacific.jpg') no-repeat top", // Island
+					4 : "-webkit-linear-gradient( #bbb , #888 )", // Grey Gradient
+					5 : "-webkit-linear-gradient( #1B70E0 , #0A317A )", // Blue Gradient
+					6 : "-webkit-linear-gradient( #555 , #111 )" // Dark Gradient
+				}
+
+				// Grab the current background
+				var current = parseInt( response.conf.background );
+
+				// Set the page background.
+				$("body").css("background", backgrounds[ current ] );
+				// Set the page background.
+				$(".sampleArea").css("background", backgrounds[ current ] );
+
+				// Now time for color schemes
+				// Define what colors they are.
+				var colorSchemes = {
+					// Grey
+					1 : {
+						start : "#5eaae5",
+						end : "#1e5799"
+					},
+					2 : {
+						start : "#bbb",
+						end : "#888"
+					},
+					3 : {
+						start : "#555",
+						end : "#111"
+					}
+				}
+
+				var current = colorSchemes[ response.conf.colorScheme ];
+
+				$(".genbutton").css("background","-webkit-linear-gradient(" + current.start + "," + current.end + ")");
+
+
+
+			});
+
+		}
+
+		function setOptions() {
+
+			chrome.extension.sendRequest({ action : 'getConfig' } , function( response ) {
+				$("#timeFormat option[value=" + response.conf.timeFormat + "]").attr("selected","selected");
+				$("#showSeconds option[value=" + response.conf.showSeconds + "]").attr("selected","selected");
+				$("#background option[value=" + response.conf.background + "]").attr("selected","selected");
+				$("#colorScheme option[value=" + response.conf.colorScheme + "]").attr("selected","selected");
+			});
+
+		}
+
+		colorScheme();
+		setOptions();
+
+		$(document).ready(function() {
+
+			$("select").change(function() {
+
+				// First, assemble the configuration object to store
+				var configData = {
+					timeFormat : parseInt( $("#timeFormat :selected").val() ),
+					dateFormat : parseInt( $("#dateFormat :selected").val() ),
+					showSeconds : parseInt( $("#showSeconds :selected").val() ),
+					background : parseInt( $("#background :selected").val() ),
+					colorScheme : parseInt( $("#colorScheme :selected").val() )
+				}
+				console.log( configData );
+
+				// Now send the config to the background page for storing
+				chrome.extension.sendRequest({ action : 'setConfig' , data : configData } , function( response ) {
+					console.log( response );
+					if( response.success == true ) {
+						$("#success").text("Configuration stored!").fadeIn();
+					} else {
+						$("#error").text("Unable to store configuration! Refresh and try again!").fadeIn();
+					}
+				});
+
+				colorScheme();
+
+			});
+		});
+		
+
+</script>
+
+<style type="text/css">
+.sampleArea {
+	width: 80%;
+	padding: 10%;
+	background-position: bottom;
+	border: 1px #eee solid;
+	box-shadow: inset 0 0 10px #000;
+	background-size: 100% 100%;
+}
+</style>
+	</head>
+	<body style="background-size: cover;">
+		<div class="genBox">
+
+			<div id="success">success</div>
+			<div id="error">error</div>
+			<h2>Options</h2>
+			
+			<form id="bantpOptions">
+			<hr />
+			Time Format: 
+			<select id="timeFormat" class="option">
+				<option value="1">4:30 pm</option>
+				<option value="2">16:30</option>
+			</select>
+
+			Display Seconds:
+			<select id="showSeconds" class="option">
+				<option value="1">Yes</option>
+				<option value="2">No</option>
+			</select>
+
+			<hr />
+
+<!--
+			Date Format 
+			<select id="dateFormat" class="option">
+				<option value="1">January 1 2012</option>
+				<option value="2">1 January 2012</option>
+				<option value="3">01/01/2012</option>
+			</select>
+
+			<hr />
+-->
+			Background: 
+			<select id="background" class="option">
+				<option value="1">Mountains</option>
+				<option value="2">Trees</option>
+				<option value="3">Island</option>
+				<option value="4">Grey Gradient</option>
+				<option value="5">Blue Gradient</option>
+				<option value="6">Dark Gradient</option>
+			</select>
+
+			Color Scheme: 
+			<select id="colorScheme" class="option">
+				<option value="1">Blue</option>
+				<option value="2">Grey</option>
+				<option value="3">Dark</option>
+			</select>
+
+			<div class="sampleArea">
+				<a href="#" class="genbutton" style="float: none;"><span class="gentext">Test</span></a>
+			</div>
+
+			</form>
+
+			<hr />
+
+			<h3> Shameless Self Promotion </h3>
+			<span style="font-size: 40px; letter-spacing: -2px;">My hosting company, Zee-Way hosting. If you want great hosting at a low, flat rate, use coupon code BANTP to get 20% off shared and vps hosting for life!</span>
+			<a href="http://www.zee-way.com?utm_source=BANTP&utm_medium=DefaultLink&utm_campaign=v040"><img src="lib/img/zw_logo.png" alt="Zee-Way Hosting" title="Zee-Way Hosting" /></a>
+
+		</div>
+		
+   <script>
+     var _gaq = _gaq || [];
+     _gaq.push(['_setAccount', 'UA-21684633-1']);
+     _gaq.push(['_trackPageview']);
+
+     (function() {
+       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+       ga.src = 'https://ssl.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+     })();
+   </script>
+	</body>
+</html>
