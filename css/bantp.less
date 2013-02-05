@@ -28,10 +28,10 @@
 	-webkit-border-radius: @radius;
 }
 .gradientBg ( @top, @bottom ) {
-	background: linear-gradient( @top, @bottom );
+	background: -webkit-linear-gradient( @top, @bottom );
 }
 .headerShadow {
-	text-shadow: 0 2px 15px #222, 0 -1px 1px #fff;
+	text-shadow: 0 2px 10px #000, 0 -1px 1px #fff;
 }
 
 
@@ -40,7 +40,7 @@
 	.f_nexa;
 	color: #222;
 	-webkit-transition: all 0.3s;
-	-webkit-user-select: none;
+	//-webkit-user-select: none;
 }
 html, body {
 	height: 100%;
@@ -61,14 +61,15 @@ h1 {
 		margin: 0;
 
 		&:hover {
-			color: #999;
+			color: #333;
 			.headerShadow;
 		}
 	}
 }
 
 h2 {
-	.f_verb;
+	.f_novecento_bold;
+	margin: 0;
 }
 
 
@@ -110,6 +111,7 @@ a {
 		background-opacity: 0.5;
 		border: 5px #333 dashed;
 		padding: 10px 25px;
+		margin: 20px 0 20px 0;
 		font-size: 25px;
 		color: #eee;
 		text-shadow: 0 2px 4px #222;
@@ -124,4 +126,12 @@ a {
 		  box-shadow: inset 0 0 10px #000, 0 0 3px #000;
 		}
 	}
+}
+
+.module {
+	.gradientBg( #ddd, #ccc );
+	.borderRadius( 5px );
+	border: 1px #bbb solid;
+	box-shadow: 0 1px 1px #999, inset 0 1px 1px #fff;
+	padding: 8px;
 }
