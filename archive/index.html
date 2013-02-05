@@ -1,0 +1,270 @@
+<html>
+	<head>
+		<title>Start Here : Bad Ass New Tab Page</title>
+		<link rel="stylesheet" type="text/css" href="lib/css/style.css" />
+		<script src="lib/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+		<script src="lib/js/jquery-ui-1.8.18.custom.min.js" type="text/javascript"></script>
+		<script type="text/javascript">
+
+		const bg = chrome.extension.getBackgroundPage();
+
+		/*
+		function bg() {
+			console.log(chrome.extension.getBackgroundPage());
+			return chrome.extension.getBackgroundPage();
+		}
+		*/
+
+		function colorScheme() {
+
+			// Fetch config from localStorage
+			chrome.extension.sendRequest({ action : 'getConfig' } , function( response ) {
+
+				// Separate the configuration values from return data
+				var conf = response.conf;
+
+				console.log("Initializing color scheme...");
+				console.log( conf );
+
+				var backgrounds = {
+					1 : "url('lib/img/bg.jpg') no-repeat top", // Mountains
+					2 : "url('lib/img/bg2.jpg') no-repeat top", // Trees
+					3 : "url('lib/img/pacific.jpg') no-repeat top", // Island
+					4 : "-webkit-linear-gradient( #bbb , #888 )", // Grey Gradient
+					5 : "-webkit-linear-gradient( #1B70E0 , #0A317A )", // Blue Gradient
+					6 : "-webkit-linear-gradient( #555 , #111 )", // Dark Gradient
+				}
+
+				// Grab the current background
+				var current = parseInt( response.conf.background );
+
+				// Set the page background.
+				$("body").css("background", backgrounds[ current ] );
+
+				// Now time for color schemes
+				// Define what colors they are.
+				var colorSchemes = {
+					// Grey
+					1 : {
+						start : "#5eaae5",
+						end : "#1e5799"
+					},
+					2 : {
+						start : "#bbb",
+						end : "#888"
+					},
+					3 : {
+						start : "#555",
+						end : "#111"
+					}
+				}
+
+				var current = parseInt( response.conf.colorScheme );
+
+				var item = colorSchemes[ current ];
+
+				$(".genbutton").css("background","-webkit-linear-gradient(" + item.start + "," + item.end + ")");
+
+			});
+
+		}
+		
+		function displayLinks() {
+			var linkOutput = bg.buildLinks();
+			//console.log(linkOutput);
+			$(linkOutput).appendTo("#linkStart");
+			$("#linkStart").sortable({
+				disabled : true,
+				stop : function() {
+					console.log("Stopped!");
+					var order = $("#linkStart").sortable("toArray");
+					console.log(order);
+
+					chrome.extension.sendRequest({ action : "storeOrder" , data : order } , function( response ) {
+						if( response.success == true ) {
+							$("#success").html("Order stored. It's all good in the hood.").fadeIn("fast");
+						} else {
+							$("#error").html("Unable to store the order of the links. Try again, or maybe try reinstalling the extension :-/ Sorry!").fadeIn("fast");
+						}
+					});
+				},
+				start : function() {
+					console.log("Started!");
+				},
+				update : function() {
+					console.log("Updated.");
+				},
+				drop : function() {
+					console.log("Element dropped. Logging.");
+				}
+			});
+		}	
+
+		function updateTime() {
+			var today = new Date();
+			var hour = today.getHours();
+			var min = today.getMinutes();
+			var sec = today.getSeconds();
+			var ampm = '';
+
+			// Figure out whether AM or PM
+			if( hour < 12) {
+				ampm = 'a';
+			} else if( hour >= 12 ) {
+				ampm = 'p';
+			}
+
+			// Pad the hours/mins/seconds with zeroes
+			if( hour < 10) {
+				hour = "0" + hour;
+			}
+			if( min < 10) {
+				min = "0" + min;
+			}
+			if(sec < 10) {
+				sec = "0" + sec;
+			}
+
+
+			// Get configuration for whether or not they want seconds displayed.
+			chrome.extension.sendRequest( { action : 'getConfig' } , function( response )  {
+
+				var timeOutput = "";
+
+				// Modify the hours if in the 12 hour format. 24 hour format unaffected.
+				if( response.conf.timeFormat == 1 ) {
+					// Specific to the 12 hour time format.
+					if ( hour > 12 ) {
+						hour = hour - 12;
+					}
+					if( hour == "00" || hour == 0 ) {
+						hour = "12";
+					}
+				}
+
+				// Assemble the time, format independent
+				timeOutput = hour + ":" + min;
+
+				// Figure out seconds
+				if( response.conf.showSeconds == 1 ) {
+					timeOutput += ":" + sec;
+				}
+
+				// Now figure out if we show am/pm
+				if( response.conf.timeFormat == 1 ) {
+					timeOutput += " " + ampm;
+				}
+
+				document.getElementById("time").innerHTML = timeOutput;
+
+			});
+			
+			var day = today.toDateString();
+			document.getElementById("date").innerHTML = day;
+		}
+
+		console.log('initializing...');
+
+		$(document).ready(function () {
+
+			// Initialize clock and set it 
+			updateTime();
+			var clock = window.setInterval(updateTime,1000);
+			
+			// Get the links out there.
+			displayLinks();
+
+			// Configure color scheme based on user preferences.
+			colorScheme();
+			
+			$("#menuBar_optionsPage").click(function() {
+				chrome.tabs.create({
+					url:	"tabPageFiles/options.html"
+				})
+			});
+			
+			$("#menuBar a").hover(function() {
+				$(this).animate({
+					backgroundColor: "#cccccc",
+					color: "#333333"
+				},"fast")
+			},function() {
+				$(this).animate({
+					backgroundColor: "#666666;",
+					color: "#eeeeee"
+				},"fast")
+			});
+
+			$("a.deleteLink").live('click',function() {
+				var link = $(this).attr("linkname");
+				var id = $(this).attr("name");
+				if (confirm("Are you sure that you want to delete '" + link + "' from your new tab page?")) {
+					console.log('Removing...');
+					if(bg.removeLink(id)) {
+						var li = $("#link_" + id);
+						li.fadeOut('slow',function() {
+							li.remove();
+						});
+						$("#success").html("Link for '" + link + "' successfully removed from new tab page.").fadeIn('fast');
+					} else {
+						$("#error").html("Unable to delete link. Please try again.").fadeIn('fast');
+					}
+				}
+				return false;
+			});
+			
+			$("#btn_linkedit").toggle(function() {
+				$(".btnDelete").show("slide",{direction: "down"}, 1000);
+				$("#linkStart").sortable({disabled : false});
+				$(this).find('span').text("Done Editing");
+			},function() {
+				$(".btnDelete").hide("slide",{direction: "down"}, 1000);
+				$("#linkStart").sortable({disabled : true});
+				$(this).find('span').text("Edit Links");
+			});
+
+		});
+			
+		</script>
+	</head>
+	
+	<body>
+
+		<div id="clock">
+			<div id="timeBox">
+				<h1 class="gentext" id="time" style="width: 400px;">02:27:35 pm</h1>
+			</div>
+			<div id="dateBox">
+				<h1 class="gentext" id="date">Tues<br />Mar 06<br />2012</h1>
+			</div>
+		</div>
+		
+		<div id="links">
+			<div id="bigbar">
+				<a href="#" id="menuBar_optionsPage" class="genbutton"><span class="gentext">Options</span></a>
+				<a href="#" id="btn_linkedit" class="genbutton"><span class="gentext">Edit Links</span></a>
+				<!-- <a href="#"><span class="gentext">Options</span></a> -->
+				<div class="clear"></div>
+			</div>
+
+			<div class="clear"></div>
+			<ul id="linkStart"></ul>
+			
+		</div>
+		
+		<div id="error" style="display:none;">Error!</div>
+		<div id="success" style="display:none;">Success!</div>
+
+		<script type="text/javscript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-21684633-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = 'https://ssl.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+		</script>
+	</body>
+</html>
