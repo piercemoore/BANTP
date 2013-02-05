@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<title>Bad Ass New Tab Page</title>
 
@@ -7,36 +7,43 @@
 		<link rel="stylesheet" type="text/css" href="css/fonts/nexa/stylesheet.css" />
 		<link rel="stylesheet" type="text/css" href="css/fonts/verb/stylesheet.css" />
 		<link rel="stylesheet" type="text/css" href="css/fonts/novecento/stylesheet.css" />
-		<link rel="stylesheet" type="text/css" href="css/foundation.min.css" />
-		<link rel="stylesheet" type="text/css" href="css/app.css" />
+		<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
 		<link rel="stylesheet/less" type="text/css" href="css/bantp.less" />
 
 		<!-- Now let's bring in all the awesomeness -->
-		<script type="text/javascript" src="js/zepto.min.js"></script>
+		<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
 		<script type="text/javascript" src="js/underscore-min.js"></script>
 		<script type="text/javascript" src="js/backbone-min.js"></script>
 		<script type="text/javascript" src="js/handlebars.js"></script>
-		<script type="text/javascript" src="js/less-1.3.3.min.js"></script>
-		<script type="text/javascript" src="js/foundation.min.js"></script>
-		<script type="text/javascript" src="js/app.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/bantp.js"></script>
 
+		<!-- Bring in Less.js and configure it to show errors -->
+		<script type="text/javascript">less = { env: 'development' };</script>
+		<script type="text/javascript" src="js/less-1.3.3.min.js"></script>
 
 		<!-- Now let's load our plugins
 		<link rel="stylesheet" href="lib/toolbar/jquery.toolbars.css" />
-		<link rel="stylesheet" href="lib/toolbar/bootstrap.icons.css" />
 		<script type="text/javascript" src="lib/toolbar/jquery.toolbar.min.js"></script> -->
 
 		<link rel="shortcut icon" href="img/favicon.ico" />
 	</head>
 	<body>
-<div class="row">
-	<div class="twelve columns">asflafhlkasfhlasfklas</div>
-</div>
 
-<div class="row">
-	<div class="four columns">Sidebar!</div>
-	<div class="eight columns">Main content!</div>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span3">
+			<h1 class="logo">BANTP</h1>
+		</div>
+		<div class="span9">
+			<button>Button Text that is way, way longer and should make the button bigger!</button>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+		<div class="span4">Sidebar!</div>
+		<div class="span8">Main content!</div>
+	</div>
 </div>
 
 <!-- This is where all our awesome Handlebars scripts will go -->

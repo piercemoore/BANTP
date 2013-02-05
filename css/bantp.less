@@ -2,15 +2,58 @@
  * This is the awesome LESS CSS stylesheet for BANTP :D
  */
 
+/** UTILITY MIXINs **/
+.borderRadius ( @radius : 5px ) {
+	border-radius: @radius;
+	-webkit-border-radius: @radius;
+}
+.gradientBg ( @top, @bottom ) {
+	background: linear-gradient( @top, @bottom );
+}
+
+
 /** PRIMARY STYLES **/
 * {
-	font-family: NovecentowideBookBold;
+	font-family: NovecentowideLightRegular;
+	color: #eee;
 }
 body {
-	height: 1000px;
-	width: 1920px;
-	background: -webkit-linear-gradient( #1B70E0 , #0A317A );
+	//background: -webkit-linear-gradient( #1B70E0 , #0A317A );
+	background: #444;
 }
 h1 {
 	font-family: NovecentowideBookBold;
+
+	&.logo {
+		font-size: 3.5em;
+		color: #eee;
+		margin: 0;
+	}
+}
+
+button {
+	.gradientBg( #eee, #ccc );
+	.borderRadius( 3px );
+  border: 1px solid #ccc;
+  border-bottom: 1px solid #bbb;
+  color: #333;
+  padding: 10px 10px;
+  text-align: center;
+  text-shadow: 0 1px 0 #eee;
+  min-width: 150px; 
+
+  &:hover {
+  	.gradientBg( #ddd, #bbb );
+    border: 1px solid #bbb;
+    border-bottom: 1px solid #999;
+    cursor: pointer;
+    text-shadow: 0 1px 0 #ddd; 
+  }
+
+  &:active {
+    border: 1px solid #aaa;
+    border-bottom: 1px solid #888;
+    -webkit-box-shadow: inset 0 0 5px 2px #aaaaaa, 0 1px 0 0 #eeeeee;
+    box-shadow: inset 0 0 5px 2px #aaaaaa, 0 1px 0 0 #eeeeee;
+  }
 }
