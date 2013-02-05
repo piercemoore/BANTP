@@ -2,6 +2,26 @@
  * This is the awesome LESS CSS stylesheet for BANTP :D
  */
 
+/** TYPOGRAPHY **/
+.f_bebas {
+	font-family: Bebas Neue;
+}
+.f_nexa {
+	font-family: nexa_lightregular;
+}
+.f_novecento_bold {
+	font-family: NovecentowideBookBold;
+}
+.f_novecento_demibold {
+	font-family: NovecentowideLightBold;
+}
+.f_novecento_light {
+	font-family: NovecentowideLightRegular;
+}
+.f_verb {
+	font-family: verb_blackregular;
+}
+
 /** UTILITY MIXINs **/
 .borderRadius ( @radius : 5px ) {
 	border-radius: @radius;
@@ -10,24 +30,35 @@
 .gradientBg ( @top, @bottom ) {
 	background: linear-gradient( @top, @bottom );
 }
+.headerShadow {
+	text-shadow: 0 2px 15px #222, 0 -1px 1px #fff;
+}
 
 
 /** PRIMARY STYLES **/
 * {
-	font-family: NovecentowideLightRegular;
-	color: #eee;
+	.f_nexa;
+	color: #222;
+}
+html, body {
+	height: 100%;
 }
 body {
-	//background: -webkit-linear-gradient( #1B70E0 , #0A317A );
-	background: #444;
+	background: #ddd;
 }
 h1 {
-	font-family: NovecentowideBookBold;
+	.f_novecento_bold;
 
 	&.logo {
-		font-size: 3.5em;
-		color: #eee;
+		font-size: 4em;
+		letter-spacing: -5px;
+		color: #222;
 		margin: 0;
+
+		&:hover {
+			color: #999;
+			.headerShadow;
+		}
 	}
 }
 
