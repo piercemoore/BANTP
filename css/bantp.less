@@ -108,6 +108,27 @@ button {
 a {
 	text-decoration: none;
 
+	&.admin_button {
+		.gradientBg( #356194, #254469 );
+		.borderRadius( 3px );
+		border: 1px #81A3C9 solid;
+		box-shadow: 0 1px 3px #222, inset 0 1px 1px #99BEE8;
+		padding: 10px 30px;
+		float: right;
+		margin: 15px 5px 5px 0;
+		font-size: 16px;
+		color: #eee;
+		text-shadow: 0 1px 1px #000;
+
+		&:hover {
+			.gradientBg( #1E568F, #2265A8 );
+		}
+
+		&:active {
+	    box-shadow: inset 0 0 5px #333, 0 1px 2px #333;
+		}
+	}
+
 	&.app_icon {
 		.borderRadius( 3px );
 		border: 3px #eee solid;
@@ -115,7 +136,7 @@ a {
 		display: inline;
 		float: left;
 		margin: 0 3px 3px 0;
-		opacity: 0.6;
+		opacity: 0.7;
 
 		&:hover {
 			opacity: 1;
