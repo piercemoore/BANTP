@@ -7,8 +7,10 @@
 		<link rel="stylesheet" type="text/css" href="css/fonts/nexa/stylesheet.css" />
 		<link rel="stylesheet" type="text/css" href="css/fonts/verb/stylesheet.css" />
 		<link rel="stylesheet" type="text/css" href="css/fonts/novecento/stylesheet.css" />
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet/less" type="text/css" href="css/bantp.less" />
 
 		<!-- Now let's bring in all the awesomeness -->
@@ -59,6 +61,16 @@
 
 				<div class="clearfix"></diV>
 			</div>
+
+			<hr />
+
+			<div class="module">
+				<h2>Button Testing</h2>
+
+					<a href="#" class="btn">PierceMoore.com</a>	
+
+				<div class="clearfix"></diV>
+			</div>
 		</div>
 
 		<div class="span8">
@@ -97,8 +109,17 @@ $(function() {
 	// Build the interface!
 	var Workspace = new BANTP.Workspace();
 
-	var test = ["Yo!","What's up?","HEYO!","BANTP"];
-	_.each( test, function(t) {
+	var modules = {
+		"Module One" : {
+			"size" : 10,
+			"description" : "This is a quick description about module one. It's awesome. That's it."
+		},
+		"Module Two" : {
+			"size" : 6,
+			"description" : "Module two? Awesome."
+		}
+	};
+	_.each( modules, function(t) {
 	//	$("body").append('<h1>' + t + '</h1>');
 	});
 });

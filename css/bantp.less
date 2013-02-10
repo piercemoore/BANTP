@@ -33,13 +33,16 @@
 .headerShadow {
 	text-shadow: 0 2px 10px #000, 0 -1px 1px #fff;
 }
+.transition(@time: 0.2s) {
+	-webkit-transition: @time all;
+	transition: @time all;
+}
 
 
 /** PRIMARY STYLES **/
 * {
-	.f_nexa;
+	font-family: Open Sans;
 	color: #222;
-	-webkit-transition: all 0.3s;
 	//-webkit-user-select: none;
 }
 html, body {
@@ -52,8 +55,8 @@ body {
 
 /** HEADERS and TYPOGRAPHY **/
 h1 {
-	.f_novecento_bold;
-
+	font-family: Open Sans;
+	
 	&.logo {
 		font-size: 5em;
 		letter-spacing: -5px;
@@ -68,7 +71,7 @@ h1 {
 }
 
 h2 {
-	.f_novecento_bold;
+	font-family: Open Sans;
 	margin: 0;
 	letter-spacing: -2px;
 }
@@ -111,6 +114,18 @@ button {
 
 a {
 	text-decoration: none;
+
+	&.linktest {
+		padding: 7px 25px;
+		border-radius: 20px;
+		font-size: 20px;
+		.gradientBg(#3D7DC4, #2D5480);
+		box-shadow: inset 0 1px 1px #E1ECF7, 0 1px 3px #222;
+		font-family: Open Sans Medium;
+		font-weight: 300;
+		color: #ddd;
+		text-shadow: 0 1px 1px #222;
+	}
 
 	&.admin_button {
 		.gradientBg( #356194, #254469 );
