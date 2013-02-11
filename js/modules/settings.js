@@ -1,5 +1,6 @@
 (function(Settings) {
 	Settings.Workspace = Backbone.View.extend({
+		el : "#bantp_canvas",
 		events : {
 			// All event delegators here
 		},

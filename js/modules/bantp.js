@@ -1,6 +1,6 @@
 (function(BANTP) {
 	BANTP.Workspace = Backbone.View.extend({
-		el : "#bantp_canvas",
+		// NO $el for global application!
 		events : {
 			// All event delegators here
 		},
