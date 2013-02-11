@@ -10,8 +10,9 @@
 		render : function() {
 			// Put the thing on the page!
 			var self = this;
+			var template = Handlebars.compile( $("#hb_dashboard_workspace").html() );
 
-			this.$el.html("BANTP Dashboard rendered!");
+			this.$el.html( template({  }) );
 	
 			return this;
 		}
