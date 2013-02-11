@@ -18,4 +18,4 @@
 	});
 	
 	
-})(loader.app("Todo"));
+})(loader.app("todo"));

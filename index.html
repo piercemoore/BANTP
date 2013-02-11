@@ -63,8 +63,8 @@ $(function() {
 
 			<p>APPS</p>
 
-			<a href="#" data-module="app_manager" data-title="Application Manager" data-content="Manage your installed Google Chrome Applications and Extensions"><i class="icon-desktop"></i></a>
-			<a href="#" data-module="todo" data-title="To-Do List" data-content="A simple, configurable to-do list that stays out of your way."><i class="icon-check"></i></a>
+			<a href="#" data-app="app_manager" data-title="Application Manager" data-content="Manage your installed Google Chrome Applications and Extensions"><i class="icon-desktop"></i></a>
+			<a href="#" data-app="todo" data-title="To-Do List" data-content="A simple, configurable to-do list that stays out of your way."><i class="icon-check"></i></a>
 
 		</div>
 
@@ -126,7 +126,7 @@ $(function() {
 
 <script type="text/javascript">
 $(function() {
-
+console.group("Building BANTP");
 	var BANTP = loader.module('bantp');
 	var Dashboard = loader.module('dashboard');
 
@@ -147,6 +147,7 @@ $(function() {
 	_.each( modules, function(t) {
 	//	$("body").append('<h1>' + t + '</h1>');
 	});
+console.groupEnd();
 });
 </script>
 

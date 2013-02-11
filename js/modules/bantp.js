@@ -21,13 +21,29 @@
 			return this;
 		},
 		activateModule : function(e) {
+			console.group("Module Activation");
 			e.preventDefault();
 
-			var module = $(e.currentTarget).data('module');
+			var data = $(e.currentTarget).data();
+			var toLoad = "";
+			var name = data.module || data.app;
 
-			this.model.set({ currentModule : module });
+			if( data.hasOwnProperty("module") ) {
+				toLoad = loader.module( data.module );
+				log("Loading Module " + name );
+			} else if( data.hasOwnProperty("app") ) {
+				toLoad = loader.app( data.app );
+				log("Loading App " + name );
+			}
 
-			log("Module " + module + " activated!");
+			this.model.set({ currentModule : name });
+
+			var IncomingModule = new toLoad.Workspace();
+			IncomingModule.render();
+
+			log("Module " + name + " activated!");
+
+			console.groupEnd();
 		}
 	});
 
