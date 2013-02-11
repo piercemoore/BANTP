@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<script type="text/javascript">
+			console.time("Page Build");
+		</script>
 		<title>Bad Ass New Tab Page</title>
 
 		<!-- Now let's bring in all the awesomeness -->
@@ -16,7 +19,15 @@
 		<script type="text/javascript" src="js/backbone-min.js"></script>
 		<script type="text/javascript" src="js/handlebars.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/bantp.js"></script>
+
+		<script type="text/javascript" src="js/modules/application.js"></script>
+		<script type="text/javascript" src="js/modules/bantp.js"></script>
+		<script type="text/javascript" src="js/modules/settings.js"></script>
+		<script type="text/javascript" src="js/modules/dashboard.js"></script>
+		<script type="text/javascript" src="js/modules/modules.js"></script>
+		<script type="text/javascript" src="js/modules/bookmarks.js"></script>
+		<script type="text/javascript" src="js/modules/apps/app_manager.js"></script>
+		<script type="text/javascript" src="js/modules/apps/todo.js"></script>
 
 		<!-- Bring in Less.js and configure it to show errors -->
 		<script type="text/javascript">less = { env: 'development' };</script>
@@ -110,7 +121,7 @@ $(function() {
 $(function() {
 
 	var BANTP = loader.module('bantp');
-	log(BANTP);
+	var Dashboard = loader.module('dashboard');
 
 	// Build the interface!
 	var Workspace = new BANTP.Workspace();
@@ -129,6 +140,10 @@ $(function() {
 	//	$("body").append('<h1>' + t + '</h1>');
 	});
 });
+</script>
+
+<script type="text/javascript">
+	console.timeEnd("Page Build");
 </script>
 	</body>
 </html>

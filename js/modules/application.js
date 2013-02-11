@@ -20,13 +20,16 @@ var loader = {
 			}
 			return modules[name] = {};
 		}
+	}(),
+	app : function() {
+		var apps = {};
+		return function(app) {
+			if( apps[app] ) {
+				return apps[app];
+			}
+			return apps[app] = {};
+		}
 	}()
 };
 
-(function(BANTP) {
-	BANTP.Workspace = Backbone.View.extend({
-		initialize : function() {
-			console.log("initializing workspace!");
-		}
-	});
-})(loader.module('bantp'));
+var buddha = _.clone(Backbone.Events);
