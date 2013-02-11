@@ -1,6 +1,5 @@
 (function(AppManager) {
 	AppManager.Workspace = Backbone.View.extend({
-		dispatcher : _.clone(Backbone.Events),
 		events : {
 			// All event delegators here
 		},
