@@ -1,11 +1,12 @@
 (function(BANTP) {
 	BANTP.Workspace = Backbone.View.extend({
-		// NO $el for global application!
+		el : "body",
 		events : {
-			// All event delegators here
+			"click .sidebar a" : "activateModule"
 		},
 		initialize : function() {
 			console.log("Initializing Bad Ass New Tab Page!");
+			this.model = new BANTP.WorkspaceData();
 
 			// Instantiate only the necessary dashboard module
 			var Dashboard = loader.module('dashboard');
@@ -18,8 +19,33 @@
 			this.Dashboard.render();
 	
 			return this;
+		},
+		activateModule : function(e) {
+			e.preventDefault();
+
+			var module = $(e.currentTarget).data('module');
+
+			this.model.set({ currentModule : module });
+
+			log("Module " + module + " activated!");
 		}
 	});
+
+	BANTP.WorkspaceData = Backbone.Model.extend({
+		idAttribute : '_id',
+		defaults : {
+			currentModule : "dashboard"
+		},
+		initialize : function() {
+			console.log("Initializing BANTP Workspace Data Model");
+			// Initialization
+			this.on('change', function() {
+				log("BANTP Workspace data update", this.toJSON() );
+			});
+		}
+	});
+	
+	
 	
 	
 })(loader.module('bantp'));
