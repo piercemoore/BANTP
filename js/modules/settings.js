@@ -11,6 +11,8 @@
 			// Put the thing on the page!
 			var self = this;
 	
+			this.$el.html("BANTP Setting rendered!");
+	
 			return this;
 		}
 	});

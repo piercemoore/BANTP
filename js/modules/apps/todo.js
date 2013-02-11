@@ -10,6 +10,8 @@
 		render : function() {
 			// Put the thing on the page!
 			var self = this;
+
+			this.$el.html("BANTP To-do list Application rendered!");
 	
 			return this;
 		}
