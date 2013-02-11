@@ -1,6 +1,6 @@
 (function(BANTP) {
 	BANTP.Workspace = Backbone.View.extend({
-		dispatcher : _.clone(Backbone.Events),
+		el : "#bantp_canvas",
 		events : {
 			// All event delegators here
 		},
@@ -10,6 +10,8 @@
 		render : function() {
 			// Put the thing on the page!
 			var self = this;
+
+			this.$el.html("BANTP initialized!");
 	
 			return this;
 		}

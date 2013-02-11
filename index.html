@@ -64,52 +64,54 @@ $(function() {
 		</div>
 
 		<div class="span11 workspace">
-			<h2>QUICK LAUNCH</h2>
-			<div class="module">
-				<a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a>
+			<div id="quick_launch">
+				<h2>QUICK LAUNCH</h2>
+				<div class="module">
+					<a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a>
 
-				<div class="clearfix"></div>
+					<div class="clearfix"></div>
+				</div>
 			</div>
 
-			<h2>LINK COLLECTIONS</h2>
+			<div id="bantp_canvas">
+				<h2>LINK COLLECTIONS</h2>
 
-			<div class="module">
-				<p>FAVORITES</p>
+				<div class="module">
+					<p>FAVORITES</p>
 
-				<div class="links">
-					<a href="#" class="btn btn-large">GOOGLE</a>	
-					<a href="#" class="btn btn-large">GOOGLE</a>	
-					<a href="#" class="btn btn-large">GOOGLE</a>
+					<div class="links">
+						<a href="#" class="btn btn-large">GOOGLE</a>	
+						<a href="#" class="btn btn-large">GOOGLE</a>	
+						<a href="#" class="btn btn-large">GOOGLE</a>
+					</div>
+
+					<div class="clearfix"></diV>
 				</div>
 
-				<div class="clearfix"></diV>
-			</div>
+				<div class="module">
+					<p>TOP SITES</p>
 
-			<div class="module">
-				<p>TOP SITES</p>
+					<div class="links">
+						<a href="#" class="btn btn-large">GOOGLE</a>	
+						<a href="#" class="btn btn-large">GOOGLE</a>	
+						<a href="#" class="btn btn-large">GOOGLE</a>
+					</div>
 
-				<div class="links">
-					<a href="#" class="btn btn-large">GOOGLE</a>	
-					<a href="#" class="btn btn-large">GOOGLE</a>	
-					<a href="#" class="btn btn-large">GOOGLE</a>
+					<div class="clearfix"></diV>
 				</div>
 
-				<div class="clearfix"></diV>
-			</div>
+				<div class="module">
+					<p>WEB DEVELOPMENT</p>
 
-			<div class="module">
-				<p>WEB DEVELOPMENT</p>
+					<div class="links">
+						<a href="#" class="btn btn-large">GOOGLE</a>	
+						<a href="#" class="btn btn-large">GOOGLE</a>	
+						<a href="#" class="btn btn-large">GOOGLE</a>
+					</div>
 
-				<div class="links">
-					<a href="#" class="btn btn-large">GOOGLE</a>	
-					<a href="#" class="btn btn-large">GOOGLE</a>	
-					<a href="#" class="btn btn-large">GOOGLE</a>
+					<div class="clearfix"></diV>
 				</div>
-
-				<div class="clearfix"></diV>
 			</div>
-
-			<hr />
 
 		</div>
 	</div>
@@ -125,6 +127,7 @@ $(function() {
 
 	// Build the interface!
 	var Workspace = new BANTP.Workspace();
+	Workspace.render();
 
 	var modules = {
 		"Module One" : {
