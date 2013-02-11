@@ -5,7 +5,7 @@
 			// All event delegators here
 		},
 		initialize : function() {
-			console.log("Initializing App Manager View");
+			log("Initializing App Manager View");
 		},
 		render : function() {
 			// Put the thing on the page!

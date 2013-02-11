@@ -5,7 +5,7 @@
 			// All event delegators here
 		},
 		initialize : function() {
-			console.log("Initializing Todo Application View");
+			log("Initializing Todo Application View");
 		},
 		render : function() {
 			// Put the thing on the page!

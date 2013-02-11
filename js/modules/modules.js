@@ -5,7 +5,7 @@
 			// All event delegators here
 		},
 		initialize : function() {
-			console.log("Initializing Modules View");
+			log("Initializing Modules View");
 		},
 		render : function() {
 			// Put the thing on the page!

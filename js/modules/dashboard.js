@@ -5,7 +5,7 @@
 			// All event delegators here
 		},
 		initialize : function() {
-			console.log("Initializing Dashboard Workspace View");
+			log("Initializing Dashboard Workspace View");
 		},
 		render : function() {
 			// Put the thing on the page!

@@ -5,7 +5,7 @@
 			"click .sidebar a" : "activateModule"
 		},
 		initialize : function() {
-			console.log("Initializing Bad Ass New Tab Page!");
+			log("Initializing Bad Ass New Tab Page!");
 			this.model = new BANTP.WorkspaceData();
 
 			// Instantiate only the necessary dashboard module
@@ -37,7 +37,7 @@
 			currentModule : "dashboard"
 		},
 		initialize : function() {
-			console.log("Initializing BANTP Workspace Data Model");
+			log("Initializing BANTP Workspace Data Model");
 			// Initialization
 			this.on('change', function() {
 				log("BANTP Workspace data update", this.toJSON() );

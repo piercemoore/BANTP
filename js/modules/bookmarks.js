@@ -5,7 +5,7 @@
 			// All event delegators here
 		},
 		initialize : function() {
-			console.log("Initializing Bookmarks View");
+			log("Initializing Bookmarks View");
 		},
 		render : function() {
 			// Put the thing on the page!
