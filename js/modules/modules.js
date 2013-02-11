@@ -10,8 +10,9 @@
 		render : function() {
 			// Put the thing on the page!
 			var self = this;
+			var template = Handlebars.compile( $("#hb_modules_workspace").html() );
 
-			this.$el.html("BANTP Modules rendered!");
+			this.$el.html( template({  }) );
 	
 			return this;
 		}

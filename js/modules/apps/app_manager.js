@@ -10,8 +10,9 @@
 		render : function() {
 			// Put the thing on the page!
 			var self = this;
+			var template = Handlebars.compile( $("#hb_appmanager_workspace").html() );
 
-			this.$el.html("BANTP Application Manager rendered!");
+			this.$el.html( template({  }) );
 	
 			return this;
 		}

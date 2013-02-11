@@ -10,8 +10,9 @@
 		render : function() {
 			// Put the thing on the page!
 			var self = this;
-	
-			this.$el.html("BANTP Setting rendered!");
+			var template = Handlebars.compile( $("#hb_settings_workspace").html() );
+
+			this.$el.html( template({  }) );
 	
 			return this;
 		}

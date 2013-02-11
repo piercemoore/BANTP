@@ -10,8 +10,9 @@
 		render : function() {
 			// Put the thing on the page!
 			var self = this;
+			var template = Handlebars.compile( $("#hb_todo_workspace").html() );
 
-			this.$el.html("BANTP To-do list Application rendered!");
+			this.$el.html( template({  }) );
 	
 			return this;
 		}

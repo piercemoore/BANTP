@@ -10,8 +10,9 @@
 		render : function() {
 			// Put the thing on the page!
 			var self = this;
+			var template = Handlebars.compile( $("#hb_bookmarks_workspace").html() );
 
-			this.$el.html("BANTP Bookmarks rendered!");
+			this.$el.html( template({  }) );
 	
 			return this;
 		}
