@@ -6,12 +6,16 @@
 		},
 		initialize : function() {
 			console.log("Initializing Bad Ass New Tab Page!");
+
+			// Instantiate only the necessary dashboard module
+			var Dashboard = loader.module('dashboard');
+			this.Dashboard = new Dashboard.Workspace();
 		},
 		render : function() {
 			// Put the thing on the page!
 			var self = this;
 
-			this.$el.html("BANTP initialized!");
+			this.Dashboard.render();
 	
 			return this;
 		}
