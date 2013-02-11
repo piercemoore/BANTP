@@ -21,7 +21,8 @@
 			return this;
 		},
 		activateModule : function(e) {
-			console.group("Module Activation");
+			console.time("Module Activation");
+			console.groupCollapsed("Module Activation");
 			e.preventDefault();
 
 			var data = $(e.currentTarget).data();
@@ -44,6 +45,7 @@
 			log("Module " + name + " activated!");
 
 			console.groupEnd();
+			console.timeEnd("Module Activation");
 		}
 	});
 
