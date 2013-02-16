@@ -5,7 +5,6 @@
 			"click .sidebar a" : "activateModule"
 		},
 		initialize : function() {
-			log("Initializing Bad Ass New Tab Page!");
 			this.model = new BANTP.WorkspaceData();
 		},
 		render : function() {
@@ -21,8 +20,6 @@
 			return this;
 		},
 		activateModule : function(e) {
-			console.time("Module Activation");
-			console.groupCollapsed("Module Activation");
 			e.preventDefault();
 
 			var data = $(e.currentTarget).data();
@@ -31,21 +28,14 @@
 
 			if( data.hasOwnProperty("module") ) {
 				toLoad = loader.module( data.module );
-				log("Loading Module " + name );
 			} else if( data.hasOwnProperty("app") ) {
 				toLoad = loader.app( data.app );
-				log("Loading App " + name );
 			}
 
 			this.model.set({ currentModule : name });
 
 			var IncomingModule = new toLoad.Workspace();
 			IncomingModule.render();
-
-			log("Module " + name + " activated!");
-
-			console.groupEnd();
-			console.timeEnd("Module Activation");
 		}
 	});
 
@@ -55,7 +45,6 @@
 			currentModule : "dashboard"
 		},
 		initialize : function() {
-			log("Initializing BANTP Workspace Data Model");
 			// Initialization
 			this.on('change', function() {
 				log("BANTP Workspace data update", this.toJSON() );

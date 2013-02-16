@@ -1,5 +1,4 @@
 $(function() {
-console.group("Building BANTP");
 
 	$(".sidebar a").popover({
 		placement : "right",
@@ -31,8 +30,6 @@ console.group("Building BANTP");
 	_.each( modules, function(module, name) {
 		$("#bantp_canvas").append('<div class="module"><h2>' + name + '</h2><p>' + module.description + '</p></div>');
 	});
-	
-console.groupEnd();
 
 	var _gaq = _gaq || [];
 	_gaq.push(['_setAccount', 'UA-21684633-1']);
