@@ -6,6 +6,7 @@
 	"manifest_version" : 2,
 	"incognito" : "spanning",
 	"offline_enabled" : true,
+	"content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
 	"icons": {
 		"16": "img/icon_16.png",
 		"48": "img/icon_48.png",
@@ -15,7 +16,7 @@
 		{
 			"matches" : ["<all_urls>"],
 			"css" : ["stylesheets/bantp_inpage.css"],
-			"js" : ["js/jquery-1.9.1.min.js","js/bantp_inpage.js"]
+			"js" : ["lib/jquery-1.9.1.min.js","js/bantp_inpage.js"]
 		}
 	],
 	"browser_action": {
