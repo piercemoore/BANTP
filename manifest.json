@@ -6,7 +6,6 @@
 	"manifest_version" : 2,
 	"incognito" : "spanning",
 	"offline_enabled" : true,
-	"default_locale" : "en",
 	"icons": {
 		"16": "img/icon_16.png",
 		"48": "img/icon_48.png",
@@ -14,8 +13,8 @@
 	},
 	"content_scripts" : [
 		{
-			"matches" : "<all_urls>",
-			"css" : ["bantp_inpage.css"],
+			"matches" : ["<all_urls>"],
+			"css" : ["stylesheets/bantp_inpage.css"],
 			"js" : ["js/jquery-1.9.1.min.js","js/bantp_inpage.js"]
 		}
 	],
@@ -28,9 +27,12 @@
 		"img/icon_48.png",
 		"img/icon_16.png"
 	],
-	"background": "background.html",
-	"chrome_url_overrides": {
-		"newtab": "index.html"
+	"background": {
+		"persistent" : true,
+		"page" : "background.html"
+	},
+	"chrome_url_overrides" : {
+		"newtab" : "index.html"
 	},
 	"permissions": [
 		"tabs",
