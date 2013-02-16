@@ -1,17 +1,18 @@
-function log( msg ) {
-	console.log("BANTP Log: ", msg );
-}
-function warn( msg ) {
-	console.warn("BANTP Warning: ", msg );
-}
-function error( msg ) {
-	console.error("BANTP ERROR: ", msg );
-}
-
+/**
+ * The BANTP Config and function file!
+ *
+ * @author Pierce Moore
+ * @package BANTP
+ * @subpackage Config
+ */
 var _config = {
 	defaults : {
 		useSync : true,
 		startModule : "bantp_m1"
+	},
+	contextMenu : {
+		title : "Add to New Tab Page",
+		contexts : ["page"]
 	},
 	app : {
 		name : "Bad Ass New Tab Page",
@@ -81,45 +82,4 @@ var _config = {
 			}
 		},
 	]
-};
-
-var config = function( slug ) {
-	console.group("Fetching Config Item '" + slug + "'");
-	//chrome.storage.local.clear();
-	try {
-		log("Fetching config item: " + typeof slug + " '" + slug + "'");
-		chrome.storage.local.get(slug, function(items) {
-			if( _.size(items) ) {
-				console.log("Found in local storage!", items );
-				return items;
-			} else {
-				console.log("Slug '" + slug + "' not found in local storage, searching.");
-				parts = slug.split(":");
-				var fullConfig = _config;
-				_.each(parts, function(property) {
-					if( _.has(fullConfig, property) ) {
-						console.log("Property '" + property + "' found in config, digging deeper", fullConfig );
-						fullConfig = fullConfig[property];
-					} else {
-						throw error("Config item not found '" + slug + "', failed at node: '" + property + "'");
-					}
-				});	
-				console.log("Found item for slug '" + slug + "':", fullConfig );
-				var toStore = {};
-				toStore[slug] = fullConfig;
-				chrome.storage.local.set(toStore);
-			}
-		}); 
-
-		return chrome.storage.local.get(function(items) {
-			console.log("Full local storage object", items );
-			console.groupEnd();
-			return items;
-		});
-
-	} catch(err) {
-		error(err.stack );
-		groupEnd();
-		return false;
-	}
 };
