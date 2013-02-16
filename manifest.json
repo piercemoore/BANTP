@@ -12,6 +12,13 @@
 		"48": "img/icon_48.png",
 		"128": "img/icon_128.png"
 	},
+	"content_scripts" : [
+		{
+			"matches" : "<all_urls>",
+			"css" : ["bantp_inpage.css"],
+			"js" : ["js/jquery-1.9.1.min.js","js/bantp_inpage.js"]
+		}
+	],
 	"browser_action": {
 		"default_icon": "img/icon_19.png",
 		"default_title": "Bad Ass New Tab Page",
@@ -19,7 +26,7 @@
 	},
 	"web_accessible_resources" : [
 		"img/icon_48.png",
-		"img/icon_16.png",
+		"img/icon_16.png"
 	],
 	"background": "background.html",
 	"chrome_url_overrides": {
