@@ -6,7 +6,7 @@
 	"manifest_version" : 2,
 	"incognito" : "spanning",
 	"offline_enabled" : true,
-	"content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+	"content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://d2wy8f7a9ursnm.cloudfront.net; object-src 'self'",
 	"icons": {
 		"16": "img/icon_16.png",
 		"48": "img/icon_48.png",
