@@ -1,31 +1,44 @@
-chrome.tabs.onCreated.addListener(function(tab) {
-	console.log("Tab Created", tab);
+/**
+ * 
+ * Background page for BANTP. This is where the magic happens.
+ *
+ * @author Pierce Moore
+ * @package BANTP
+ * @subpackage Background Page
+ */
+/**
+ * First, let's do the super high level stuff: Install/Update events.
+ */
+chrome.runtime.onInstalled.addListener(function(details) {
+	switch(details.reason) {
+		case "install":
+			//
+			break;
+		case "update":
+			var oldVersion = details.previousVersion;
+			//
+			break;
+		case "chrome_update":
+			//
+			break;
+		default:
+			//
+			break;
+	}
 });
 
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-	console.log("Tab changed: #" + tabId, changeInfo, tab );
+/**
+ * Now let's handle all the start/stop/suspend events.
+ */
+chrome.runtime.onStartup.addListener(function() {
+	//
 });
 
-chrome.storage.sync.get(null, function(items) {
-	console.log("All items in synced storage", items );
+chrome.runtime.onSuspend.addListener(function() {
+	//
 });
 
-chrome.storage.sync.set({name : "Pierce Moore", _config : _config }, function() {
-	console.log("Set name to Pierce Moore");
+chrome.runtime.onSuspendCanceled.addListener(function() {
+	//
 });
 
-chrome.storage.sync.get("name", function(items) {
-	console.log("Name in synced storage", items );
-});
-
-chrome.storage.sync.get(null, function(items) {
-	console.log("All items in synced storage", items );
-});
-
-chrome.storage.sync.getBytesInUse(null, function(bytes) {
-	console.log("Total bytes in use:" + bytes + " bytes");
-});
-
-var d = new Date();
-
-console.log(d.toUTCString());
