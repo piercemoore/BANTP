@@ -8,9 +8,11 @@
 			log("Initializing Dashboard Workspace View");
 		},
 		render : function() {
+
+			log( Handlebars );
 			// Put the thing on the page!
 			var self = this;
-			var template = Handlebars.compile( $("#hb_dashboard_workspace").html() );
+			var template = Handlebars.templates["dashboard_workspace.handlebars"];
 
 			this.$el.html( template({  }) );
 	
