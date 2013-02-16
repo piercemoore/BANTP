@@ -9,8 +9,7 @@
 		},
 		render : function() {
 			// Put the thing on the page!
-			var self = this;
-			var template = Handlebars.compile( $("#hb_modules_workspace").html() );
+			var self = this;var template = Handlebars.templates["modules_workspace.handlebars"];
 
 			this.$el.html( template({  }) );
 	

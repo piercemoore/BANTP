@@ -9,8 +9,7 @@
 		},
 		render : function() {
 			// Put the thing on the page!
-			var self = this;
-			var template = Handlebars.compile( $("#hb_bookmarks_workspace").html() );
+			var self = this;var template = Handlebars.templates["bookmarks_workspace.handlebars"];
 
 			this.$el.html( template({  }) );
 	
