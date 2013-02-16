@@ -10,7 +10,7 @@
 		render : function() {
 			// Put the thing on the page!
 			var self = this;
-			var template = Handlebars.compile( $("#hb_todo_workspace").html() );
+			var template = Handlebars.templates["todo_workspace.handlebars"];
 
 			this.$el.html( template({  }) );
 	
