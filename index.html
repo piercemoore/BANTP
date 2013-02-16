@@ -34,7 +34,11 @@
 $(function() {
 	$(".sidebar a").popover({
 		placement : "right",
-		trigger : "hover"
+		trigger : "hover",
+		delay : {
+			show : 600,
+			hide : 100
+		}
 	});
 });
 </script>
@@ -43,37 +47,37 @@ $(function() {
 
 <script type="text/x-handlebars-template" id="hb_dashboard_workspace">
 <div id="dashboard_workspace">
-	<h2>DASHBOARD</h2>
+	<h1>DASHBOARD</h1>
 </div>
 </script>
 		
 <script type="text/x-handlebars-template" id="hb_modules_workspace">
 <div id="modules_workspace">
-	<h2>MODULE MANAGEMENT</h2>
+	<h1>MODULE MANAGEMENT</h1>
 </div>
 </script>
 		
 <script type="text/x-handlebars-template" id="hb_bookmarks_workspace">
 <div id="bookmarks_workspace">
-	<h2>BOOKMARK MANAGEMENT</h2>
+	<h1>BOOKMARK MANAGEMENT</h1>
 </div>
 </script>
 		
 <script type="text/x-handlebars-template" id="hb_settings_workspace">
 <div id="settings_workspace">
-	<h2>BANTP SETTINGS</h2>
+	<h1>BANTP SETTINGS</h1>
 </div>
 </script>
 		
 <script type="text/x-handlebars-template" id="hb_appmanager_workspace">
 <div id="appmanager_workspace">
-	<h2>APPLICATION MANAGEMENT</h2>
+	<h1>APPLICATION MANAGEMENT</h1>
 </div>
 </script>
 		
 <script type="text/x-handlebars-template" id="hb_todo_workspace">
 <div id="todo_workspace">
-	<h2>TO-DO LIST APPLICATION</h2>
+	<h1>TO-DO LIST APPLICATION</h1>
 </div>
 </script>
 
@@ -160,7 +164,6 @@ $(function() {
 $(function() {
 console.group("Building BANTP");
 	var BANTP = loader.module('bantp');
-	var Dashboard = loader.module('dashboard');
 
 	// Build the interface!
 	var Application = new BANTP.Workspace();
@@ -176,8 +179,10 @@ console.group("Building BANTP");
 			"description" : "Module two? Awesome."
 		}
 	};
-	_.each( modules, function(t) {
-	//	$("body").append('<h1>' + t + '</h1>');
+
+	// Now we build the dashboard itself
+	_.each( modules, function(module, name) {
+		$("#bantp_canvas").append('<div class="module"><h2>' + name + '</h2><p>' + module.description + '</p></div>');
 	});
 console.groupEnd();
 });
