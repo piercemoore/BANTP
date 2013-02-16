@@ -1,23 +1,39 @@
 {
 	"name":	"Bad Ass New Tab Page",
-	"version": "0.4.3",
 	"description": "I got tired of Chrome's ugly new tab page, so this is an attempt to fix it and make it more useful. Stay tuned for new features!",
-	"browser_action": {
-		"default_icon": "img/icon_19.png",
-		"default_title": "Bad Ass New Tab Page",
-		"default_popup": "tabPageFiles/popup.html"
-	},
+	"homepage_url" : "http://piercemoore.com",
+	"version": "0.5.0",
+	"manifest_version" : 2,
+	"incognito" : "spanning",
+	"offline_enabled" : true,
+	"default_locale" : "en",
 	"icons": {
 		"16": "img/icon_16.png",
 		"48": "img/icon_48.png",
 		"128": "img/icon_128.png"
 	},
-	"background_page": "tabPageFiles/bg.html",
-	"options_page": "tabPageFiles/options.html",
+	"browser_action": {
+		"default_icon": "img/icon_19.png",
+		"default_title": "Bad Ass New Tab Page",
+		"default_popup": "popup.html"
+	},
+	"web_accessible_resources" : [
+		"img/icon_48.png",
+		"img/icon_16.png",
+	],
+	"background": "background.html",
 	"chrome_url_overrides": {
-		"newtab": "tabPageFiles/index.html"
+		"newtab": "index.html"
 	},
 	"permissions": [
-		"tabs"
+		"tabs",
+		"bookmarks",
+		"history",
+		"topSites",
+		"management",
+		"contextMenus",
+		"storage",
+		"unlimitedStorage",
+		"alarms"
 	]
 }
