@@ -7,16 +7,16 @@
 		initialize : function() {
 			log("Initializing Bad Ass New Tab Page!");
 			this.model = new BANTP.WorkspaceData();
-
-			// Instantiate only the necessary dashboard module
-			var Dashboard = loader.module('dashboard');
-			this.Dashboard = new Dashboard.Workspace();
 		},
 		render : function() {
 			// Put the thing on the page!
 			var self = this;
 
-			this.Dashboard.render();
+			// Instantiate only the necessary dashboard module
+			var DashboardModule = loader.module('dashboard');
+			var Dashboard = new DashboardModule.Workspace();
+
+			Dashboard.render();
 	
 			return this;
 		},
