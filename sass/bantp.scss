@@ -1,34 +1,34 @@
 /**
- * This is the awesome LESS CSS stylesheet for BANTP :D
+ * This is the awesome SASS CSS stylesheet for BANTP :D
  */
 
 /** TYPOGRAPHY **/
-.f_open_lt {
-	font-family: Open Sans;
+@mixin f_open_lt {
+	font-family: Open Sans; 
 	font-weight: 300;
 }
 
 /** UTILITY MIXINs **/
-.borderRadius ( @radius : 5px ) {
-	border-radius: @radius;
-	-webkit-border-radius: @radius;
+@mixin borderRadius ( $radius : 5px ) {
+	border-radius: $radius;
+	-webkit-border-radius: $radius;
 }
 
-.gradientBg ( @top, @bottom ) {
-	background: -webkit-linear-gradient( @top, @bottom );
+@mixin gradientBg ( $top, $bottom ) {
+	background: -webkit-linear-gradient( $top, $bottom );
 }
 
-.headerShadow {
+@mixin headerShadow {
 	text-shadow: 0 2px 10px #000, 0 -1px 1px #fff;
 }
 
-.transition(@time: 0.2s) {
-	-webkit-transition: @time all;
-	transition: @time all;
+@mixin transition($time: 0.2s) {
+	-webkit-transition: $time all;
+	transition: $time all;
 }
 
-.stroke(@size: 1px, @color: #fff) {
-	-webkit-text-stroke: @size @color;
+@mixin stroke($size: 1px, $color: #fff) {
+	-webkit-text-stroke: $size $color;
 }
 
 
@@ -44,15 +44,14 @@ html, body {
 }
 
 body {
-	//background: #ddd;
 	background: url('/backgrounds/default.jpg') no-repeat top center;
 	background-size: 100% 100%;
 }
 
 a,button {
-	.f_open_lt;
+	@include f_open_lt;
 	&.btn {
-		.f_open_lt;
+		@include f_open_lt;
 	}
 }
 
@@ -94,8 +93,8 @@ i {
 }
 
 .module {
-	.gradientBg( #ddd, #ccc );
-	.borderRadius( 3px );
+	@include gradientBg( #ddd, #ccc );
+	@include borderRadius( 3px );
 	border: 1px #999 solid;
 	//box-shadow: 0 1px 4px #222, inset 0 1px 1px #fff;
 	box-shadow: inset 0 1px 1px #fff;
@@ -114,7 +113,7 @@ i {
 	margin: 0 5px 5px 0;
 	opacity: 0.7;
 
-	.transition(0.3s);
+	@include transition(0.3s);
 
 	&:hover {
 		opacity: 1;
@@ -159,7 +158,7 @@ i {
 		font-size: 2em;
 		text-shadow: 0 2px 10px #000;
 		text-decoration: none;
-		.transition(0.3s);
+		@include transition(0.3s);
 		position: relative;
 		z-index: 100;
 
