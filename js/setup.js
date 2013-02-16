@@ -13,6 +13,6 @@ window.onerror = function windowError(msg, url, line) {
 	pathParts.splice(0,3);
 	var path = pathParts.join("/");
 	Bugsnag.notify("Uncaught: '" + path + ", line #" + line + " :: " + msg );
-	error("Uncaught: '" + path + ", line #" + line + " :: " + msg );
+	error("Uncaught: '" + url + ", line #" + line + " :: " + msg );
 	return true;
 };
