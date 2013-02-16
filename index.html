@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<script type="text/javascript">
-			console.time("Page Build");
-		</script>
+		<!-- Initialize Setup -->
+		<script type="text/javascript" src="js/setup.js"></script>
+
 		<title>Bad Ass New Tab Page</title>
 
 		<!-- Now let's bring in all the awesomeness -->
@@ -14,182 +14,105 @@
 		<link rel="stylesheet" type="text/css" href="stylesheets/bantp.css" />
 
 		<!-- Now let's bring in all the awesomeness -->
-		<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
-		<script type="text/javascript" src="js/underscore-min.js"></script>
-		<script type="text/javascript" src="js/backbone-min.js"></script>
-		<script type="text/javascript" src="js/handlebars.js"></script>
-		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="lib/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="lib/underscore-min.js"></script>
+		<script type="text/javascript" src="lib/backbone-min.js"></script>
+		<script type="text/javascript" src="lib/handlebars.runtime.js"></script>
+		<script type="text/javascript" src="lib/bootstrap.min.js"></script>
 
-		<script type="text/javascript" src="js/modules/application.js"></script>
-		<script type="text/javascript" src="js/modules/bantp.js"></script>
-		<script type="text/javascript" src="js/modules/settings.js"></script>
-		<script type="text/javascript" src="js/modules/dashboard.js"></script>
-		<script type="text/javascript" src="js/modules/modules.js"></script>
-		<script type="text/javascript" src="js/modules/bookmarks.js"></script>
-		<script type="text/javascript" src="js/modules/apps/app_manager.js"></script>
-		<script type="text/javascript" src="js/modules/apps/todo.js"></script>
+		<script type="text/javascript" src="js/templates.js"></script>
+		<script type="text/javascript" src="js/application.js"></script>
+		<script type="text/javascript" src="js/bantp.js"></script>
+		<script type="text/javascript" src="js/settings.js"></script>
+		<script type="text/javascript" src="js/dashboard.js"></script>
+		<script type="text/javascript" src="js/modules.js"></script>
+		<script type="text/javascript" src="js/bookmarks.js"></script>
+		<script type="text/javascript" src="js/apps/app_manager.js"></script>
+		<script type="text/javascript" src="js/apps/todo.js"></script>
 
 		<link rel="shortcut icon" href="img/favicon.ico" />
-<script type="text/javascript">
-$(function() {
-	$(".sidebar a").popover({
-		placement : "right",
-		trigger : "hover",
-		delay : {
-			show : 600,
-			hide : 100
-		}
-	});
-});
-</script>
+
+		<!-- Initialize Teardown -->
+		<script type="text/javascript" src="js/teardown.js"></script>
 	</head>
 	<body>
 
-<script type="text/x-handlebars-template" id="hb_dashboard_workspace">
-<div id="dashboard_workspace">
-	<h1>DASHBOARD</h1>
-</div>
-</script>
-		
-<script type="text/x-handlebars-template" id="hb_modules_workspace">
-<div id="modules_workspace">
-	<h1>MODULE MANAGEMENT</h1>
-</div>
-</script>
-		
-<script type="text/x-handlebars-template" id="hb_bookmarks_workspace">
-<div id="bookmarks_workspace">
-	<h1>BOOKMARK MANAGEMENT</h1>
-</div>
-</script>
-		
-<script type="text/x-handlebars-template" id="hb_settings_workspace">
-<div id="settings_workspace">
-	<h1>BANTP SETTINGS</h1>
-</div>
-</script>
-		
-<script type="text/x-handlebars-template" id="hb_appmanager_workspace">
-<div id="appmanager_workspace">
-	<h1>APPLICATION MANAGEMENT</h1>
-</div>
-</script>
-		
-<script type="text/x-handlebars-template" id="hb_todo_workspace">
-<div id="todo_workspace">
-	<h1>TO-DO LIST APPLICATION</h1>
-</div>
-</script>
+		<div class="container-fluid">
 
-<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span1 sidebar">
 
-	<div class="row-fluid">
-		<div class="span1 sidebar">
+					<img src="img/icon_48.png" alt="Bad Ass New Tab Page" title="Bad Ass New Tab Page" />
 
-			<img src="img/icon_48.png" alt="Bad Ass New Tab Page" title="Bad Ass New Tab Page" />
+					<br /><br />
 
-			<br /><br />
+					<p>MODULES</p>
 
-			<p>MODULES</p>
+					<a href="#" data-module="dashboard" data-title="Dashboard" data-content="View all your modules, applications, and bookmarks in the same place."><i class="icon-dashboard"></i></a>
+					<a href="#" data-module="modules" data-title="Module Management" data-content="Add, configure, and remove BANTP modules."><i class="icon-plus-sign-alt"></i></a>
+					<a href="#" data-module="bookmarks" data-title="Bookmarks" data-content="View and manage all your collected bookmarks."><i class="icon-bookmark-empty"></i></a>
+					<a href="#" data-module="settings" data-title="BANTP Settings" data-content="Manage and configure all your BANTP settings."><i class="icon-cogs"></i></a>
 
-			<a href="#" data-module="dashboard" data-title="Dashboard" data-content="View all your modules, applications, and bookmarks in the same place."><i class="icon-dashboard"></i></a>
-			<a href="#" data-module="modules" data-title="Module Management" data-content="Add, configure, and remove BANTP modules."><i class="icon-plus-sign-alt"></i></a>
-			<a href="#" data-module="bookmarks" data-title="Bookmarks" data-content="View and manage all your collected bookmarks."><i class="icon-bookmark-empty"></i></a>
-			<a href="#" data-module="settings" data-title="BANTP Settings" data-content="Manage and configure all your BANTP settings."><i class="icon-cogs"></i></a>
+					<p>APPS</p>
 
-			<p>APPS</p>
+					<a href="#" data-app="app_manager" data-title="Application Manager" data-content="Manage your installed Google Chrome Applications and Extensions"><i class="icon-desktop"></i></a>
+					<a href="#" data-app="todo" data-title="To-Do List" data-content="A simple, configurable to-do list that stays out of your way."><i class="icon-check"></i></a>
 
-			<a href="#" data-app="app_manager" data-title="Application Manager" data-content="Manage your installed Google Chrome Applications and Extensions"><i class="icon-desktop"></i></a>
-			<a href="#" data-app="todo" data-title="To-Do List" data-content="A simple, configurable to-do list that stays out of your way."><i class="icon-check"></i></a>
+				</div>
 
-		</div>
+				<div class="span11 workspace">
+					<div id="quick_launch">
+						<div class="module">
+						<p>QUICK LAUNCH</p>
+							<a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a>
 
-		<div class="span11 workspace">
-			<div id="quick_launch">
-				<div class="module">
-				<p>QUICK LAUNCH</p>
-					<a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a><a href="#" class="app_icon"><img src="http://placekitten.com/70/70" /></a>
+							<div class="clearfix"></div>
+						</div>
+					</div>
 
-					<div class="clearfix"></div>
+					<div id="bantp_canvas">
+						<h2>LINK COLLECTIONS</h2>
+
+						<div class="module">
+							<p>FAVORITES</p>
+
+							<div class="links">
+								<a href="#" class="btn btn-large">GOOGLE</a>	
+								<a href="#" class="btn btn-large">GOOGLE</a>	
+								<a href="#" class="btn btn-large">GOOGLE</a>
+							</div>
+
+							<div class="clearfix"></diV>
+						</div>
+
+						<div class="module">
+							<p>TOP SITES</p>
+
+							<div class="links">
+								<a href="#" class="btn btn-large">GOOGLE</a>	
+								<a href="#" class="btn btn-large">GOOGLE</a>	
+								<a href="#" class="btn btn-large">GOOGLE</a>
+							</div>
+
+							<div class="clearfix"></diV>
+						</div>
+
+						<div class="module">
+							<p>WEB DEVELOPMENT</p>
+
+							<div class="links">
+								<a href="#" class="btn btn-large">GOOGLE</a>	
+								<a href="#" class="btn btn-large">GOOGLE</a>	
+								<a href="#" class="btn btn-large">GOOGLE</a>
+							</div>
+
+							<div class="clearfix"></diV>
+						</div>
+					</div>
+
 				</div>
 			</div>
-
-			<div id="bantp_canvas">
-				<h2>LINK COLLECTIONS</h2>
-
-				<div class="module">
-					<p>FAVORITES</p>
-
-					<div class="links">
-						<a href="#" class="btn btn-large">GOOGLE</a>	
-						<a href="#" class="btn btn-large">GOOGLE</a>	
-						<a href="#" class="btn btn-large">GOOGLE</a>
-					</div>
-
-					<div class="clearfix"></diV>
-				</div>
-
-				<div class="module">
-					<p>TOP SITES</p>
-
-					<div class="links">
-						<a href="#" class="btn btn-large">GOOGLE</a>	
-						<a href="#" class="btn btn-large">GOOGLE</a>	
-						<a href="#" class="btn btn-large">GOOGLE</a>
-					</div>
-
-					<div class="clearfix"></diV>
-				</div>
-
-				<div class="module">
-					<p>WEB DEVELOPMENT</p>
-
-					<div class="links">
-						<a href="#" class="btn btn-large">GOOGLE</a>	
-						<a href="#" class="btn btn-large">GOOGLE</a>	
-						<a href="#" class="btn btn-large">GOOGLE</a>
-					</div>
-
-					<div class="clearfix"></diV>
-				</div>
-			</div>
-
 		</div>
-	</div>
-</div>
 
-<!-- This is where all our awesome Handlebars scripts will go -->
-
-<script type="text/javascript">
-$(function() {
-console.group("Building BANTP");
-	var BANTP = loader.module('bantp');
-
-	// Build the interface!
-	var Application = new BANTP.Workspace();
-	Application.render();
-
-	var modules = {
-		"Module One" : {
-			"size" : 10,
-			"description" : "This is a quick description about module one. It's awesome. That's it."
-		},
-		"Module Two" : {
-			"size" : 6,
-			"description" : "Module two? Awesome."
-		}
-	};
-
-	// Now we build the dashboard itself
-	_.each( modules, function(module, name) {
-		$("#bantp_canvas").append('<div class="module"><h2>' + name + '</h2><p>' + module.description + '</p></div>');
-	});
-console.groupEnd();
-});
-</script>
-
-<script type="text/javascript">
-	console.timeEnd("Page Build");
-</script>
 	</body>
 </html>
