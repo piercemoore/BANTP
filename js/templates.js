@@ -46,7 +46,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   if (stack1 = helpers.icon) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.icon; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" height=\"32\" width=\"32\" alt=\"";
+    + "\" height=\"48\" width=\"48\" alt=\"";
   if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
