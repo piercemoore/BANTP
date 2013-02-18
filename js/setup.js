@@ -56,17 +56,23 @@ function ifSuccessful(successCallback, data, failureCallback ) {
 	}
 }
 
+var getLocalData = function( slug, callback ) {
+	chrome.storage.local.get(slug, function(data) {
+		callback(data[slug]);
+	});
+};
+
 var config = function( slug, callback ) {
 	//chrome.storage.local.clear();
 	try {
-		chrome.storage.local.get(slug, function(items) {
+		getLocalData(slug, function(items) {
 			if( _.size(items) ) {
 				console.log("Found in local storage!", items );
 				if( callback )
 					callback(items);
 			} else {
 				parts = slug.split(":");
-				var fullConfig = _config;
+				var fullConfig = { config : _config };
 				_.each(parts, function(property) {
 					if( _.has(fullConfig, property) ) {
 						fullConfig = fullConfig[property];
