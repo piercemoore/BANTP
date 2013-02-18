@@ -9,7 +9,7 @@
 		},
 		render : function() {
 			var self = this;
-			var template = Handlebars.templates["dashboard_workspace.handlebars"];
+			var template = Handlebars.templates["dashboard_workspace"];
 
 			this.$el.html( template({  }) );
 	
