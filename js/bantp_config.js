@@ -81,5 +81,41 @@ var _config = {
 				//
 			}
 		},
-	]
+	],
+	links : {
+		default : [
+			{
+				name : "Facebook",
+				url : "https://www.facebook.com"
+			},
+			{
+				name : "Twitter",
+				url : "https://www.twitter.com"
+			},
+			{
+				name : "Gmail",
+				url : "https://mail.google.com"
+			}
+		],
+		developer : [
+			{
+				name : "GitHub",
+				url : "https://www.github.com"
+			},
+			{
+				name : "StackOverflow",
+				url : "http://www.stackoverflow.com"
+			}
+		],
+		social : [
+			{
+				name : "MySpace",
+				url : "http://www.myspace.com"
+			},
+			{
+				name : "Reddit",
+				url : "https://www.reddit.com"
+			}
+		]
+	}
 };
