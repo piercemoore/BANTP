@@ -93,12 +93,14 @@ var createContextMenu = function() {
 	});
 };
 
-var destroyStorage = function() {
+var destroyStorage = function( afterStorageDestroyed ) {
 	chrome.storage.local.clear(function() {
 		log("Local storage cleared");
-	});
-	chrome.storage.sync.clear(function() {
-		log("Synced storage cleared");
+		chrome.storage.sync.clear(function() {
+			log("Synced storage cleared");
+			if( afterStorageDestroyed )
+				afterStorageDestroyed();
+		});
 	});
 };
 
@@ -109,6 +111,18 @@ var logStorage = function() {
 	chrome.storage.sync.get(function(syncData) {
 		log("All synced BANTP data:", syncData);
 	});
+};
+
+var hardReset = function() {
+	log("Performing a hard reset of BANTP");
+	chrome.contextMenus.removeAll(function() {
+		log("All context menus removed");
+		destroyStorage(function() {
+			log("Hard reset complete, processing fresh install")
+			processInstall();
+		});
+	});
+	
 };
 
 /**
