@@ -24,3 +24,11 @@ var loader = {
 };
 
 var buddha = _.clone(Backbone.Events);
+
+/*
+ *	This is where we get all the awesome Handlebars-ness going
+ * 	@Pierce Moore, 2/18/13
+ */
+Handlebars.registerHelper('log', function(obj) {
+	log("Handlebars object: ", obj);
+});
