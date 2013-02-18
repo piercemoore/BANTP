@@ -21,28 +21,21 @@
  */
 var parseInstalledApplications = function() {
 	chrome.management.getAll(function(apps) {
-		log(apps);
+		//log(apps);
 		
-		var template = Handlebars.templates['quick_launch_single'];
-		$("#quick_launch .module").append( template( app ) );
-		
-		var quickLaunchApps = allApps = [];
+		var quickLaunchApps = [];
+		var allApps = [];
 		
 		_.each(apps, function(app) {
-			var quick, appIcon, icon128found;
+			var quick = {};
+			var appIcon, icon128found;
 			
 			// First we parse the app icon
 			if( !app.icons ) {
 				appIcon = chrome.extension.getURL("img/icon_128.png");		
 			} else {
 				_.each(app.icons, function(icon) {
-					if( icon128found )
-						break;
-					
-					if( icon.size == 128 && appIcon == null ) {
-						appIcon = icon.url;
-						icon128found = true;
-					} else if( icon.size == 48 && appIcon == null && icon128found == null ) {
+					if( icon.size == 128 ) {
 						appIcon = icon.url;
 					}
 				});
@@ -62,15 +55,15 @@ var parseInstalledApplications = function() {
 				quick.id = app.id;
 				quick.url = app.appLaunchUrl;
 				quick.name = app.name;
+				// Push them into our arrays to store
+				quickLaunchApps.push(quick);
 			}
 			
-			// Push them into our arrays to store
-			quickLaunchApps.push(quick);
 			allApps.push(app);
 		});
 		
 		// Now that's done, we store both objects locally
-		chrome.storage.local.set({ quickLaunchApps : quickLaunchApps, allApps : allApps }, function() {
+		chrome.storage.local.set({ quickLaunchApps : quickLaunchApps, installedApps : allApps }, function() {
 			if( chrome.runtime.lastError )
 				error( chrome.runtime.lastError );
 			else
