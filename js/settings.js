@@ -10,7 +10,7 @@
 		render : function() {
 			// Put the thing on the page!
 			var self = this;
-			var template = Handlebars.templates["settings_workspace.handlebars"];
+			var template = Handlebars.templates["settings_workspace"];
 
 			this.$el.html( template({  }) );
 	
