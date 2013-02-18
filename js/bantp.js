@@ -10,6 +10,26 @@
 		render : function() {
 			// Put the thing on the page!
 			var self = this;
+			
+			// Populate and render the quick application launcher
+			chrome.management.getAll(function(apps) {
+				log(apps);
+				var template = Handlebars.templates['quick_launch_single'];
+				_.each(apps, function(app) {
+					if( app.enabled ) {
+						var appIcon = "";
+						if( !app.icons ) {
+							app.icon = chrome.extension.getURL("img/icon_48.png");						
+						} else {
+							_.each(app.icons, function(icon) {
+								if( icon.size == 32 || icon.size == 48 || icon.size == 128 )
+									app.icon = icon.url;
+							});
+						}
+						$("#quick_launch .module").append( template( app ) );
+					}
+				});
+			});
 
 			// Instantiate only the necessary dashboard module
 			var DashboardModule = loader.module('dashboard');
