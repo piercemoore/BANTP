@@ -13,24 +13,7 @@
 			var self = this;
 			
 			// Populate and render the quick application launcher
-			chrome.management.getAll(function(apps) {
-				log(apps);
-				var template = Handlebars.templates['quick_launch_single'];
-				_.each(apps, function(app) {
-					if( app.enabled && app.type != "extension" && app.type != "theme") {
-						var appIcon = "";
-						if( !app.icons ) {
-							app.icon = chrome.extension.getURL("img/icon_48.png");						
-						} else {
-							_.each(app.icons, function(icon) {
-								if( icon.size == 32 || icon.size == 48 || icon.size == 128 )
-									app.icon = icon.url;
-							});
-						}
-						$("#quick_launch .module").append( template( app ) );
-					}
-				});
-			});
+			// Parse locally stored precompiled list of applications for quick launcher
 
 			// Instantiate only the necessary dashboard module
 			var DashboardModule = loader.module('dashboard');
@@ -45,18 +28,39 @@
 
 			var data = $(e.currentTarget).data();
 			var toLoad = "";
-			var name = data.module || data.app;
+			var name = data.module || data.app || data.helper;
 
-			if( data.hasOwnProperty("module") ) {
-				toLoad = loader.module( data.module );
-			} else if( data.hasOwnProperty("app") ) {
-				toLoad = loader.app( data.app );
+			if( _.has(data, "module") || _.has(data, "app")) {
+				if(_.has(data, "module")) {
+					toLoad = loader.module( data.module );
+				} else if(_.has(data, "app")) {
+					toLoad = loader.app( data.app );
+				}
+
+				this.model.set({ currentModule : name });
+
+				var IncomingModule = new toLoad.Workspace();
+				IncomingModule.render();
+			} else if(_.has(data, "helper")){
+				
+				var bg = chrome.extension.getBackgroundPage();
+				log("Background page:", bg);
+				bg[data.helper]();
+				/*
+				switch(data.helper) {
+					case "logStorage":
+						logStorage();
+						break;
+					case "processInstall":
+						processInstall();
+						break;
+					case "resetLinks":
+					case "hardReset":
+					default:
+						break;
+				}
+				*/
 			}
-
-			this.model.set({ currentModule : name });
-
-			var IncomingModule = new toLoad.Workspace();
-			IncomingModule.render();
 		},
 		launchApp : function(e) {
 			e.preventDefault();
