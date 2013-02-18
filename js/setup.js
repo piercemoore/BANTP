@@ -17,26 +17,32 @@ window.onerror = function windowError(msg, url, line) {
 	return true;
 };
 
-function log() {
-	_.each( arguments, function(msg) {
-		console.log("BANTP Log: ", msg );
-	});
+function bantpLog( type, a,b,c,d,e,f,g) {
+	a = a || "";
+	b = b || "";
+	c = c || "";
+	d = d || "";
+	e = e || "";
+	f = f || "";
+	g = g || "";	
+	if( type == "log" ) {
+		console.log("BANTP Log: ", a,b,c,d,e,f,g );
+	} else if( type == "warn" ) {
+		console.warn("BANTP Warning: ", a,b,c,d,e,f,g );
+	} else if( type == "error" ) {
+		console.error("BANTP Error: ", a,b,c,d,e,f,g );
+	}
+}
+function log(a,b,c,d,e,f,g) {
+	bantpLog("log", a,b,c,d,e,f,g);
 }
 
-function warn(msg) {
-	_.each( arguments, function(msg) {
-		console.warn("BANTP Warning: ", msg );
-	});
+function warn(a,b,c,d,e,f,g) {
+	bantpLog("warn", a,b,c,d,e,f,g);
 }
 
-function error(msg) {
-	if( typeof _ == "undefined" )
-		return;
-	
-	_.each( arguments, function(msg) {
-		console.error("BANTP ERROR: ", msg );
-		return true;
-	});
+function error(a,b,c,d,e,f,g) {
+	bantpLog("error", a,b,c,d,e,f,g);
 }
 
 function ifSuccessful(successCallback, data, failureCallback ) {
