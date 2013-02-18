@@ -53,6 +53,9 @@ a,button {
 	&.btn {
 		@include f_open_lt;
 	}
+	&:hover {
+		text-decoration: none;
+	}
 }
 
 /** HEADERS and TYPOGRAPHY **/
