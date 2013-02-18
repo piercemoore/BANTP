@@ -14,9 +14,7 @@
 			
 			// Populate and render the quick application launcher
 			getLocalData("quickLaunchApps", function(apps) {
-				log("Building quick launch apps:", apps);
 				_.each(apps, function(app) {
-					log("Adding app to quick launcher", app);
 					var template = Handlebars.templates['quick_launch_single'];
 					$("#quick_launch_target").append( template( app ) );	
 				});

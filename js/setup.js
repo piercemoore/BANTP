@@ -63,7 +63,6 @@ var getLocalData = function( slug, callback ) {
 };
 
 var config = function( slug, callback ) {
-	//chrome.storage.local.clear();
 	try {
 		getLocalData(slug, function(items) {
 			if( _.size(items) ) {

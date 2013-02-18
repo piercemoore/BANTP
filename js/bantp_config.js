@@ -11,7 +11,7 @@ var _config = {
 		startModule : "bantp_m1"
 	},
 	contextMenu : {
-		title : "Add to New Tab Page",
+		title : "Add to Bad Ass New Tab Page",
 		contexts : ["page"]
 	},
 	app : {
