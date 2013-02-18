@@ -13,7 +13,14 @@
 			var self = this;
 			
 			// Populate and render the quick application launcher
-			// Parse locally stored precompiled list of applications for quick launcher
+			getLocalData("quickLaunchApps", function(apps) {
+				log("Building quick launch apps:", apps);
+				_.each(apps, function(app) {
+					log("Adding app to quick launcher", app);
+					var template = Handlebars.templates['quick_launch_single'];
+					$("#quick_launch_target").append( template( app ) );	
+				});
+			});
 
 			// Instantiate only the necessary dashboard module
 			var DashboardModule = loader.module('dashboard');
@@ -42,24 +49,8 @@
 				var IncomingModule = new toLoad.Workspace();
 				IncomingModule.render();
 			} else if(_.has(data, "helper")){
-				
 				var bg = chrome.extension.getBackgroundPage();
-				log("Background page:", bg);
 				bg[data.helper]();
-				/*
-				switch(data.helper) {
-					case "logStorage":
-						logStorage();
-						break;
-					case "processInstall":
-						processInstall();
-						break;
-					case "resetLinks":
-					case "hardReset":
-					default:
-						break;
-				}
-				*/
 			}
 		},
 		launchApp : function(e) {
