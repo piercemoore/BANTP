@@ -71,7 +71,3 @@ chrome.runtime.onSuspend.addListener(function() {
 chrome.runtime.onSuspendCanceled.addListener(function() {
 	//
 });
-
-config("contextMenu", function(data) {
-	log("Config of contextMenu", data );
-});
