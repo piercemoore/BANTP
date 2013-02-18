@@ -95,9 +95,8 @@ var createContextMenu = function() {
 
 var destroyStorage = function( afterStorageDestroyed ) {
 	chrome.storage.local.clear(function() {
-		log("Local storage cleared");
 		chrome.storage.sync.clear(function() {
-			log("Synced storage cleared");
+			log("All storage cleared");
 			if( afterStorageDestroyed )
 				afterStorageDestroyed();
 		});
@@ -114,15 +113,11 @@ var logStorage = function() {
 };
 
 var hardReset = function() {
-	log("Performing a hard reset of BANTP");
 	chrome.contextMenus.removeAll(function() {
-		log("All context menus removed");
 		destroyStorage(function() {
-			log("Hard reset complete, processing fresh install")
 			processInstall();
 		});
 	});
-	
 };
 
 /**
@@ -134,9 +129,7 @@ var hardReset = function() {
  */
 var installDefaultLinks = function() {
 	config("config:links:default", function(links) {
-		_.each(links, function(link) {
-			//
-		});
+		
 	});
 };
 
@@ -145,7 +138,6 @@ var processInstall = function() {
 	// Store the configuration locally
 	chrome.storage.local.set({ config : _config }, function() {
 		ifSuccessful(function() {
-			log("Config stored locally");
 			createContextMenu();
 			parseInstalledApplications();
 			installDefaultLinks();
