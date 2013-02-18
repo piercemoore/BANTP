@@ -53,7 +53,6 @@ var parseInstalledApplications = function() {
 			// let's do the quick launch bar.
 			if( app.enabled && app.isApp ) {
 				quick.id = app.id;
-				quick.url = app.appLaunchUrl;
 				quick.name = app.name;
 				// Push them into our arrays to store
 				quickLaunchApps.push(quick);
@@ -81,7 +80,7 @@ var parseInstalledApplications = function() {
  *	@date 2/18/13
  */
 var createContextMenu = function() {
-	config("contextMenu", function(properties) {
+	config("config:contextMenu", function(properties) {
 		if( _.size(properties) ) {
 			chrome.contextMenus.create( properties, function() {
 				ifSuccessful(function() {
@@ -91,6 +90,15 @@ var createContextMenu = function() {
 				});
 			});	
 		}
+	});
+};
+
+var destroyStorage = function() {
+	chrome.storage.local.clear(function() {
+		log("Local storage cleared");
+	});
+	chrome.storage.sync.clear(function() {
+		log("Synced storage cleared");
 	});
 };
 
@@ -111,7 +119,7 @@ var logStorage = function() {
  *	@date 2/18/13
  */
 var installDefaultLinks = function() {
-	config("links:default", function(links) {
+	config("config:links:default", function(links) {
 		_.each(links, function(link) {
 			//
 		});
@@ -121,7 +129,7 @@ var installDefaultLinks = function() {
 var processInstall = function() {
 	log("Processing install of BANTP");
 	// Store the configuration locally
-	chrome.storage.local.set(_config, function() {
+	chrome.storage.local.set({ config : _config }, function() {
 		ifSuccessful(function() {
 			log("Config stored locally");
 			createContextMenu();
