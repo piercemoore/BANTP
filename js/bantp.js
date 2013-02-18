@@ -2,7 +2,8 @@
 	BANTP.Workspace = Backbone.View.extend({
 		el : "body",
 		events : {
-			"click .sidebar a" : "activateModule"
+			"click .sidebar a" : "activateModule",
+			"click .app-launch" : "launchApp"
 		},
 		initialize : function() {
 			this.model = new BANTP.WorkspaceData();
@@ -16,7 +17,7 @@
 				log(apps);
 				var template = Handlebars.templates['quick_launch_single'];
 				_.each(apps, function(app) {
-					if( app.enabled ) {
+					if( app.enabled && app.type != "extension" && app.type != "theme") {
 						var appIcon = "";
 						if( !app.icons ) {
 							app.icon = chrome.extension.getURL("img/icon_48.png");						
@@ -56,6 +57,13 @@
 
 			var IncomingModule = new toLoad.Workspace();
 			IncomingModule.render();
+		},
+		launchApp : function(e) {
+			e.preventDefault();
+			var id = $(e.currentTarget).data("app");
+			chrome.management.launchApp(id, function() {
+				window.close();
+			});
 		}
 	});
 
