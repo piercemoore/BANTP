@@ -51,25 +51,19 @@ function ifSuccessful(successCallback, data, failureCallback ) {
 }
 
 var config = function( slug, callback ) {
-	console.group("Fetching Config Item '" + slug + "'");
-	chrome.storage.local.clear();
+	//chrome.storage.local.clear();
 	try {
-		log("Fetching config item: " + typeof slug + " '" + slug + "'");
 		chrome.storage.local.get(slug, function(items) {
 			if( _.size(items) ) {
 				console.log("Found in local storage!", items );
 				if( callback )
 					callback(items);
 			} else {
-				console.log("Slug '" + slug + "' not found in local storage, searching.");
 				parts = slug.split(":");
 				var fullConfig = _config;
 				_.each(parts, function(property) {
 					if( _.has(fullConfig, property) ) {
-						console.log("Property '" + property + "' found in config, digging deeper", fullConfig );
-						log("FullConfig before assignment", fullConfig );
 						fullConfig = fullConfig[property];
-						log("FullConfig after assignment", fullConfig );
 					} else {
 						throw error("Config item not found '" + slug + "', failed at node: '" + property + "'");
 					}
@@ -79,7 +73,6 @@ var config = function( slug, callback ) {
 				toStore[slug] = fullConfig;
 				chrome.storage.local.set(toStore, function() {
 					if(callback)	{
-						log("Value passed to callback:", fullConfig );
 						callback(fullConfig);						
 					}
 				});
@@ -88,7 +81,6 @@ var config = function( slug, callback ) {
 
 	} catch(err) {
 		error(err.stack );
-		console.groupEnd();
 		return false;
 	}
 };
