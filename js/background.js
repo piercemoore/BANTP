@@ -24,8 +24,11 @@ var processInstall = function() {
 	config("contextMenu", function(properties) {
 		if( _.size(properties) ) {
 			chrome.contextMenus.create( properties, function() {
+				log("Evaluating success of context menu creation using properties: ", properties );
 				ifSuccessful(function() {
-					log("Context Menu created");
+					log("Context Menu created", properties );
+				}, properties, function(err, data) {
+					log("Context menu creation failed!", err, data);
 				});
 			});	
 		}

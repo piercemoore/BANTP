@@ -23,6 +23,9 @@ var loader = {
 	}()
 };
 
-log("Searching for config value 'app:name'", config("app:name") );
+log("Searching for config value 'app:name'");
+config("contextMenu", function( property ) {
+		log( property );
+});
 
 var buddha = _.clone(Backbone.Events);
