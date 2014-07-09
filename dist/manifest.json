@@ -1,0 +1,52 @@
+{
+	"name":	"BANTP",
+	"description": "Making the new tab page less ugly, one browser at a time.",
+	"homepage_url" : "https://github.com/piercemoore/BANTP",
+	"version": "0.5.0",
+	"manifest_version" : "2",
+	"incognito" : "spanning",
+	"offline_enabled" : true,
+	"content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://d2wy8f7a9ursnm.cloudfront.net; object-src 'self'",
+	"icons": {
+		"16": "app_images/icon_16.png",
+		"48": "app_images/icon_48.png",
+		"128": "app_images/icon_128.png"
+	},
+	"browser_action": {
+		"default_icon": "app_images/icon_19.png",
+		"default_title": "BANTP",
+		"default_popup": "popup.html"
+	},
+	"web_accessible_resources" : [
+		"app_images/icon_48.png",
+		"app_images/icon_16.png"
+	],
+	"background": {
+		"persistent" : true,
+		"page" : "background.html"
+	},
+	"chrome_url_overrides" : {
+		"newtab" : "index.html"
+	},
+	"permissions": [
+		
+			"tabs",
+		
+			"bookmarks",
+		
+			"history",
+		
+			"topSites",
+		
+			"management",
+		
+			"contextMenus",
+		
+			"storage",
+		
+			"unlimitedStorage",
+		
+			"alarms",
+		
+	]
+}

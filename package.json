@@ -1,0 +1,82 @@
+{
+  "name" : "BANTP",
+  "name_full": "Bad Ass New Tab Page",
+  "version": "0.5.0",
+  "year": 2013,
+  "description": "Making the new tab page less ugly, one browser at a time.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/piercemoore/BANTP.git"
+  },
+  "author": "Pierce Moore <me@prex.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/piercemoore/BANTP/issues"
+  },
+  "homepage": "https://github.com/piercemoore/BANTP",
+  "dependencies" : {
+    "grunt" : "latest",
+    "grunt-banner" : "latest",
+    "grunt-compile-handlebars" : "latest",
+    "grunt-contrib-clean" : "latest",
+    "grunt-contrib-coffee" : "latest",
+    "grunt-contrib-concat" : "latest",
+    "grunt-contrib-copy" : "latest",
+    "grunt-contrib-handlebars" : "latest",
+    "grunt-contrib-jshint" : "latest",
+    "grunt-contrib-less" : "latest",
+    "grunt-contrib-uglify" : "latest",
+    "grunt-contrib-watch" : "latest",
+    "grunt-mocha" : "latest",
+    "grunt-rename" : "latest",
+    "grunt-uncss" : "latest",
+    "handlebars" : "latest",
+    "mocha" : "latest"
+  },
+  "links" : {
+    "lodash" : "https://github.com/lodash/lodash",
+    "gridster" : "https://github.com/ducksboard/gridster.js",
+    "holder" : "https://github.com/imsky/holder",
+    "iCheck" : "https://github.com/fronteed/iCheck",
+    "Faker" : "https://github.com/Marak/Faker.js",
+    "doT" : "https://github.com/olado/doT",
+    "grunt-contrib-handlebars" : "https://github.com/gruntjs/grunt-contrib-handlebars",
+    "less.js" : "https://github.com/less/less.js",
+    "grunt-readme" : "https://github.com/assemble/grunt-readme",
+    "grunt-lodash" : "https://github.com/lodash/grunt-lodash",
+    "grunt-uncss" : "https://github.com/addyosmani/grunt-uncss",
+    "PixelKit UI Kits" : "https://github.com/Pixelkit/PixelKit-Bootstrap-UI-Kits",
+    "Zngine Admin Gruntfile" : "https://github.com/sq1agency/zngine-admin/blob/development/Gruntfile.js",
+    "Chrome Extension Docs" : "http://developer.chrome.com/extensions/devguide.html"
+  },
+  "chrome" : {
+    "manifest_version": 2,
+    "incognito": "spanning",
+    "pages": {
+      "background": "background.html",
+      "index": "index.html",
+      "popup": "popup.html"
+    },
+    "paths": {
+      "app_images": "app_images"
+    },
+    "permissions": [
+      "tabs",
+      "bookmarks",
+      "history",
+      "topSites",
+      "management",
+      "contextMenus",
+      "storage",
+      "unlimitedStorage",
+      "alarms"
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "Bad Ass New Tab Page",
+  "version": "0.5.0",
+  "homepage": "https://github.com/piercemoore/BANTP",
+  "authors": [
+    "Pierce Moore <me@prex.io>"
+  ],
+  "description": "Making the new tab page less ugly, one browser at a time.",
+  "license": "MIT",
+  "dependencies": {
+    "lodash" : "latest",
+    "backbone" : "latest",
+    "backbone.localstorage" : "latest",
+    "zeptojs" : "latest",
+    "handlebars" : "latest",
+    "bootstrap" : "latest",
+    "font-awesome" : "latest",
+    "momentjs" : "latest",
+    "holderjs" : "latest",
+    "jquery-icheck" : "latest",
+    "Faker" : "latest",
+    "gridster" : "latest"
+  }
+}
